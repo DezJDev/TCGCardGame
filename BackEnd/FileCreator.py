@@ -240,8 +240,7 @@ class Gestionnaire:
         collectionTable = f"CREATE TABLE IF NOT EXISTS P10_Collection(\n\tcardId INT REFERENCES P10_Card(cardId)" \
                           f",\n\tuserId INT REFERENCES P10_User(userId));\n"
 
-        self.cible.write(
-            f"{drop}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}")
+        self.cible.write(f"{drop}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}")
 
     def oracleTable(self):
         if self.lang == "fr":
@@ -335,12 +334,18 @@ class Gestionnaire:
                                      f"WHERE attackName = '{donnes[16]}' AND attackCost = '{donnes[17]}' AND "
                                      f"attackDamage = '{donnes[18]}'))")
         if self.oracle:
-            self.cible.write("SELECT * FROM dual;")
+            self.cible.write("\nSELECT * FROM dual;")
 
     def nettoyage(self):
         self.cible.seek(0)
-        for lignes in self.cible.readlines():
-            self.cible.write(lignes.replace("'null'", "null"))
+        lignes = self.cible.readlines()
+        self.cible.close()
+        fichier = open(self.nameCible, "w")
+        for ligne in lignes:
+            newLine = ligne.replace("'null'", "null")
+            fichier.write(newLine)
+        fichier.close()
+        self.cible.close()
 
 
 if __name__ == "__main__":
