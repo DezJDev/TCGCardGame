@@ -198,7 +198,8 @@ class Gestionnaire:
         if self.lang == "fr":
             types = ["Incolore", "Feu", "Eau", "Plante", "Combat", "Métal", "Électrique", "Psy", "Obscurité", "Dragon"]
         else:
-            types = ["Colorless", "Fire", "Water", "Grass", "Fighting", "Metal", "Lightning", "Psychic", "Darkness", "Dragon"]
+            types = ["Colorless", "Fire", "Water", "Grass", "Fighting", "Metal", "Lightning", "Psychic", "Darkness",
+                     "Dragon"]
         if self.extension == "Postgresql":
             auto = "SERIAL"
         else:
@@ -209,29 +210,29 @@ class Gestionnaire:
                f"P10_Weakness;\n{tbl} P10_User;\n{tbl} P10_Abitility;\n"
 
         abilityTable = f"CREATE TABLE IF NOT EXISTS P10_Ability(\n\tabilityId {auto} PRIMARY KEY,\n\t" \
-                       "abilityName varchar(50) NOT NULL,\n\tabilityEffect varchar(255) NOT NULL);\n"
+                       f"abilityName varchar(50) NOT NULL,\n\tabilityEffect varchar(255) NOT NULL);\n"
 
         resistanceTable = f"CREATE TABLE IF NOT EXISTS P10_Resistance(\n\tresistanceId {auto} PRIMARY KEY,\n\t" \
-                          "resistanceType varchar(10) NOT NULL CHECK IN {types},\n\tresistanceValue varchar(5) NOT NULL);\n"
+                          f"resistanceType varchar(10) NOT NULL CHECK IN {types},\n\tresistanceValue varchar(5) NOT NULL DEFAULT '-20' CHECK IN ['x2',+20,+10,+30]);\n"
 
         weaknessTable = f"CREATE TABLE IF NOT EXISTS P10_Weakness(\n\tweaknessId {auto} PRIMARY KEY,\n\t" \
-                        "weaknessType varchar(10) NOT NULL CHECK IN {types},\n\tweaknessValue varchar(5) NOT NULL);\n"
+                        f"weaknessType varchar(10) NOT NULL CHECK IN {types},\n\tweaknessValue varchar(5) NOT NULL DEFAULT 'x2' CHECK IN ['x2',-20,-10,-30]);\n"
 
         attackTable = f"CREATE TABLE IF NOT EXISTS P10_Attack(\n\tattackId {auto} PRIMARY KEY,\n\t" \
-                      "attackName varchar(50) NOT NULL,\n\tattackCost varchar(50),\n\tattackDamage varchar(4)," \
-                      "\n\tattackEffect varchar(255),\n\tattackLang varchar(20) NOT NULL);\n"
+                      f"attackName varchar(50) NOT NULL,\n\tattackCost varchar(50),\n\tattackDamage varchar(4)," \
+                      f"\n\tattackEffect varchar(255),\n\tattackLang varchar(20) NOT NULL DEFAULT 'fr' CHECK IN ['fr','en']);\n"
 
         cardTable = f"CREATE TABLE IF NOT EXISTS P10_Card(\n\tcardId {auto} PRIMARY KEY,\n\t" \
-                    "cardCategory varchar(50) NOT NULL,\n\tcardName varchar(50) NOT NULL,\n\tcardHP INT,\n\t" \
-                    "cardRarity varchar(50) NOT NULL,\n\tcardImg varchar(20) NOT NULL,\n\tcardType varchar(10) CHECK IN {types},\n\t" \
-                    "cardExtension varchar(255) NOT NULL,\n\tcardRetreat INT,\n\tcardLang varchar(20) NOT NULL,\n\t" \
-                    "abilityId INT REFERENCES P10_Ability(abilityId),\n\t" \
-                    "resistanceId INT REFERENCES P10_Resistance(resistanceId),\n\t" \
-                    "weaknessId INT REFERENCES P10_Weakness(weaknessId));\n"
+                    f"cardCategory varchar(50) NOT NULL DEFAULT 'Pokémon' CHECK IN ['Pokémon','Pokemon','Dresseur','Trainer'],\n\tcardName varchar(50) NOT NULL,\n\tcardHP INT,\n\t" \
+                    f"cardRarity varchar(50) NOT NULL DEFAULT 'Commune' CHECK IN ['Commune','Peu Commune','Rare','Ultra Rare','Magnifique'],\n\tcardImg varchar(20) NOT NULL,\n\tcardType varchar(10) CHECK IN {types},\n\t" \
+                    f"cardExtension varchar(255) NOT NULL,\n\tcardRetreat INT,\n\tcardLang varchar(20) NOT NULL DEFAULT 'fr' CHECK IN ['fr','en'],\n\t" \
+                    f"abilityId INT REFERENCES P10_Ability(abilityId),\n\t" \
+                    f"resistanceId INT REFERENCES P10_Resistance(resistanceId),\n\t" \
+                    f"weaknessId INT REFERENCES P10_Weakness(weaknessId));\n"
 
         userTable = f"CREATE TABLE IF NOT EXISTS P10_User(\n\tuserId {auto} PRIMARY KEY,\n\t" \
-                    "userName varchar(20) NOT NULL,\n\tuserDob date NOT NULL,\n\tuserStatus varchar(10) NOT NULL," \
-                    "\n\tuserLogin varchar(255) NOT NULL,\n\tuserPass varchar(255) NOT NULL);\n"
+                    f"userName varchar(20) NOT NULL,\n\tuserDob date NOT NULL,\n\tuserStatus varchar(10) NOT NULL CHECK IN ['root','user']," \
+                    f"\n\tuserLogin varchar(255) NOT NULL,\n\tuserPass varchar(255) NOT NULL);\n"
 
         contientTable = f"CREATE TABLE IF NOT EXISTS P10_Contient(\n\tcardId INT REFERENCES P10_Card(cardId)" \
                         f",\n\tattackId INT REFERENCES P10_Attack(attackId));\n"
@@ -288,7 +289,8 @@ class Gestionnaire:
         collectionTable = f"CREATE TABLE IF NOT EXISTS P10_Collection(\n\tcardId NUMBER REFERENCES P10_Card(cardId)" \
                           f",\n\tuserId NUMBER REFERENCES P10_User(userId));\n"
 
-        self.cible.write(f"{drops}\n{sequences}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}\n")
+        self.cible.write(
+            f"{drops}\n{sequences}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}\n")
 
     def assocTable(self):
         self.source.seek(0)
@@ -301,17 +303,30 @@ class Gestionnaire:
             print(donnes[5])
             if donnes[12] != "null" and donnes[16] == "null":
                 if not self.oracle:
-                    self.cible.write(f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
+                    self.cible.write(
+                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
                 else:
-                    self.cible.write(f"\n\tINTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
+                    self.cible.write(
+                        f"\n\tINTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
 
             elif donnes[12] != "null" and donnes[16] != "null":
                 if not self.oracle:
-                    self.cible.write(f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
-                    self.cible.write(f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[16]}' AND attackCost = '{donnes[17]}' AND attackDamage = '{donnes[18]}'))")
+                    self.cible.write(
+                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
+                    self.cible.write(
+                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[16]}' AND attackCost = '{donnes[17]}' AND attackDamage = '{donnes[18]}'))")
                 else:
-                    self.cible.write(f"\n\tINTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
-                    self.cible.write(f"\n\tINTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[16]}' AND attackCost = '{donnes[17]}' AND attackDamage = '{donnes[18]}'))")
+                    self.cible.write(f"\n\tINTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
+                                     f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
+                                     f"WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND "
+                                     f"attackDamage = '{donnes[14]}'))")
+
+                    self.cible.write(f"\n\tINTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
+                                     f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
+                                     f"WHERE attackName = '{donnes[16]}' AND attackCost = '{donnes[17]}' AND "
+                                     f"attackDamage = '{donnes[18]}'))")
+        if self.oracle:
+            self.cible.write("SELECT * FROM dual;")
 
 
 if __name__ == "__main__":
