@@ -9,7 +9,7 @@ def traitementLigne(ligne: str) -> list[str]:
     attributs = ligne.split("|")
     attributsTraites = []
     for element in attributs:
-        element = element.replace("\n", "").replace("'", "\\'")
+        element = element.replace("\n", "").replace("'", "''")
         tableauProvisoire = element.split(":")
         if len(tableauProvisoire) > 2:
             tableauProvisoire[1] = tableauProvisoire[1] + ":" + tableauProvisoire[2]
@@ -57,7 +57,7 @@ class Gestionnaire:
             self.cible.write(f"\n\nINSERT INTO P10_{nameTable}(")
             for i in range(len(nameAttributs)):
                 if i == len(nameAttributs) - 1:
-                    self.cible.write(f"{nameAttributs[i]},{nameTable.lower()}lang) VALUES ")
+                    self.cible.write(f"{nameAttributs[i]}) VALUES ")
                 else:
                     self.cible.write(f"{nameAttributs[i]},")
         else:
@@ -84,18 +84,18 @@ class Gestionnaire:
                     for i in range(nbAttributs):
                         if i == (nbAttributs - 1):
                             if nameTable == "Attack":
-                                chaine += f"\"{donnees[attributs[i]]}\", \"{self.lang}\"),"
+                                chaine += f"'{donnees[attributs[i]]}'),"
                             else:
-                                chaine += f"\"{donnees[attributs[i]]}\"),"
+                                chaine += f"'{donnees[attributs[i]]}'),"
                         else:
-                            chaine += f"\"{donnees[attributs[i]]}\","
+                            chaine += f"'{donnees[attributs[i]]}',"
                     self.cible.write(f"{chaine}")
 
             else:
                 header = f"\n\tINTO P10_{nameTable}("
                 for i in range(nbAttributs):
                     if i == nbAttributs - 1:
-                        header += f"{attributsTable[i]},{nameTable.lower()}lang) VALUES ("
+                        header += f"{attributsTable[i]}) VALUES ("
                     else:
                         header += f"{attributsTable[i]},"
 
@@ -104,17 +104,17 @@ class Gestionnaire:
                     chaine = header
                     for i in range(nbAttributs):
                         if i == nbAttributs - 1:
-                            chaine += f"\"{donnees[attributs[i]]}\",\"{self.lang}\")"
+                            chaine += f"'{donnees[attributs[i]]}')"
                         else:
-                            chaine += f"\"{donnees[attributs[i]]}\","
+                            chaine += f"'{donnees[attributs[i]]}',"
 
-                    chaine = chaine.replace("\"null\"", "null")
+                    chaine = chaine.replace("'null'", "null")
                     self.cible.write(f"{chaine}")
         if not self.oracle:
             self.cible.seek(self.cible.tell() - 1)
             self.cible.write(";")
             # self.cible.write(f"\n\tINTO {attributsTable[0]}(abilityId, abilityName, abilityEffect) "
-            #                 f"VALUES ({index}, \"{donnees[10]}\", \"{donnees[11]}\")")
+            #                 f"VALUES ({index}, '{donnees[10]}', '{donnees[11]}')")
 
     def implementsCardsNoOracle(self):
         self.source.seek(0)
@@ -125,8 +125,8 @@ class Gestionnaire:
         for lignes in self.source.readlines():
             donnees = traitementLigne(lignes)
 
-            chaine = f"\n\t(\"{donnees[1]}\",\"{donnees[2]}\",\"{donnees[3]}\",\"{donnees[4]}\",\"{donnees[5]}\",\"{donnees[6]}\"," \
-                     f"\"{donnees[7]}\",{donnees[8]},\"{donnees[9]}\""
+            chaine = f"\n\t('{donnees[1]}','{donnees[2]}','{donnees[3]}','{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
+                     f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
 
             if donnees[10] == "null" and donnees[11] != "null":
                 chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityEffect = '{donnees[11]}')"
@@ -135,21 +135,21 @@ class Gestionnaire:
                 chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityName = '{donnees[10]}' " \
                           f"AND abilityEffect = '{donnees[11]}')"
             else:
-                chaine += ",\"null\""
+                chaine += ",'null'"
 
             if donnees[22] != "null":
                 chaine += f",(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = '{donnees[22]}' " \
                           f"AND weaknessValue = '{donnees[23]}')"
             else:
-                chaine += ",\"null\""
+                chaine += ",'null'"
 
             if donnees[20] != "null":
                 chaine += f",(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = '{donnees[20]}' " \
                           f"AND resistanceValue = '{donnees[21]}')"
             else:
-                chaine += ",\"null\""
+                chaine += ",'null'"
 
-            chaine = chaine.replace("\"null\"", "null")
+            chaine = chaine.replace("'null'", "null")
             self.cible.write(chaine + "),")
         self.cible.seek(self.cible.tell() - 1)
         self.cible.write(";")
@@ -164,8 +164,8 @@ class Gestionnaire:
                      "cardHP,cardRarity,cardImg,cardType,cardExtension" \
                      "cardRetreat,cardLang,abilityId,resistanceId,weaknessId) VALUES "
 
-            chaine += f"(\"{donnees[1]}\",\"{donnees[2]}\",\"{donnees[3]}\",\"{donnees[4]}\",\"{donnees[5]}\",\"{donnees[6]}\"," \
-                      f"\"{donnees[7]}\",{donnees[8]},\"{donnees[9]}\""
+            chaine += f"('{donnees[1]}','{donnees[2]}','{donnees[3]}','{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
+                      f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
 
             if donnees[10] == "null" and donnees[11] != "null":
                 chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityEffect = '{donnees[11]}')"
@@ -174,22 +174,22 @@ class Gestionnaire:
                 chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityName = '{donnees[10]}' " \
                           f"AND abilityEffect = '{donnees[11]}')"
             else:
-                chaine += ",\"null\""
+                chaine += ",'null'"
 
             if donnees[22] != "null":
                 chaine += f",(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = '{donnees[22]}' " \
                           f"AND weaknessValue = '{donnees[23]}')"
             else:
-                chaine += ",\"null\""
+                chaine += ",'null'"
 
             if donnees[20] != "null":
                 chaine += f",(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = '{donnees[20]}' " \
                           f"AND resistanceValue = '{donnees[21]}')"
 
             else:
-                chaine += ",\"null\""
+                chaine += ",'null'"
 
-            chaine = chaine.replace("\"null\"", "null")
+            chaine = chaine.replace("'null'", "null")
             self.cible.write(chaine + ")")
         self.cible.write("\nSELECT * FROM dual;")
 
@@ -199,7 +199,7 @@ class Gestionnaire:
         else:
             auto = "INT AUTO_INCREMENT"
             
-        tbl = "DROP TABLE IF NOT EXISTS"
+        tbl = "DROP TABLE IF EXISTS"
         drop = f"{tbl} P10_Card;\n{tbl} P10_Attack;\n{tbl} P10_Resistance;\n{tbl} "\
                f"P10_Weakness;\n{tbl} P10_User;\n{tbl} P10_Abitility;\n"
 
@@ -284,7 +284,7 @@ if __name__ == "__main__":
     gesteSQL.writeDataInFile([22, 23])
     gesteSQL.implementsCardsNoOracle()
 
-    gesteOracle = Gestionnaire("EN-DataBlackWhiteWithoutDoublon.txt", "EN-PokemonOracle.oracl", "oracle")
+    gesteOracle = Gestionnaire("EN-DataBlackWhiteWithoutDoublon.txt", "EN-PokemonOracle.sql", "oracle")
     gesteOracle.oracleTable()
     gesteOracle.cible.write("INSERT ALL")
     gesteOracle.writeDataInFile([10, 11])
