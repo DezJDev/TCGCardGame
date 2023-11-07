@@ -30,13 +30,15 @@ CREATE TABLE P10_Resistance(
 	resistanceId NUMBER DEFAULT seq_resistance.nextval PRIMARY KEY,
 	resistanceType VARCHAR2(10) NOT NULL,
 	resistanceValue VARCHAR2(5) NOT NULL DEFAULT '-20',
-	CONSTRAINT CheckType CHECK (resistanceType IN ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon')));
+	CONSTRAINT CheckType CHECK (resistanceType IN ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon')),
+	CONSTRAINT CheckValue CHECK (resistanceValue IN ('/2','-10','-20','-30')));
 
 CREATE TABLE P10_Weakness(
 	weaknessId NUMBER DEFAULT seq_weakness.nextval PRIMARY KEY,
 	weaknessType VARCHAR2(10) NOT NULL,
 	weaknessValue VARCHAR2(5) NOT NULL DEFAULT 'x2',
-	CONSTRAINT CheckType CHECK (weaknessType IN ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon')));
+	CONSTRAINT CheckType CHECK (weaknessType IN ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon')),
+	CONSTRAINT CheckValue CHECK (weaknessValue IN ('x2','+10','+20','+30')));
 
 CREATE TABLE P10_Attack(
 	attackId NUMBER DEFAULT seq_attack.nextval PRIMARY KEY,

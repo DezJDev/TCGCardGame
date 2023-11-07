@@ -21,12 +21,12 @@ CREATE TABLE IF NOT EXISTS P10_Ability(
 CREATE TABLE IF NOT EXISTS P10_Resistance(
 	resistanceId INT AUTO_INCREMENT PRIMARY KEY,
 	resistanceType varchar(10) NOT NULL CHECK IN ['Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon'],
-	resistanceValue varchar(5) NOT NULL DEFAULT '-20' CHECK IN ['x2',+20,+10,+30]);
+	resistanceValue varchar(5) NOT NULL DEFAULT '-20' CHECK IN ['/2',-20,-10,-30]);
 
 CREATE TABLE IF NOT EXISTS P10_Weakness(
 	weaknessId INT AUTO_INCREMENT PRIMARY KEY,
 	weaknessType varchar(10) NOT NULL CHECK IN ['Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon'],
-	weaknessValue varchar(5) NOT NULL DEFAULT 'x2' CHECK IN ['x2',-20,-10,-30]);
+	weaknessValue varchar(5) NOT NULL DEFAULT 'x2' CHECK IN ['x2',+20,+10,+30]);
 
 CREATE TABLE IF NOT EXISTS P10_Attack(
 	attackId INT AUTO_INCREMENT PRIMARY KEY,

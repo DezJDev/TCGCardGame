@@ -213,10 +213,10 @@ class Gestionnaire:
                        f"abilityName varchar(50) NOT NULL,\n\tabilityEffect varchar(255) NOT NULL);\n"
 
         resistanceTable = f"CREATE TABLE IF NOT EXISTS P10_Resistance(\n\tresistanceId {auto} PRIMARY KEY,\n\t" \
-                          f"resistanceType varchar(10) NOT NULL CHECK IN {types},\n\tresistanceValue varchar(5) NOT NULL DEFAULT '-20' CHECK IN ['x2',+20,+10,+30]);\n"
+                          f"resistanceType varchar(10) NOT NULL CHECK IN {types},\n\tresistanceValue varchar(5) NOT NULL DEFAULT '-20' CHECK IN ['/2',-20,-10,-30]);\n"
 
         weaknessTable = f"CREATE TABLE IF NOT EXISTS P10_Weakness(\n\tweaknessId {auto} PRIMARY KEY,\n\t" \
-                        f"weaknessType varchar(10) NOT NULL CHECK IN {types},\n\tweaknessValue varchar(5) NOT NULL DEFAULT 'x2' CHECK IN ['x2',-20,-10,-30]);\n"
+                        f"weaknessType varchar(10) NOT NULL CHECK IN {types},\n\tweaknessValue varchar(5) NOT NULL DEFAULT 'x2' CHECK IN ['x2',+20,+10,+30]);\n"
 
         attackTable = f"CREATE TABLE IF NOT EXISTS P10_Attack(\n\tattackId {auto} PRIMARY KEY,\n\t" \
                       f"attackName varchar(50) NOT NULL,\n\tattackCost varchar(50),\n\tattackDamage varchar(4)," \
@@ -266,11 +266,13 @@ class Gestionnaire:
 
         resistanceTable = f"CREATE TABLE P10_Resistance(\n\tresistanceId NUMBER DEFAULT seq_resistance.nextval PRIMARY KEY,\n\t" \
                           "resistanceType VARCHAR2(10) NOT NULL,\n\tresistanceValue VARCHAR2(5) NOT NULL DEFAULT '-20',\n\t" \
-                          f"CONSTRAINT CheckType CHECK (resistanceType IN {types}));\n"
+                          f"CONSTRAINT CheckType CHECK (resistanceType IN {types}),\n\t" \
+                          f"CONSTRAINT CheckValue CHECK (resistanceValue IN ('/2','-10','-20','-30')));\n"
 
         weaknessTable = f"CREATE TABLE P10_Weakness(\n\tweaknessId NUMBER DEFAULT seq_weakness.nextval PRIMARY KEY,\n\t" \
                         "weaknessType VARCHAR2(10) NOT NULL,\n\tweaknessValue VARCHAR2(5) NOT NULL DEFAULT 'x2',\n\t" \
-                        f"CONSTRAINT CheckType CHECK (weaknessType IN {types}));\n"
+                        f"CONSTRAINT CheckType CHECK (weaknessType IN {types}),\n\t" \
+                        f"CONSTRAINT CheckValue CHECK (weaknessValue IN ('x2','+10','+20','+30')));\n"
 
         attackTable = f"CREATE TABLE P10_Attack(\n\tattackId NUMBER DEFAULT seq_attack.nextval PRIMARY KEY,\n\t" \
                       "attackName VARCHAR2(50) NOT NULL,\n\tattackCost VARCHAR2(50),\n\tattackDamage VARCHAR2(4)," \
