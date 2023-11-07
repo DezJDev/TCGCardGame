@@ -15,8 +15,8 @@ CREATE TABLE IF NOT EXISTS P10_User(
 
 CREATE TABLE IF NOT EXISTS P10_Ability(
 	abilityId SERIAL PRIMARY KEY,
-	abilityName varchar(50),
-	abilityEffect varchar(255));
+	abilityName varchar(50) NOT NULL,
+	abilityEffect varchar(255) NOT NULL);
 
 CREATE TABLE IF NOT EXISTS P10_Resistance(
 	resistanceId SERIAL PRIMARY KEY,

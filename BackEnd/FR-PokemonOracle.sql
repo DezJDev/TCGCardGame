@@ -23,8 +23,8 @@ CREATE TABLE P10_User(
 
 CREATE TABLE P10_Ability(
 	abilityId NUMBER DEFAULT seq_ability.nextval PRIMARY KEY,
-	abilityName VARCHAR2(50),
-	abilityEffect VARCHAR2(255));
+	abilityName VARCHAR2(50) NOT NULL,
+	abilityEffect VARCHAR2(255) NOT NULL);
 
 CREATE TABLE P10_Resistance(
 	resistanceId NUMBER DEFAULT seq_resistance.nextval PRIMARY KEY,
