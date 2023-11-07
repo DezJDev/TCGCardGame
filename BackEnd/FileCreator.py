@@ -42,7 +42,7 @@ class Gestionnaire:
     def __init__(self, fichierNameSource: str, fichierNameCible: str, extension: str):
         self.source = open(fichierNameSource, "r", encoding="UTF-8")
         self.lang = fichierNameSource[0].lower() + fichierNameSource[1].lower()
-        self.cible = open(fichierNameCible, "w")
+        self.cible = open(fichierNameCible, "w+")
         self.nameSource = fichierNameSource
         self.nameCible = fichierNameCible
         self.pourcentage = 0
@@ -136,19 +136,19 @@ class Gestionnaire:
                 chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityName = '{donnees[10]}' " \
                           f"AND abilityEffect = '{donnees[11]}')"
             else:
-                chaine += ",'null'"
+                chaine += ",null"
 
             if donnees[22] != "null":
                 chaine += f",(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = '{donnees[22]}' " \
                           f"AND weaknessValue = '{donnees[23]}')"
             else:
-                chaine += ",'null'"
+                chaine += ",null"
 
             if donnees[20] != "null":
                 chaine += f",(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = '{donnees[20]}' " \
                           f"AND resistanceValue = '{donnees[21]}')"
             else:
-                chaine += ",'null'"
+                chaine += ",null"
 
             chaine = chaine.replace("'null'", "null")
             self.cible.write(chaine + "),")
@@ -226,12 +226,12 @@ class Gestionnaire:
                     f"cardCategory varchar(50) NOT NULL DEFAULT 'Pokémon' CHECK IN ['Pokémon','Pokemon','Dresseur','Trainer'],\n\tcardName varchar(50) NOT NULL,\n\tcardHP INT,\n\t" \
                     f"cardRarity varchar(50) NOT NULL DEFAULT 'Commune' CHECK IN ['Commune','Peu Commune','Rare','Ultra Rare','Magnifique'],\n\tcardImg varchar(20) NOT NULL,\n\tcardType varchar(10) CHECK IN {types},\n\t" \
                     f"cardExtension varchar(255) NOT NULL,\n\tcardRetreat INT,\n\tcardLang varchar(20) NOT NULL DEFAULT 'fr' CHECK IN ['fr','en'],\n\t" \
-                    f"abilityId INT REFERENCES P10_Ability(abilityId),\n\t" \
-                    f"resistanceId INT REFERENCES P10_Resistance(resistanceId),\n\t" \
-                    f"weaknessId INT REFERENCES P10_Weakness(weaknessId));\n"
+                    f"abilityId INT REFERENCES P10_Ability(abilityId) DEFAULT null,\n\t" \
+                    f"resistanceId INT REFERENCES P10_Resistance(resistanceId) DEFAULT null,\n\t" \
+                    f"weaknessId INT REFERENCES P10_Weakness(weaknessId) DEFAULT null);\n"
 
         userTable = f"CREATE TABLE IF NOT EXISTS P10_User(\n\tuserId {auto} PRIMARY KEY,\n\t" \
-                    f"userName varchar(20) NOT NULL,\n\tuserDob date NOT NULL,\n\tuserStatus varchar(10) NOT NULL CHECK IN ['root','user']," \
+                    f"userName varchar(20) NOT NULL,\n\tuserDob date NOT NULL,\n\tuserStatus varchar(10) NOT NULL DEFAULT 'user' CHECK IN ['root','user']," \
                     f"\n\tuserLogin varchar(255) NOT NULL,\n\tuserPass varchar(255) NOT NULL);\n"
 
         contientTable = f"CREATE TABLE IF NOT EXISTS P10_Contient(\n\tcardId INT REFERENCES P10_Card(cardId)" \
@@ -244,6 +244,10 @@ class Gestionnaire:
             f"{drop}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}")
 
     def oracleTable(self):
+        if self.lang == "fr":
+            types = ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon')
+        else:
+            types = ('Colorless', 'Fire', 'Water', 'Grass', 'Fighting', 'Metal', 'Lightning', 'Psychic', 'Darkness', 'Dragon')
         drops = "-- DROP TABLE P10_Card;\n" \
                 "-- DROP TABLE P10_Ability;\n" \
                 "-- DROP TABLE P10_Attack;\n" \
@@ -262,26 +266,32 @@ class Gestionnaire:
                        "abilityName VARCHAR2(50) NOT NULL,\n\tabilityEffect VARCHAR2(255) NOT NULL);\n"
 
         resistanceTable = f"CREATE TABLE P10_Resistance(\n\tresistanceId NUMBER DEFAULT seq_resistance.nextval PRIMARY KEY,\n\t" \
-                          "resistanceType VARCHAR2(10) NOT NULL,\n\tresistanceValue VARCHAR2(5) NOT NULL);\n"
+                          "resistanceType VARCHAR2(10) NOT NULL,\n\tresistanceValue VARCHAR2(5) NOT NULL DEFAULT '-20',\n\t" \
+                          f"CONSTRAINT CheckType CHECK (resistanceType IN {types}));\n"
 
         weaknessTable = f"CREATE TABLE P10_Weakness(\n\tweaknessId NUMBER DEFAULT seq_weakness.nextval PRIMARY KEY,\n\t" \
-                        "weaknessType VARCHAR2(10) NOT NULL,\n\tweaknessValue VARCHAR2(5) NOT NULL);\n"
+                        "weaknessType VARCHAR2(10) NOT NULL,\n\tweaknessValue VARCHAR2(5) NOT NULL DEFAULT 'x2',\n\t" \
+                        f"CONSTRAINT CheckType CHECK (weaknessType IN {types}));\n"
 
         attackTable = f"CREATE TABLE P10_Attack(\n\tattackId NUMBER DEFAULT seq_attack.nextval PRIMARY KEY,\n\t" \
                       "attackName VARCHAR2(50) NOT NULL,\n\tattackCost VARCHAR2(50),\n\tattackDamage VARCHAR2(4)," \
-                      "\n\tattackEffect VARCHAR2(255),\n\tattackLang VARCHAR2(20));\n"
+                      "\n\tattackEffect VARCHAR2(255),\n\tattackLang VARCHAR2(20) DEFAULT 'fr',\n\t" \
+                      "CONSTRAINT checkLang CHECK (attackLang IN ('fr','en')));\n"
 
         cardTable = f"CREATE TABLE P10_Card(\n\tcardId INT DEFAULT seq_card.nextval PRIMARY KEY,\n\t" \
-                    "cardCategory VARCHAR2(50),\n\tcardName VARCHAR2(50),\n\tcardHP NUMBER,\n\t" \
-                    "cardRarity VARCHAR2(50),\n\tcardImg VARCHAR2(20),\n\tcardType VARCHAR2(10),\n\t" \
-                    "cardExtension VARCHAR2(255),\n\tcardRetreat NUMBER,\n\tcardLang VARCHAR2(20),\n\t" \
-                    "abilityId NUMBER REFERENCES P10_Ability(abilityId),\n\t" \
-                    "resistanceId NUMBER REFERENCES P10_Resistance(resistanceId),\n\t" \
-                    "weaknessId NUMBER REFERENCES P10_Weakness(weaknessId));\n"
+                    "cardCategory VARCHAR2(50) DEFAULT 'Pokémon',\n\tcardName VARCHAR2(50),\n\tcardHP NUMBER,\n\t" \
+                    "cardRarity VARCHAR2(50) DEFAULT 'Commune',\n\tcardImg VARCHAR2(20),\n\tcardType VARCHAR2(10),\n\t" \
+                    "cardExtension VARCHAR2(255),\n\tcardRetreat NUMBER DEFAULT 1,\n\tcardLang VARCHAR2(20) DEFAULT 'fr',\n\t" \
+                    "abilityId NUMBER REFERENCES P10_Ability(abilityId) DEFAULT null,\n\t" \
+                    "resistanceId NUMBER REFERENCES P10_Resistance(resistanceId) DEFAULT null,\n\t" \
+                    "weaknessId NUMBER REFERENCES P10_Weakness(weaknessId) DEFAULT null,\n\t" \
+                    f"CONSTRAINT CheckRarity CHECK (cardRarity IN ('Commune','Peu commune','Rare','Ultra Rare','Maginfique')),\n\t" \
+                    f"CONSTRAINT CheckCategory CHECK (cardCategory IN ('Pokémon','Pokemon','Dresseur','Trainer')));\n"
 
         userTable = f"CREATE TABLE P10_User(\n\tuserId NUMBER DEFAULT seq_user.nextval PRIMARY KEY,\n\t" \
-                    "userName VARCHAR2(20),\n\tuserDob date,\n\tuserStatus VARCHAR2(10)," \
-                    "\n\tuserLogin VARCHAR2(255),\n\tuserPass VARCHAR2(255));\n"
+                    "userName VARCHAR2(20),\n\tuserDob date,\n\tuserStatus VARCHAR2(10) DEFAULT 'user'," \
+                    "\n\tuserLogin VARCHAR2(255),\n\tuserPass VARCHAR2(255),\n\t" \
+                    f"CONSTRAINT CheckStatus CHECK (cardCategory IN ('root', 'user')));\n"
 
         contientTable = (f"CREATE TABLE IF NOT EXISTS P10_Contient(\n\tcardId NUMBER REFERENCES P10_Card(cardId)"
                          f",\n\tattackId NUMBER REFERENCES P10_Attack(attackId));\n")
@@ -289,8 +299,7 @@ class Gestionnaire:
         collectionTable = f"CREATE TABLE IF NOT EXISTS P10_Collection(\n\tcardId NUMBER REFERENCES P10_Card(cardId)" \
                           f",\n\tuserId NUMBER REFERENCES P10_User(userId));\n"
 
-        self.cible.write(
-            f"{drops}\n{sequences}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}\n")
+        self.cible.write(f"{drops}\n{sequences}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}\n")
 
     def assocTable(self):
         self.source.seek(0)
@@ -328,6 +337,11 @@ class Gestionnaire:
         if self.oracle:
             self.cible.write("SELECT * FROM dual;")
 
+    def nettoyage(self):
+        self.cible.seek(0)
+        for lignes in self.cible.readlines():
+            self.cible.write(lignes.replace("'null'", "null"))
+
 
 if __name__ == "__main__":
     gesteSQL = Gestionnaire("FR-DataBlackWhiteWithoutDoublon.txt", "FR-PokemonMySQL.sql", "mysql")
@@ -339,6 +353,7 @@ if __name__ == "__main__":
     gesteSQL.writeDataInFile([22, 23])
     gesteSQL.implementsCardsNoOracle()
     gesteSQL.assocTable()
+    gesteSQL.nettoyage()
 
     gestePostgreSQL = Gestionnaire("FR-DataBlackWhiteWithoutDoublon.txt", "FR-PokemonPostgresql.sql", "postgresql")
     gestePostgreSQL.sqlTable()
@@ -349,6 +364,7 @@ if __name__ == "__main__":
     gestePostgreSQL.writeDataInFile([22, 23])
     gestePostgreSQL.implementsCardsNoOracle()
     gestePostgreSQL.assocTable()
+    gestePostgreSQL.nettoyage()
 
     gesteOracle = Gestionnaire("FR-DataBlackWhiteWithoutDoublon.txt", "FR-PokemonOracle.sql", "oracle")
     gesteOracle.oracleTable()
@@ -361,3 +377,4 @@ if __name__ == "__main__":
     gesteOracle.cible.write("\nSELECT * FROM dual;")
     gesteOracle.implementsCardOracle()
     gesteOracle.assocTable()
+    gesteOracle.nettoyage()
