@@ -1,5 +1,5 @@
 if __name__ == "__main__":
-    EN = open("school_data", "r")
+    EN = open("sc", "r")
     ENSansDoublon = open("school_data2", "w")
 
     line = EN.readline()

@@ -133,7 +133,7 @@ class Gestionnaire:
 
     def implementsCardsNoOracle(self):
         Gestionnaire.newSource.seek(0)
-        self.cible.write("\n\nINSERT INTO Card(cardCatergory,cardName,"
+        self.cible.write("\n\nINSERT INTO P10_Card(cardCatergory,cardName,"
                          "cardHP,cardRarity,cardImg,cardType,cardExtension"
                          "cardRetreat,cardLang,abilityId,resistanceId,weaknessId) VALUES")
 
