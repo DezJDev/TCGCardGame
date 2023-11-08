@@ -363,7 +363,7 @@ class Gestionnaire:
 
 
 if __name__ == "__main__":
-    gesteSQL = Gestionnaire("FR-PokemonMySQL.sql", "mysql")
+    gesteSQL = Gestionnaire("P10_PokemonMySQL.sql", "mysql")
     gesteSQL.sqlTable()
     gesteSQL.writeDataInFile([10, 11])
     gesteSQL.writeDataInFile([12, 13, 14, 15])
@@ -374,7 +374,7 @@ if __name__ == "__main__":
     gesteSQL.assocTable()
     gesteSQL.nettoyage()
 
-    gestePostgreSQL = Gestionnaire( "FR-PokemonPostgresql.sql", "postgresql")
+    gestePostgreSQL = Gestionnaire( "P10_PokemonPostgresql.sql", "postgresql")
     gestePostgreSQL.sqlTable()
     gestePostgreSQL.writeDataInFile([10, 11])
     gestePostgreSQL.writeDataInFile([12, 13, 14, 15])
@@ -385,7 +385,7 @@ if __name__ == "__main__":
     gestePostgreSQL.assocTable()
     gestePostgreSQL.nettoyage()
 
-    gesteOracle = Gestionnaire("FR-PokemonOracle.sql", "oracle")
+    gesteOracle = Gestionnaire("P10_PokemonOracle.sql", "oracle")
     gesteOracle.oracleTable()
     gesteOracle.cible.write("INSERT ALL")
     gesteOracle.writeDataInFile([10, 11])
