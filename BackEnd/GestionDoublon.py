@@ -1,6 +1,6 @@
 if __name__ == "__main__":
-    EN = open("../../en-DataBlackWhite.txt", "r")
-    ENSansDoublon = open("../en-DataBlackWhiteWithoutDoublon.txt", "w")
+    EN = open("school_data", "r")
+    ENSansDoublon = open("school_data2", "w")
 
     line = EN.readline()
     while line:

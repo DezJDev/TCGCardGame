@@ -1,3 +1,6 @@
+from random import randint
+
+
 def getNameTable(chaine: str) -> str:
     for i, c in enumerate(chaine):
         if c.isupper():
@@ -12,7 +15,6 @@ def traitementLigne(ligne: str) -> list[str]:
         element = element.replace("\n", "").replace("'", "''")
         tableauProvisoire = element.split(":")
         if len(tableauProvisoire) > 2:
-            print(tableauProvisoire)
             tableauProvisoire[1] += ":" + tableauProvisoire[2]
         attributsTraites.append(tableauProvisoire[1])
 
@@ -38,14 +40,26 @@ def getAttributsFromTable(ligne: str, attributs: list[int]) -> list[str]:
 
 
 class Gestionnaire:
+    newSource = open("school_data", "w+")
+    francais = open("FR-DataBlackWhiteWithoutDoublon.txt", "r", encoding="UTF-8")
+    anglais = open("EN-DataBlackWhiteWithoutDoublon.txt", "r", encoding="UTF-8")
 
-    def __init__(self, fichierNameSource: str, fichierNameCible: str, extension: str):
-        self.source = open(fichierNameSource, "r", encoding="UTF-8")
-        self.lang = fichierNameSource[0].lower() + fichierNameSource[1].lower()
+    numberLignes = sum(1 for _ in francais)
+
+    for i in range(50):
+        francais.seek(0)
+        anglais.seek(0)
+        nblignealea = randint(0, numberLignes)
+        for j in range(nblignealea):
+            francais.readline()
+            anglais.readline()
+
+        newSource.write(francais.readline())
+        newSource.write(anglais.readline())
+
+    def __init__(self, fichierNameCible: str, extension: str):
         self.cible = open(fichierNameCible, "w+")
-        self.nameSource = fichierNameSource
         self.nameCible = fichierNameCible
-        self.pourcentage = 0
         self.extension = extension.capitalize()
 
         if extension.capitalize() == "Oracle":
@@ -65,17 +79,17 @@ class Gestionnaire:
             pass
 
     def writeDataInFile(self, attributs: list[int]):
-        self.source.seek(0)
+        Gestionnaire.newSource.seek(0)
         Existing = []
         nbAttributs = len(attributs)
-        attributsTable = getAttributsFromTable(self.source.readline(), attributs)
+        attributsTable = getAttributsFromTable(Gestionnaire.newSource.readline(), attributs)
         nameTable = getNameTable(attributsTable[0])
-        self.source.seek(0)
+        Gestionnaire.newSource.seek(0)
 
         if not self.oracle:
             self.writeRequestInFile(nameTable, attributsTable)
 
-        for lignes in self.source.readlines():
+        for lignes in Gestionnaire.newSource.readlines():
             donnees = traitementLigne(lignes)
 
             if not self.oracle:
@@ -118,12 +132,12 @@ class Gestionnaire:
             #                 f"VALUES ({index}, '{donnees[10]}', '{donnees[11]}')")
 
     def implementsCardsNoOracle(self):
-        self.source.seek(0)
+        Gestionnaire.newSource.seek(0)
         self.cible.write("\n\nINSERT INTO Card(cardCatergory,cardName,"
                          "cardHP,cardRarity,cardImg,cardType,cardExtension"
                          "cardRetreat,cardLang,abilityId,resistanceId,weaknessId) VALUES")
 
-        for lignes in self.source.readlines():
+        for lignes in Gestionnaire.newSource.readlines():
             donnees = traitementLigne(lignes)
 
             chaine = f"\n\t('{donnees[1]}','{donnees[2]}','{donnees[3]}','{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
@@ -156,9 +170,9 @@ class Gestionnaire:
         self.cible.write(";")
 
     def implementsCardOracle(self):
-        self.source.seek(0)
+        Gestionnaire.newSource.seek(0)
         self.cible.write(f"\nINSERT ALL")
-        for lignes in self.source.readlines():
+        for lignes in Gestionnaire.newSource.readlines():
             donnees = traitementLigne(lignes)
 
             chaine = "\n\tINTO P10_Card(cardCatergory,cardName," \
@@ -195,11 +209,9 @@ class Gestionnaire:
         self.cible.write("\nSELECT * FROM dual;")
 
     def sqlTable(self):
-        if self.lang == "fr":
-            types = ["Incolore", "Feu", "Eau", "Plante", "Combat", "Métal", "Électrique", "Psy", "Obscurité", "Dragon"]
-        else:
-            types = ["Colorless", "Fire", "Water", "Grass", "Fighting", "Metal", "Lightning", "Psychic", "Darkness",
-                     "Dragon"]
+        types = ["Incolore", "Feu", "Eau", "Plante", "Combat", "Métal", "Électrique", "Psy", "Obscurité", "Dragon",
+                 "Colorless", "Fire", "Water", "Grass", "Fighting", "Metal", "Lightning", "Psychic", "Darkness"]
+
         if self.extension == "Postgresql":
             auto = "SERIAL"
         else:
@@ -224,7 +236,7 @@ class Gestionnaire:
 
         cardTable = f"CREATE TABLE IF NOT EXISTS P10_Card(\n\tcardId {auto} PRIMARY KEY,\n\t" \
                     f"cardCategory varchar(50) NOT NULL DEFAULT 'Pokémon' CHECK IN ['Pokémon','Pokemon','Dresseur','Trainer'],\n\tcardName varchar(50) NOT NULL,\n\tcardHP INT,\n\t" \
-                    f"cardRarity varchar(50) NOT NULL DEFAULT 'Commune' CHECK IN ['Commune','Peu Commune','Rare','Ultra Rare','Magnifique'],\n\tcardImg varchar(20) NOT NULL,\n\tcardType varchar(10) CHECK IN {types},\n\t" \
+                    f"cardRarity varchar(50) NOT NULL DEFAULT 'Commune' CHECK IN ['Commune','Common','Uncommon','Peu Commune','Rare','Ultra Rare','Secret Rare','Magnifique','Maginfic'],\n\tcardImg varchar(20) NOT NULL,\n\tcardType varchar(10) CHECK IN {types},\n\t" \
                     f"cardExtension varchar(255) NOT NULL,\n\tcardRetreat INT,\n\tcardLang varchar(20) NOT NULL DEFAULT 'fr' CHECK IN ['fr','en'],\n\t" \
                     f"abilityId INT REFERENCES P10_Ability(abilityId) DEFAULT null,\n\t" \
                     f"resistanceId INT REFERENCES P10_Resistance(resistanceId) DEFAULT null,\n\t" \
@@ -240,13 +252,13 @@ class Gestionnaire:
         collectionTable = f"CREATE TABLE IF NOT EXISTS P10_Collection(\n\tcardId INT REFERENCES P10_Card(cardId)" \
                           f",\n\tuserId INT REFERENCES P10_User(userId));\n"
 
-        self.cible.write(f"{drop}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}")
+        self.cible.write(
+            f"{drop}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}")
 
     def oracleTable(self):
-        if self.lang == "fr":
-            types = ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon')
-        else:
-            types = ('Colorless', 'Fire', 'Water', 'Grass', 'Fighting', 'Metal', 'Lightning', 'Psychic', 'Darkness', 'Dragon')
+        types = ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon',
+                 'Colorless', 'Fire', 'Water', 'Grass', 'Fighting', 'Metal', 'Lightning', 'Psychic', 'Darkness')
+
         drops = "-- DROP TABLE P10_Card;\n" \
                 "-- DROP TABLE P10_Ability;\n" \
                 "-- DROP TABLE P10_Attack;\n" \
@@ -300,17 +312,17 @@ class Gestionnaire:
         collectionTable = f"CREATE TABLE IF NOT EXISTS P10_Collection(\n\tcardId NUMBER REFERENCES P10_Card(cardId)" \
                           f",\n\tuserId NUMBER REFERENCES P10_User(userId));\n"
 
-        self.cible.write(f"{drops}\n{sequences}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}\n")
+        self.cible.write(
+            f"{drops}\n{sequences}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}\n")
 
     def assocTable(self):
-        self.source.seek(0)
+        Gestionnaire.newSource.seek(0)
         if not self.oracle:
             self.cible.write("\n\nINSERT INTO P10_Contient(cardId, attackId) VALUES")
         else:
             self.cible.write("\n\nINSERT ALL")
-        for lignes in self.source.readlines():
+        for lignes in Gestionnaire.newSource.readlines():
             donnes = traitementLigne(lignes)
-            print(donnes[5])
             if donnes[12] != "null" and donnes[16] == "null":
                 if not self.oracle:
                     self.cible.write(
@@ -351,7 +363,7 @@ class Gestionnaire:
 
 
 if __name__ == "__main__":
-    gesteSQL = Gestionnaire("FR-DataBlackWhiteWithoutDoublon.txt", "FR-PokemonMySQL.sql", "mysql")
+    gesteSQL = Gestionnaire("FR-PokemonMySQL.sql", "mysql")
     gesteSQL.sqlTable()
     gesteSQL.writeDataInFile([10, 11])
     gesteSQL.writeDataInFile([12, 13, 14, 15])
@@ -362,7 +374,7 @@ if __name__ == "__main__":
     gesteSQL.assocTable()
     gesteSQL.nettoyage()
 
-    gestePostgreSQL = Gestionnaire("FR-DataBlackWhiteWithoutDoublon.txt", "FR-PokemonPostgresql.sql", "postgresql")
+    gestePostgreSQL = Gestionnaire( "FR-PokemonPostgresql.sql", "postgresql")
     gestePostgreSQL.sqlTable()
     gestePostgreSQL.writeDataInFile([10, 11])
     gestePostgreSQL.writeDataInFile([12, 13, 14, 15])
@@ -373,7 +385,7 @@ if __name__ == "__main__":
     gestePostgreSQL.assocTable()
     gestePostgreSQL.nettoyage()
 
-    gesteOracle = Gestionnaire("FR-DataBlackWhiteWithoutDoublon.txt", "FR-PokemonOracle.sql", "oracle")
+    gesteOracle = Gestionnaire("FR-PokemonOracle.sql", "oracle")
     gesteOracle.oracleTable()
     gesteOracle.cible.write("INSERT ALL")
     gesteOracle.writeDataInFile([10, 11])
