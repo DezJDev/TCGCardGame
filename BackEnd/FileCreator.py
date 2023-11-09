@@ -50,7 +50,6 @@ class Gestionnaire:
         francais.seek(0)
         anglais.seek(0)
         nblignealea = randint(0, numberLignes)
-
         while nblignealea in ExistingLines:
             nblignealea = randint(0, numberLignes)
 
@@ -331,17 +330,47 @@ class Gestionnaire:
         Gestionnaire.newSource.seek(0)
         if not self.oracle:
             self.cible.write("\n\nINSERT INTO P10_Contient(cardId, attackId) VALUES")
-        else:
-            self.cible.write("\n\nINSERT ALL")
+
         for lignes in Gestionnaire.newSource.readlines():
             donnes = traitementLigne(lignes)
+
+
+            data12 = f"= '{donnes[12]}'"
+            if donnes[12] == "null":
+                data12 = data12.replace("= 'null'", "IS NULL")
+
+            data13 = f"= '{donnes[13]}'"
+            if donnes[13] == "null":
+                data13 = data13.replace("= 'null'", "IS NULL")
+
+            data14 = f"= '{donnes[14]}'"
+            if donnes[14] == "null":
+                data14 = data14.replace("= 'null'", "IS NULL")
+
+            data16 = f"= '{donnes[16]}'"
+            if donnes[16] == "null":
+                data16 = data16.replace("= 'null'", "IS NULL")
+
+            data17 = f"= '{donnes[17]}'"
+            if donnes[17] == "null":
+                data17 = data17.replace("= 'null'", "IS NULL")
+
+            data18 = f"= '{donnes[18]}'"
+            if donnes[18] == "null":
+                data18 = data18.replace("= 'null'", "IS NULL")
+
             if donnes[12] != "null" and donnes[16] == "null":
                 if not self.oracle:
                     self.cible.write(
-                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
+                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), "
+                        f"(SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' "
+                        f"AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
                 else:
                     self.cible.write(
-                        f"\n\tINTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
+                        f"\n\tINSERT INTO P10_Contient(cardId,attackId) VALUES "
+                        f"((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), "
+                        f"(SELECT attackId FROM P10_Attack WHERE attackName {data12}), "
+                        f"AND attackCost {data13} AND attackDamage {data14}))")
 
             elif donnes[12] != "null" and donnes[16] != "null":
                 if not self.oracle:
@@ -350,17 +379,15 @@ class Gestionnaire:
                     self.cible.write(
                         f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[16]}' AND attackCost = '{donnes[17]}' AND attackDamage = '{donnes[18]}'))")
                 else:
-                    self.cible.write(f"\n\tINTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
+                    self.cible.write(f"\n\tINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
                                      f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
-                                     f"WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND "
-                                     f"attackDamage = '{donnes[14]}'))")
+                                     f"WHERE attackName {data12} AND attackCost {data13} AND "
+                                     f"attackDamage {data14}))")
 
-                    self.cible.write(f"\n\tINTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
+                    self.cible.write(f"\n\tINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
                                      f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
-                                     f"WHERE attackName = '{donnes[16]}' AND attackCost = '{donnes[17]}' AND "
-                                     f"attackDamage = '{donnes[18]}'))")
-        if self.oracle:
-            self.cible.write("\nSELECT * FROM dual;")
+                                     f"WHERE attackName {data16} AND attackCost {data17} AND "
+                                     f"attackDamage {data18}))")
 
     def nettoyage(self):
         self.cible.seek(0)
@@ -368,7 +395,7 @@ class Gestionnaire:
         self.cible.close()
         fichier = open(self.nameCible, "w")
         for ligne in lignes:
-            newLine = ligne.replace("'null'", "null")
+            newLine = ligne.replace("'null'", "null").replace(" "," ")
             fichier.write(newLine)
         fichier.close()
         self.cible.close()
