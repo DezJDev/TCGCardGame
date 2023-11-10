@@ -292,12 +292,12 @@ class Gestionnaire:
                        "abilityName VARCHAR2(50) NOT NULL,\n\tabilityEffect CLOB NOT NULL);\n"
 
         resistanceTable = f"CREATE TABLE P10_Resistance(\n\tresistanceId NUMBER PRIMARY KEY,\n\t" \
-                          "resistanceType VARCHAR2(10) NOT NULL,\n\tresistanceValue VARCHAR2(5) DEFAULT '-20',\n\t" \
+                          "resistanceType VARCHAR2(20) NOT NULL,\n\tresistanceValue VARCHAR2(5) DEFAULT '-20',\n\t" \
                           f"CONSTRAINT CheckTypeResistance CHECK (resistanceType IN {types}),\n\t" \
                           f"CONSTRAINT CheckValueResistance CHECK (resistanceValue IN ('/2','-10','-20','-30')));\n"
 
         weaknessTable = f"CREATE TABLE P10_Weakness(\n\tweaknessId NUMBER PRIMARY KEY,\n\t" \
-                        "weaknessType VARCHAR2(10) NOT NULL,\n\tweaknessValue VARCHAR2(5) DEFAULT 'x2',\n\t" \
+                        "weaknessType VARCHAR2(20) NOT NULL,\n\tweaknessValue VARCHAR2(5) DEFAULT 'x2',\n\t" \
                         f"CONSTRAINT CheckTypeWeakness CHECK (weaknessType IN {types}),\n\t" \
                         f"CONSTRAINT CheckValueWeakness CHECK (weaknessValue IN ('x2','+10','+20','+30')));\n"
 
