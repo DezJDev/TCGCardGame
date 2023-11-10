@@ -78,8 +78,6 @@ class Gestionnaire:
                     self.cible.write(f"{nameAttributs[i]}) VALUES ")
                 else:
                     self.cible.write(f"{nameAttributs[i]},")
-        else:
-            pass
 
     def writeDataInFile(self, attributs: list[int]):
         Gestionnaire.newSource.seek(0)
@@ -110,7 +108,7 @@ class Gestionnaire:
                     self.cible.write(f"{chaine}")
 
             else:
-                header = f"\nINSERT INTO P10_{nameTable}("
+                header = f"\nINSERT INTO P10_{nameTable}({nameTable}Id,"
                 for i in range(nbAttributs):
                     if i == nbAttributs - 1:
                         header += f"{attributsTable[i]}) VALUES ("
@@ -138,7 +136,7 @@ class Gestionnaire:
     def implementsCardsNoOracle(self):
         Gestionnaire.newSource.seek(0)
         self.cible.write("\n\nINSERT INTO P10_Card(cardCategory,cardName,"
-                         "cardHP,cardRarity,cardImg,cardType,cardExtension"
+                         "cardHP,cardRarity,cardImg,cardType,cardExtension,"
                          "cardRetreat,cardLang,abilityId,resistanceId,weaknessId) VALUES")
 
         for lignes in Gestionnaire.newSource.readlines():
@@ -211,8 +209,8 @@ class Gestionnaire:
             self.cible.write(chaine + ");")
 
     def sqlTable(self):
-        types = ["Incolore", "Feu", "Eau", "Plante", "Combat", "Métal", "Électrique", "Psy", "Obscurité", "Dragon",
-                 "Colorless", "Fire", "Water", "Grass", "Fighting", "Metal", "Lightning", "Psychic", "Darkness"]
+        types = ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon',
+                 'Colorless', 'Fire', 'Water', 'Grass', 'Fighting', 'Metal', 'Lightning', 'Psychic', 'Darkness')
 
         if self.extension == "Postgresql":
             auto = "SERIAL"
@@ -227,25 +225,25 @@ class Gestionnaire:
                        f"abilityName varchar(50) NOT NULL,\n\tabilityEffect varchar(255) NOT NULL);\n"
 
         resistanceTable = f"CREATE TABLE IF NOT EXISTS P10_Resistance(\n\tresistanceId {auto} PRIMARY KEY,\n\t" \
-                          f"resistanceType varchar(10) NOT NULL CHECK IN {types},\n\tresistanceValue varchar(5) NOT NULL CHECK IN ['/2',-20,-10,-30]);\n"
+                          f"resistanceType varchar(10) CHECK (resistanceType IN {types}),\n\tresistanceValue varchar(5) CHECK (resistanceValue IN ('/2','-20','-10','-30')));\n"
 
         weaknessTable = f"CREATE TABLE IF NOT EXISTS P10_Weakness(\n\tweaknessId {auto} PRIMARY KEY,\n\t" \
-                        f"weaknessType varchar(10) NOT NULL CHECK IN {types},\n\tweaknessValue varchar(5) NOT NULL CHECK IN ['x2',+20,+10,+30]);\n"
+                        f"weaknessType varchar(10) CHECK (weaknessValue IN {types}),\n\tweaknessValue varchar(5) CHECK (weaknessValue IN ('x2','+20','+10','+30')));\n"
 
         attackTable = f"CREATE TABLE IF NOT EXISTS P10_Attack(\n\tattackId {auto} PRIMARY KEY,\n\t" \
                       f"attackName varchar(50) NOT NULL,\n\tattackCost varchar(50),\n\tattackDamage varchar(4)," \
-                      f"\n\tattackEffect varchar(255),\n\tattackLang varchar(20) NOT NULL CHECK IN ['fr','en']);\n"
+                      f"\n\tattackEffect varchar(255));\n"
 
         cardTable = f"CREATE TABLE IF NOT EXISTS P10_Card(\n\tcardId {auto} PRIMARY KEY,\n\t" \
-                    f"cardCategory varchar(50) NOT NULL 'Pokémon' CHECK IN ['Pokémon','Pokemon','Dresseur','Trainer'],\n\tcardName varchar(50) NOT NULL,\n\tcardHP INT,\n\t" \
-                    f"cardRarity varchar(50) NOT NULL 'Commune' CHECK IN ['Commune','Common','Uncommon','Peu Commune','Rare','Ultra Rare','Secret Rare','Magnifique','Maginfic'],\n\tcardImg varchar(20) NOT NULL,\n\tcardType varchar(10) CHECK IN {types},\n\t" \
-                    f"cardExtension varchar(255) NOT NULL,\n\tcardRetreat INT,\n\tcardLang varchar(20) NOT NULL CHECK IN ['fr','en'],\n\t" \
-                    f"abilityId INT REFERENCES P10_Ability(abilityId) DEFAULT null,\n\t" \
-                    f"resistanceId INT REFERENCES P10_Resistance(resistanceId) DEFAULT null,\n\t" \
-                    f"weaknessId INT REFERENCES P10_Weakness(weaknessId) DEFAULT null);\n"
+                    f"cardCategory varchar(50) DEFAULT 'Pokémon' CHECK (cardCategory IN ('Pokémon','Pokemon','Dresseur','Trainer')),\n\tcardName varchar(50) NOT NULL,\n\tcardHP INT,\n\t" \
+                    f"cardRarity varchar(50) DEFAULT 'Commune' CHECK (cardRarity IN ('Commune','Common','Uncommon','Peu Commune','Rare','Ultra Rare','Secret Rare','Magnifique','Maginfic')),\n\tcardImg varchar(20) NOT NULL,\n\tcardType varchar(10) CHECK (cardType IN {types}),\n\t" \
+                    f"cardExtension TEXT NOT NULL,\n\tcardRetreat INT,\n\tcardLang varchar(20) CHECK(cardLang IN ('fr','en')),\n\t" \
+                    f"abilityId INT REFERENCES P10_Ability(abilityId),\n\t" \
+                    f"resistanceId INT REFERENCES P10_Resistance(resistanceId,\n\t" \
+                    f"weaknessId INT REFERENCES P10_Weakness(weaknessId));\n"
 
         userTable = f"CREATE TABLE IF NOT EXISTS P10_User(\n\tuserId {auto} PRIMARY KEY,\n\t" \
-                    f"userName varchar(20) NOT NULL,\n\tuserDob date NOT NULL,\n\tuserStatus varchar(10) NOT NULL CHECK IN ['root','user']," \
+                    f"userName varchar(20) NOT NULL,\n\tuserDob DATE NOT NULL,\n\tuserStatus varchar(10) CHECK(userStatus IN ('root','user'))," \
                     f"\n\tuserLogin varchar(255) NOT NULL,\n\tuserPass varchar(255) NOT NULL);\n"
 
         contientTable = f"CREATE TABLE IF NOT EXISTS P10_Contient(\n\tcardId INT REFERENCES P10_Card(cardId)" \
@@ -268,12 +266,12 @@ class Gestionnaire:
                 "-- DROP TABLE P10_Weakness CASCADE CONSTRAINTS;\n" \
                 "-- DROP TABLE P10_User CASCADE CONSTRAINTS;\n" \
                 "-- DROP TABLE P10_Contient CASCADE CONSTRAINTS;\n" \
-                "-- DROP TABLE P10_Collection CASCADE CONSTRAINTS;\n\n"\
+                "-- DROP TABLE P10_Collection CASCADE CONSTRAINTS;\n\n" \
                 "-- DROP SEQUENCE seq_ability;\n" \
-                "-- DROP SEQUENCE seq_resistance;\n"\
-                "-- DROP SEQUENCE seq_weakness;\n"\
-                "-- DROP SEQUENCE seq_attack;\n"\
-                "-- DROP SEQUENCE seq_card;\n"\
+                "-- DROP SEQUENCE seq_resistance;\n" \
+                "-- DROP SEQUENCE seq_weakness;\n" \
+                "-- DROP SEQUENCE seq_attack;\n" \
+                "-- DROP SEQUENCE seq_card;\n" \
                 "-- DROP SEQUENCE seq_user;\n"
 
         sequences = "CREATE SEQUENCE seq_ability;\n" \
@@ -333,7 +331,6 @@ class Gestionnaire:
         for lignes in Gestionnaire.newSource.readlines():
             donnes = traitementLigne(lignes)
 
-
             data12 = f"= '{donnes[12]}'"
             if donnes[12] == "null":
                 data12 = data12.replace("= 'null'", "IS NULL")
@@ -378,15 +375,17 @@ class Gestionnaire:
                     self.cible.write(
                         f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[16]}' AND attackCost = '{donnes[17]}' AND attackDamage = '{donnes[18]}'))")
                 else:
-                    self.cible.write(f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
-                                     f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
-                                     f"WHERE attackName {data12} AND attackCost {data13} AND "
-                                     f"attackDamage {data14}));")
+                    self.cible.write(
+                        f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
+                        f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
+                        f"WHERE attackName {data12} AND attackCost {data13} AND "
+                        f"attackDamage {data14}));")
 
-                    self.cible.write(f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
-                                     f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
-                                     f"WHERE attackName {data16} AND attackCost {data17} AND "
-                                     f"attackDamage {data18}));")
+                    self.cible.write(
+                        f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
+                        f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
+                        f"WHERE attackName {data16} AND attackCost {data17} AND "
+                        f"attackDamage {data18}));")
 
     def nettoyage(self):
         self.cible.seek(0)
@@ -394,7 +393,7 @@ class Gestionnaire:
         self.cible.close()
         fichier = open(self.nameCible, "w")
         for ligne in lignes:
-            newLine = ligne.replace("'null'", "null").replace(" "," ")
+            newLine = ligne.replace("'null'", "null").replace(" ", " ")
             fichier.write(newLine)
         fichier.close()
         self.cible.close()
