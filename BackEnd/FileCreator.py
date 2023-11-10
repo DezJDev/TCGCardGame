@@ -297,9 +297,9 @@ class Gestionnaire:
                           f"CONSTRAINT CheckValueResistance CHECK (resistanceValue IN ('/2','-10','-20','-30')));\n"
 
         weaknessTable = f"CREATE TABLE P10_Weakness(\n\tweaknessId NUMBER PRIMARY KEY,\n\t" \
-                        "weaknessType VARCHAR2(20) NOT NULL,\n\tweaknessValue VARCHAR2(5) DEFAULT 'x2',\n\t" \
+                        "weaknessType VARCHAR2(20) NOT NULL,\n\tweaknessValue VARCHAR2(5) DEFAULT '×2',\n\t" \
                         f"CONSTRAINT CheckTypeWeakness CHECK (weaknessType IN {types}),\n\t" \
-                        f"CONSTRAINT CheckValueWeakness CHECK (weaknessValue IN ('x2','+10','+20','+30')));\n"
+                        f"CONSTRAINT CheckValueWeakness CHECK (weaknessValue IN ('×2','+10','+20','+30')));\n"
 
         attackTable = f"CREATE TABLE P10_Attack(\n\tattackId NUMBER PRIMARY KEY,\n\t" \
                       "attackName VARCHAR2(50) NOT NULL,\n\tattackCost VARCHAR2(50),\n\tattackDamage VARCHAR2(4)," \
