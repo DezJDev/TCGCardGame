@@ -403,7 +403,7 @@ class Gestionnaire:
         self.cible.close()
         fichier = open(self.nameCible, "w")
         for ligne in lignes:
-            newLine = ligne.replace("'null'", "null").replace(" ", " ")
+            newLine = ligne.replace("'null'", "null").replace(" ", " ").replace("Métal", "Metal")
             fichier.write(newLine)
         fichier.close()
         self.cible.close()
