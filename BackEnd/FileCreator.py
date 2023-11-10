@@ -140,7 +140,7 @@ class Gestionnaire:
         Gestionnaire.newSource.seek(0)
         self.cible.write("\n\nINSERT INTO P10_Card(cardCategory,cardName,"
                          "cardHP,cardRarity,cardImg,cardType,cardExtension,"
-                         "cardRetreat,cardLang,abilityId,resistanceId,weaknessId) VALUES")
+                         "cardRetreat,cardLang,abilityId,weaknessId,resistanceId) VALUES")
 
         for lignes in Gestionnaire.newSource.readlines():
             donnees = traitementLigne(lignes)
