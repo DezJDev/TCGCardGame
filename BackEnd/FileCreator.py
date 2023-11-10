@@ -50,10 +50,9 @@ class Gestionnaire:
         francais.seek(0)
         anglais.seek(0)
         nblignealea = randint(0, numberLignes)
-        ExistingLines.append(nblignealea)
         while nblignealea in ExistingLines:
             nblignealea = randint(0, numberLignes)
-
+        ExistingLines.append(nblignealea)
         for j in range(nblignealea):
             francais.readline()
             anglais.readline()
