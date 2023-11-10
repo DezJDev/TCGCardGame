@@ -97,11 +97,11 @@ class Gestionnaire:
 
             if donnees[attributs[0]] == "Métal":
                 donnees[attributs[0]] = "Metal"
-            if not self.oracle:
-                listeattributs = []
-                for i in range(nbAttributs):
-                    listeattributs.append(donnees[attributs[i]])
 
+            listeattributs = []
+            for i in range(nbAttributs):
+                listeattributs.append(donnees[attributs[i]])
+            if not self.oracle:
                 if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
                     if attributs[0] == 10:
                         ExistingAbility.append(donnees[attributs[0]])
@@ -122,8 +122,8 @@ class Gestionnaire:
                     else:
                         header += f"{attributsTable[i]},"
 
-                if donnees[attributs[0]] != "null" and donnees[attributs[0]] not in Existing:
-                    Existing.append(donnees[attributs[0]])
+                if donnees[attributs[0]] != "null" and listeattributs not in Existing:
+                    Existing.append(listeattributs)
                     chaine = header
                     for i in range(nbAttributs):
                         if i == nbAttributs - 1:
