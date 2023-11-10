@@ -108,10 +108,10 @@ class Gestionnaire:
                     self.cible.write(f"{chaine}")
 
             else:
-                header = f"\nINSERT INTO P10_{nameTable}({nameTable}Id,"
+                header = f"\nINSERT INTO P10_{nameTable}({nameTable.lower()}Id,"
                 for i in range(nbAttributs):
                     if i == nbAttributs - 1:
-                        header += f"{attributsTable[i]}) VALUES ("
+                        header += f"{attributsTable[i]}) VALUES (seq_{nameTable.lower()}.nextval,"
                     else:
                         header += f"{attributsTable[i]},"
 
@@ -228,7 +228,7 @@ class Gestionnaire:
                           f"resistanceType varchar(10) CHECK (resistanceType IN {types}),\n\tresistanceValue varchar(5) CHECK (resistanceValue IN ('/2','-20','-10','-30')));\n"
 
         weaknessTable = f"CREATE TABLE IF NOT EXISTS P10_Weakness(\n\tweaknessId {auto} PRIMARY KEY,\n\t" \
-                        f"weaknessType varchar(10) CHECK (weaknessType IN {types}),\n\tweaknessValue varchar(5) CHECK (weaknessValue IN ('x2','+20','+10','+30')));\n"
+                        f"weaknessType varchar(10) CHECK (weaknessType IN {types}),\n\tweaknessValue varchar(5) CHECK (weaknessValue IN ('×2','+20','+10','+30')));\n"
 
         attackTable = f"CREATE TABLE IF NOT EXISTS P10_Attack(\n\tattackId {auto} PRIMARY KEY,\n\t" \
                       f"attackName varchar(50) NOT NULL,\n\tattackCost varchar(50),\n\tattackDamage varchar(4)," \
@@ -236,7 +236,7 @@ class Gestionnaire:
 
         cardTable = f"CREATE TABLE IF NOT EXISTS P10_Card(\n\tcardId {auto} PRIMARY KEY,\n\t" \
                     f"cardCategory varchar(50) DEFAULT 'Pokémon' CHECK (cardCategory IN ('Pokémon','Pokemon','Dresseur','Trainer')),\n\tcardName varchar(50) NOT NULL,\n\tcardHP INT,\n\t" \
-                    f"cardRarity varchar(50) DEFAULT 'Commune' CHECK (cardRarity IN ('Commune','Common','Uncommon','Peu Commune','Rare','Ultra Rare','Secret Rare','Magnifique','Maginfic')),\n\tcardImg varchar(20) NOT NULL,\n\tcardType varchar(10) CHECK (cardType IN {types}),\n\t" \
+                    f"cardRarity varchar(50) DEFAULT 'Commune' CHECK (cardRarity IN ('Commune','Common','Uncommon','Peu Commune','Rare','Ultra Rare','Secret Rare','Magnifique','Maginfic')),\n\tcardImg varchar(100) NOT NULL,\n\tcardType varchar(10) CHECK (cardType IN {types}),\n\t" \
                     f"cardExtension TEXT NOT NULL,\n\tcardRetreat INT,\n\tcardLang varchar(20) CHECK(cardLang IN ('fr','en')),\n\t" \
                     f"abilityId INT REFERENCES P10_Ability(abilityId),\n\t" \
                     f"resistanceId INT REFERENCES P10_Resistance(resistanceId),\n\t" \
