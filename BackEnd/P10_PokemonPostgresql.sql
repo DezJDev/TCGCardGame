@@ -62,421 +62,439 @@ CREATE TABLE IF NOT EXISTS P10_Collection(
 
 
 INSERT INTO P10_Ability(abilityName,abilityEffect) VALUES 
-	('Unobservant','If your opponent’s Active Pokémon is a Basic Pokémon, this Pokémon can’t attack.'),
-	('Prédiction','Une seule fois pendant votre tour (avant votre attaque), vous pouvez regarder les 2 cartes du dessus de votre deck, en choisir 1 et l’ajouter à votre main. Replacez l’autre carte sur le dessus de votre deck.'),
-	('Victorieux','Une seule fois pendant votre tour, après avoir lancé des pièces pour une attaque, vous pouvez ignorer les effets de ces lancers de pièce et lancer ces pièces à nouveau. Vous ne pouvez pas utiliser la capacité spéciale Victorieux plus d’une fois par tour.'),
+	('Intervention','Une seule fois pendant votre tour (avant votre attaque), si ce Pokémon est sur votre Banc, vous pouvez échanger ce Pokémon avec votre Pokémon Actif.'),
+	('Ombre Maudite','Une seule fois pendant votre tour (avant votre attaque), si ce Pokémon est votre Pokémon Actif, vous pouvez placer 3 marqueurs de dégâts sur les Pokémon de votre adversaire, de la manière que vous voulez.'),
+	('Transe Obscure','Autant de fois que vous le voulez pendant votre tour (avant votre attaque), vous pouvez déplacer une Énergie Darkness attachée à 1 de vos Pokémon vers un autre de vos Pokémon.'),
+	('Dark Cloak','Each of your Pokémon that has any Darkness Energy attached to it has no Retreat Cost.'),
+	('Signal Rouge','Lorsque vous attachez une Énergie Plasma de votre main à ce Pokémon, vous pouvez échanger 1 des Pokémon de Banc de votre adversaire avec son Pokémon Actif.'),
 	('Navigation Flamboyante','Une seule fois pendant votre tour (avant votre attaque), vous pouvez chercher une carte Énergie Fire dans votre deck et l''attacher à 1 de vos Pokémon. Dans ce cas, placez 1 marqueur de dégâts sur le Pokémon auquel l''Énergie a été attachée. Mélangez ensuite votre deck.'),
-	('Hymne au Combat','Les attaques de vos Pokémon Dragon infligent 20 dégâts supplémentaires aux Pokémon Actifs (avant application de la Faiblesse et de la Résistance).'),
-	('Garbotoxin','If this Pokémon has a Pokémon Tool card attached to it, each Pokémon in play, in each player’s hand, and in each player’s discard pile has no Abilities (except for Garbotoxin).'),
-	('Cape Obscure','Chacun de vos Pokémon auquel de l’Énergie Darkness est attachée n’a pas de coût de Retraite.'),
-	('Vision de Nuit','Une seule fois pendant votre tour (avant votre attaque), vous pouvez piocher une carte.'),
-	('Versatile','This Pokémon can use the attacks of any Pokémon in play (both yours and your opponent’s). (You still need the necessary Energy to use each attack.)'),
-	('Vent Méprisant','Une seule fois pendant votre tour (avant votre attaque), vous pouvez demander à votre adversaire de défausser des cartes de sa main jusqu''à ce qu''il ne reste que 4 cartes dans sa main.'),
-	('Empty Shell','If this Pokémon is Knocked Out, your opponent can’t take any Prize cards for it.'),
-	('Déluge','Autant de fois que vous le voulez pendant votre tour (avant votre attaque), vous pouvez attacher une carte Énergie Water de votre main à 1 de vos Pokémon.'),
-	('Œil Noir','Une seule fois pendant votre tour (avant votre attaque), si ce Pokémon est votre Pokémon Actif, vous pouvez lancer une pièce. Si c’est face, défaussez une Énergie attachée au Pokémon Actif de votre adversaire.'),
-	('Téléhypnose','Une seule fois pendant votre tour (avant votre attaque), vous pouvez lancer une pièce. Si c’est face, le Pokémon Actif de votre adversaire est maintenant Endormi. Si c’est pile, votre Pokémon Actif est maintenant Endormi.');
+	('Leaf Tailor','Each of your Pokémon that has any Energy attached to it has no Weakness.'),
+	('Tranquillou','Tous les dégâts infligés à ce Pokémon par des attaques sont réduits de 20 (après application de la Faiblesse et de la Résistance).'),
+	('Leave It to the Wind','Once during your turn (before your attack), you may return this Pokémon and all cards attached to it to your hand.'),
+	('Safeguard','Prevent all effects of attacks, including damage, done to this Pokémon by Pokémon-EX.'),
+	('Prehistoric Call','Once during your turn (before your attack), if this Pokémon is in your discard pile, you may put this Pokémon on the bottom of your deck.'),
+	('Durable Body','If this Pokémon would be Knocked Out by damage from an attack, flip a coin. If heads, this Pokémon is not Knocked Out and its remaining HP becomes 10 instead.'),
+	('Aspire-Outil','Autant de fois que vous le voulez pendant votre tour (avant votre attaque), vous pouvez placer une carte Outil Pokémon attachée à 1 de vos Pokémon dans votre main.'),
+	('Stellar Guidance','When you play this Pokémon from your hand onto your Bench, you may search your deck for a Supporter card, reveal it, and put it into your hand. Shuffle your deck afterward.'),
+	('Connexion Renforcée','Les attaques de vos Pokémon de la Team Plasma (excepté Deoxys-EX) infligent 10 dégâts supplémentaires aux Pokémon Actifs (avant application de la Faiblesse et de la Résistance).'),
+	('Zone Magique','Tant que ce Pokémon est votre Pokémon Actif, votre adversaire ne peut pas jouer de cartes Objet de sa main.');
 
 INSERT INTO P10_Attack(attackName,attackCost,attackDamage,attackEffect) VALUES 
-	('Round','ColorlessColorless','20','Does 20 damage times the number of your Pokémon that have the Round attack.'),
-	('Coupe-Vent','IncoloreIncolore','30','Lancez une pièce. Si c''est pile, cette attaque ne fait rien.'),
-	('Crushing Blow','ColorlessColorlessColorlessColorless','100','Discard an Energy attached to the Defending Pokémon.'),
-	('Nitrocharge','Incolore',null,'Cherchez une carte Énergie Fire dans votre deck et attachez-la à ce Pokémon. Mélangez ensuite votre deck.'),
-	('V-create','FireColorless','100','If you have 4 or fewer Benched Pokémon, this attack does nothing.'),
-	('Coup de Queue','Combat','10',null),
-	('Cut','DarknessColorless','30',null),
-	('Tit''Sieste','Plante',null,'Soignez 30 dégâts à ce Pokémon.'),
-	('Lifesplosion','Grass',null,'For each Energy attached to this Pokémon, search your deck for a Stage 2 Pokémon and put it onto your Bench. Shuffle your deck afterward.'),
-	('Roulade','IncoloreIncolore','20',null),
-	('Rollout','LightningColorless','20',null),
-	('Rêve Douillet','PsyPsy','40','Ce Pokémon est maintenant Endormi.'),
-	('Electriwave','LightningColorlessColorless',null,'This attack does 30 damage to each of your opponent''s Benched Pokémon. (Don''t apply Weakness and Resistance for Benched Pokémon.)'),
-	('Vendetta','IncoloreIncolore','20','Si l’un de vos Pokémon a été mis K.O. par les dégâts d''une attaque de votre adversaire lors de son dernier tour, cette attaque inflige 70 dégâts supplémentaires.'),
-	('Rayon Électrique','Électrique','20','Lancez une pièce. Si c''est face, le Pokémon Défenseur est maintenant Paralysé.'),
-	('Rage Massive','EauIncolore','20','Inflige 20 dégâts multipliés par le nombre de marqueurs de dégâts placés sur ce Pokémon.'),
-	('Present','Colorless',null,'Flip a coin. If heads, search your deck for a card and put it into your hand. Shuffle your deck afterward.'),
-	('Chargeur','Incolore',null,'Cherchez une carte Énergie Lightning dans votre deck et attachez-la à ce Pokémon. Mélangez ensuite votre deck.'),
-	('Metal Claw','MetalColorless','30',null),
-	('Attraction','Incolore',null,'Si le Pokémon Défenseur essaie d’attaquer pendant le prochain tour de votre adversaire, ce dernier lance une pièce. Si c’est pile, son attaque ne fait rien.'),
-	('Deleting Glare','Psychic',null,'Flip a coin. If heads, discard an Energy attached to 1 of your opponent''s Pokémon.'),
-	('Mainmise','Incolore',null,'Cherchez 2 cartes Outil Pokémon dans votre deck, montrez-les, puis ajoutez-les à votre main. Mélangez ensuite votre deck.'),
-	('Rock Throw','ColorlessColorless','20',null),
-	('Force Ajoutée','FeuIncolore','30','Déplacez toutes les Énergies attachées à ce Pokémon vers 1 de vos Pokémon de Banc.'),
-	('Bug Bite','GrassColorless','20',null),
-	('Absorption','FeuFeuIncolore','70','Soignez 30 dégâts à ce Pokémon.'),
-	('Double Draw','Colorless',null,'Draw 2 cards.'),
-	('Étonnement','Psy',null,'Choisissez une carte au hasard de la main de votre adversaire. Votre adversaire montre la carte choisie et la mélange avec son deck.'),
-	('Fortunate Draw','Psychic',null,'You and your opponent play Rock-Paper-Scissors. The player who wins draws 3 cards. The player who loses discards the top 3 cards of his or her deck.'),
-	('Méga-Sangsue','Plante','20','Soignez 20 dégâts infligés à ce Pokémon.'),
-	('Body Slam','GrassGrass','20','Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'),
-	('Glissement','EauMétalIncolore','40',null),
-	('Sludge Toss','PsychicPsychicColorless','60',null),
+	('Flammes Calcinantes','FeuIncolore','20','Lancez une pièce. Si c''est face, le Pokémon Défenseur est maintenant Brûlé.'),
 	('Impact-Flash','Électrique','60','Inflige 20 dégâts à 1 de vos Pokémon. (N''appliquez ni la Faiblesse ni la Résistance aux Pokémon de Banc.)'),
 	('Quick Turn','LightningColorless','20','Flip 2 coins. This attack does 20 damage times the number of heads.'),
-	('Choc Mental','PsyIncolore','20','Lancez une pièce. Si c''est face, le Pokémon Défenseur est maintenant Paralysé.'),
-	('Firefighting','Water',null,'Discard a Fire Energy attached to the Defending Pokémon.'),
-	('Finishing Blow','Darkness','20','If the Defending Pokémon already has any damage counters on it, this attack does 50 more damage.'),
-	('Griffe Acier','Métal','20',null),
-	('Shear','Fighting',null,'Discard the top 5 cards of your deck. If any of those cards are Fighting Energy cards, attach them to this Pokémon.'),
-	('Cru-Aile','IncoloreIncolore','40',null),
-	('Gust','ColorlessColorless','20',null),
-	('Crachat d’Acide','Obscurité','20','Le Pokémon Défenseur est maintenant Brûlé. Lancez une pièce. Si c’est face, le Pokémon Défenseur est aussi Paralysé.'),
-	('Headbutt','Colorless','10',null),
-	('Kesa-Gatame','CombatIncolore','30','Lancez une pièce. Si c''est face, le Pokémon Défenseur ne peut pas attaquer pendant le prochain tour de votre adversaire.'),
-	('Low Kick','LightningColorless','20',null),
-	('Appel à la Famille','Incolore',null,'Cherchez 2 Pokémon de base dans votre deck et placez-les sur votre Banc. Mélangez ensuite votre deck.'),
-	('Tangle Drag','Colorless',null,'Switch 1 of your opponent''s Benched Pokémon with the Defending Pokémon.'),
-	('Croc Ultratoxik','PsyIncoloreIncolore','40','Le Pokémon Défenseur est maintenant Empoisonné. Placez 4 marqueurs de dégâts au lieu d''un sur le Pokémon ciblé entre chaque tour.'),
-	('Replace','Psychic',null,'Move as many Energy attached to your Pokémon to your other Pokémon in any way you like.'),
-	('Fouets Croisés','Plante','30','Lancez 4 pièces. Cette attaque inflige 30 dégâts multipliés par le nombre de côtés face.'),
-	('Lunge','FightingMetal','30','Flip a coin. If tails, this attack does nothing.'),
-	('Grosse Bourrasque','IncoloreIncolore','30','S''il y a une carte Stade en jeu, cette attaque inflige 30 dégâts supplémentaires.'),
-	('Soin','Incolore',null,'Défaussez une Énergie attachée à ce Pokémon et soignez tous les dégâts de ce Pokémon.'),
-	('Rock Smash','ColorlessColorless','20','Flip a coin. If heads, this attack does 20 more damage.'),
-	('Bite','WaterColorless','20',null),
-	('Pression Énergétique','MétalIncolore','20','Inflige 20 dégâts supplémentaires pour chaque Énergie attachée au Pokémon Défenseur.'),
-	('Kick','ColorlessColorless','20',null),
-	('Déchiquetage','FeuEauIncoloreIncolore','90','Les dégâts de cette attaque ne sont affectés par aucun effet en action sur le Pokémon Défenseur.'),
-	('X-Scissor','GrassColorless','20','Flip a coin. If heads, this attack does 50 more damage.'),
-	('Son Destructeur','IncoloreIncoloreIncolore',null,'Votre adversaire montre sa main. Défaussez toutes les cartes Objet que vous y trouvez.'),
-	('Draw In','Colorless',null,'Attach 2 Darkness Energy cards from your discard pile to this Pokémon.'),
-	('Machination','Obscurité',null,'Cherchez une carte dans votre deck et ajoutez-la à votre main. Mélangez ensuite votre deck.'),
-	('Deafen','ColorlessColorlessColorless','60','Your opponent can''t play any Item cards from his or her hand during his or her next turn.'),
-	('Smack','ColorlessColorless','20',null),
-	('Vortex Draconique','Incolore','20','Inflige 20 dégâts multipliés par le nombre de cartes Énergie Water et de cartes Énergie Lightning dans votre pile de défausse. Ensuite, mélangez toutes ces cartes avec votre deck.'),
-	('Psychic','Psychic','10','Does 20 more damage for each Energy attached to the Defending Pokémon.'),
-	('Para-Spore','Plante',null,'Lancez une pièce. Si c''est face, le Pokémon Défenseur est maintenant Paralysé.'),
-	('Encore','Colorless','20','Choose 1 of the Defending Pokémon''s attacks. During your opponent''s next turn, that Pokémon can use only that attack.'),
-	('Ultrason','Incolore',null,'Le Pokémon Défenseur est maintenant Confus.'),
-	('Vol Supersonique','PsyIncolore','40','Le Pokémon Défenseur ne peut pas battre en retraite pendant le prochain tour de votre adversaire.'),
-	('Double Hit','Colorless','10','Flip 2 coins. This attack does 10 damage times the number of heads.'),
-	('Balayage','ÉlectriqueIncolore','20',null),
-	('Cursed Drop','Psychic',null,'Put 3 damage counters on your opponent''s Pokémon in any way you like.'),
-	('Hydrocanon','IncoloreIncoloreIncoloreIncolore','60','Inflige 10 dégâts supplémentaires pour chaque Énergie Water attachée à ce Pokémon.'),
-	('Destructive Sound','ColorlessColorlessColorless',null,'Your opponent reveals his or her hand. Discard all Item cards you find there.'),
-	('Mania','CombatCombatIncolore','70','Lancez une pièce. Si c''est face, cette attaque inflige 20 dégâts supplémentaires. Si c''est pile, ce Pokémon s''inflige 20 dégâts.'),
-	('Dark Clamp','DarknessColorless','30','The Defending Pokémon can''t retreat during your opponent''s next turn.'),
-	('Piqûre Psy','PsyIncolore','20',null),
-	('Powerful Storm','ColorlessColorless','20','Does 20 damage times the amount of Energy attached to all of your Pokémon.'),
-	('Devour','Metal',null,'For each of your Durant in play, discard the top card of your opponent''s deck.');
+	('Éclair','Électrique','10','Lancez une pièce. Si c''est face, le Pokémon Défenseur est maintenant Paralysé.'),
+	('Glinting Claw','FireColorlessColorless','50','Flip a coin. If heads, this attack does 30 more damage.'),
+	('Lame Ointe','IncoloreIncoloreIncolore','50','Inflige 20 dégâts supplémentaires pour chaque Énergie Water attachée à ce Pokémon.'),
+	('Morsure','Obscurité','20',null),
+	('Revenge','Colorless','20','If any of your Pokémon were Knocked Out by damage from an opponent''s attack during his or her last turn, this attack does 70 more damage.'),
+	('Mélodie Apaisante','Incolore',null,'Lancez une pièce. Si c''est face, soignez 60 dégâts à chacun de vos Pokémon.'),
+	('Raging Pecks','Colorless','30','Flip 3 coins. This attack does 30 damage times the number of heads. This Pokémon is now Confused.'),
+	('Cornes de Métal','MétalIncolore','30','Votre adversaire échange le Pokémon Défenseur avec 1 de ses Pokémon de Banc.'),
+	('Pin Missile','MetalColorless','10','Flip 4 coins. This attack does 10 damage times the number of heads.'),
+	('Lueur Sinistre','PsyPsyIncolore','50','Le Pokémon Défenseur est maintenant Brûlé et Confus.'),
+	('Electripult','LightningColorless',null,'This attack does 20 damage to 1 of your opponent''s Pokémon. (Don''t apply Weakness and Resistance for Benched Pokémon.)'),
+	('Hâte','Électrique','10','Lancez une pièce. Si c''est face, évitez tous les effets d''attaques (y compris les dégâts) infligés à ce Pokémon pendant le prochain tour de votre adversaire.'),
+	('Thundershock','Lightning','10','Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'),
+	('Bâillement','Incolore',null,'Le Pokémon Défenseur est maintenant Endormi.'),
+	('Dracoxplosion','PsyObscuritéObscuritéIncolore','140','Défaussez 2 Énergies Darkness attachées à ce Pokémon.'),
+	('Night Spear','DarknessDarknessColorless','90','Does 30 damage to 1 of your opponent''s Benched Pokémon. (Don''t apply Weakness and Resistance for Benched Pokémon.)'),
+	('Mégalo Canon','PlantePlanteIncolore','100','Inflige 20 dégâts à 1 des Pokémon de Banc de votre adversaire. (N''appliquez ni la Faiblesse ni la Résistance aux Pokémon de Banc.)'),
+	('Rapid-Fire Needles','Grass','60','Does 30 damage to 1 of your Pokémon. (Don''t apply Weakness and Resistance for Benched Pokémon.)'),
+	('Absorption','FeuFeuIncolore','70','Soignez 30 dégâts à ce Pokémon.'),
+	('Double Draw','Colorless',null,'Draw 2 cards.'),
+	('Mâchouille','FeuIncolore','30','Lancez une pièce. Si c''est face, défaussez une Énergie attachée au Pokémon Défenseur.'),
+	('Cutting Arm','GrassColorlessColorless','40','Flip 2 coins. This attack does 20 more damage for each heads.'),
+	('Prescience','Psy',null,'Regardez les 5 cartes du dessus de votre deck et replacez-les sur le dessus de votre deck dans l''ordre de votre choix.'),
+	('Beat','Colorless','10',null),
+	('Roussi','Feu',null,'Le Pokémon Défenseur est maintenant Brûlé.'),
+	('Slam','WaterColorless','20','Flip 2 coins. This attack does 20 damage times the number of heads.'),
+	('Écras''Énergie','Électrique','20','Inflige 20 dégâts multipliés par le nombre d''Énergies attachées à tous les Pokémon de votre adversaire.'),
+	('Venoshock','Psychic','10','If the Defending Pokémon is Poisoned, this attack does 60 more damage.'),
+	('Pull Out','Colorless',null,'Put a card from your discard pile on top of your deck.'),
+	('Giclée de Boue','EauIncoloreIncolore','60','Si de l''Énergie Fighting est attachée à ce Pokémon, cette attaque inflige 30 dégâts supplémentaires.'),
+	('Refreshing Rain','Colorless',null,'Heal 30 damage from each of your Pokémon.'),
+	('Regard Dépouillant','Psy',null,'Lancez une pièce. Si c''est face, défaussez une Énergie attachée à 1 des Pokémon de votre adversaire.'),
+	('Static Shock','Lightning','20',null),
+	('Pioche Synchro','Psy',null,'Mélangez votre main avec votre deck. Ensuite, piochez un nombre de cartes égal au nombre de cartes dans la main de votre adversaire.'),
+	('Cell Culture','Psychic',null,'Search your deck for Solosis and put it onto your Bench. Shuffle your deck afterward.'),
+	('Cotogarde','Plante','10','Pendant le prochain tour de votre adversaire, tous les dégâts infligés à ce Pokémon par des attaques sont réduits de 10 (après application de la Faiblesse et de la Résistance).'),
+	('Rollout','Grass','20',null),
+	('Bataille','Plante','10',null),
+	('Acrobatics','Grass','20','Flip 2 coins. This attack does 30 more damage for each heads.'),
+	('Collision','Incolore','10',null),
+	('Whirlwind','ColorlessColorless','20','Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'),
+	('Scarf Hold','FightingColorless','30','Flip a coin. If heads, the Defending Pokémon can''t attack during your opponent''s next turn.'),
+	('Claque','IncoloreIncolore','20',null),
+	('Smack Down','FightingColorless','20','If the Defending Pokémon has Fighting Resistance, this attack does 60 more damage.'),
+	('Colère','IncoloreIncolore','20','Inflige 10 dégâts supplémentaires pour chaque marqueur de dégâts placé sur ce Pokémon.'),
+	('Psychic','PsychicColorlessColorless','50','Does 10 more damage for each Energy attached to the Defending Pokémon.'),
+	('Para-Dard','Électrique','10','Lancez une pièce. Si c’est face, le Pokémon Défenseur est maintenant Paralysé.'),
+	('Rear Kick','LightningColorless','20',null),
+	('Cyclone','IncoloreIncolore','20','Votre adversaire échange le Pokémon Défenseur avec 1 de ses Pokémon de Banc.'),
+	('Grass Knot','Grass','10','Does 20 more damage for each Colorless in the Defending Pokémon''s Retreat Cost.'),
+	('Tourmente','Incolore','10','Choisissez 1 des attaques du Pokémon Défenseur. Le Pokémon Défenseur ne pourra pas l''utiliser lors du prochain tour de votre adversaire.'),
+	('Low Kick','Colorless','10',null),
+	('Bulles d''O','EauIncolore','20','Lancez une pièce. Si c''est face, le Pokémon Défenseur est maintenant Paralysé.'),
+	('Fury Attack','Water','10','Flip 3 coins. This attack does 10 damage times the number of heads.'),
+	('Tacle Feu','FeuIncoloreIncolore','50',null),
+	('Draw In','Fire',null,'Attach 2 Fire Energy cards from your discard pile to this Pokémon.'),
+	('Flamme Purifiante','FeuIncoloreIncolore','50','Retirez tous les États Spéciaux de ce Pokémon.'),
+	('Push Down','ColorlessColorless','30','Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'),
+	('Peck','Colorless','10',null),
+	('Chant Canon','IncoloreIncolore','20','Inflige 20 dégâts multipliés par le nombre de vos Pokémon possédant l''attaque Chant Canon.'),
+	('Écras''Face','Incolore','10',null),
+	('Coup d''Boule','IncoloreIncolore','30',null),
+	('Ambush','PsychicColorless','40','Flip a coin. If heads, this attack does 20 more damage.'),
+	('Piqûre','IncoloreIncoloreIncolore','60',null),
+	('Trip Over','Colorless','10','Flip a coin. If heads, this attack does 10 more damage.'),
+	('Roc Gelé','EauIncoloreIncolore','50','Lancez une pièce. Si c''est face, cette attaque inflige 20 dégâts supplémentaires et le Pokémon Défenseur est maintenant Paralysé.'),
+	('Water Cannon','Water','30','Flip a coin. If heads, this attack does 30 damage times the amount of Water Energy attached to this Pokémon.'),
+	('Koud''Poing','Incolore','10',null),
+	('Iron Head','Metal','10','Flip a coin until you get tails. This attack does 10 damage times the number of heads.'),
+	('Dracochoc','Électrique','40','Défaussez les 2 cartes du dessus de votre deck.'),
+	('Cotton Guard','Grass','10','During your opponent''s next turn, any damage done to this Pokémon by attacks is reduced by 10 (after applying Weakness and Resistance).'),
+	('Flamme Attrayante','Feu',null,'Échangez 1 des Pokémon de Banc de votre adversaire avec le Pokémon Défenseur. Le nouveau Pokémon Défenseur est maintenant Brûlé.'),
+	('Powder Snow','Water',null,'The Defending Pokémon is now Asleep.'),
+	('Grêle','Incolore',null,'Cette attaque inflige 10 dégâts à chacun des Pokémon de votre adversaire. (N''appliquez ni la Faiblesse ni la Résistance aux Pokémon de Banc.)'),
+	('Hypnostrike','MetalColorlessColorless','60','Both this Pokémon and the Defending Pokémon are now Asleep.'),
+	('Force Spirale','PsyIncolore','30','Si de l''Énergie Plasma est attachée à ce Pokémon, cette attaque inflige 30 dégâts supplémentaires pour chaque Énergie attachée au Pokémon Défenseur.'),
+	('Energy Wheel','Colorless',null,'Move an Energy from 1 of your Benched Pokémon to this Pokémon.'),
+	('Désir de Vengeance','Incolore',null,'Si ce Pokémon a subi les dégâts d''une attaque pendant le dernier tour de votre adversaire, cette attaque inflige la même quantité de dégâts au Pokémon Défenseur.'),
+	('Wave Splash','Colorless','10',null),
+	('Flux Draconique','FeuIncoloreIncolore','60','Lancez une pièce. Si c''est face, attachez une carte Énergie de base de votre pile de défausse à ce Pokémon.'),
+	('Celestial Roar','Colorless',null,'Discard the top 3 cards of your deck. If any of those cards are Energy cards, attach them to this Pokémon.'),
+	('Laser Glace','EauIncoloreIncolore','50','Lancez une pièce. Si c''est face, le Pokémon Défenseur est maintenant Paralysé.'),
+	('Fire Fang','FireColorless','20','The Defending Pokémon is now Burned.'),
+	('Mentalisme','IncoloreIncoloreIncolore','30','Inflige 20 dégâts supplémentaires pour chaque Énergie Psychic attachée à ce Pokémon.'),
+	('Aerial Ace','ColorlessColorless','20','Flip a coin. If heads, this attack does 20 more damage.');
 
 INSERT INTO P10_Attack(attackName,attackCost,attackDamage,attackEffect) VALUES 
-	('Hypnoblast','ColorlessColorlessColorless','60','Flip a coin. If heads, the Defending Pokémon is now Asleep.'),
-	('Tacle Feu','FeuFeuIncolore','50',null),
-	('Piqûre Infernale','CombatIncolore','20','Lancez une pièce. Si c''est face, le Pokémon Défenseur est maintenant Paralysé.'),
-	('Fouet Lianes','PlanteIncoloreIncolore','50',null),
-	('Spiral Drain','GrassColorlessColorless','60','Heal 20 damage from this Pokémon.'),
-	('Pistolet à O','EauIncoloreIncolore','30',null),
-	('Shock Wave','LightningColorlessColorlessColorless','80','This attack''s damage isn''t affected by Resistance.'),
-	('Peignée','IncoloreIncoloreIncoloreIncolore','80','Lancez une pièce. Si c’est pile, ce Pokémon s’inflige 20 dégâts.'),
-	('Destruction','ÉlectriqueIncoloreIncolore','100','Ce Pokémon s''inflige 100 dégâts.'),
-	('Chute de Glacier','EauEauIncolore','90','Défaussez la carte du dessus du deck de votre adversaire.'),
-	('Icy Wind','WaterColorless','30','The Defending Pokémon is now Asleep.'),
-	('Éclair Désastre','ÉlectriqueÉlectriqueIncolore','80','Défaussez une Énergie attachée à ce Pokémon.'),
-	('Wreak Havoc','MetalMetalColorless','60','Flip a coin until you get tails. For each heads, discard the top card of your opponent''s deck.'),
-	('Crèvecœur','PsyIncolore','40',null),
-	('Super Psy Bolt','PsychicColorlessColorless','50',null),
-	('Yoga','CombatIncolore','30','Inflige 10 dégâts supplémentaires pour chaque marqueur de dégâts placé sur le Pokémon Défenseur.'),
-	('Leaf Wallop','GrassColorless','40','During your next turn, this Pokémon''s Leaf Wallop attack does 40 more damage (before applying Weakness and Resistance).'),
-	('Piqûre Psy','PsyIncoloreIncolore','40',null),
-	('Miracle Wing','PsychicColorlessColorless','60','Flip a coin. If heads, the Defending Pokémon is now Confused.'),
-	('Dard-Nuée','PlantePlanteIncolore','20','Lancez 4 pièces. Cette attaque inflige 20 dégâts multipliés par le nombre de côtés face.'),
 	('Mâchouille','ÉlectriqueÉlectriqueIncolore','80','Lancez une pièce. Si c''est face, défaussez une Énergie attachée au Pokémon Défenseur.'),
-	('Night Slash','DarknessColorless','30','Switch this Pokémon with 1 of your Benched Pokémon.'),
-	('Tête de Fer','MétalIncoloreIncolore','50','Lancez une pièce jusqu''à ce que vous obteniez un côté pile. Cette attaque inflige 50 dégâts multipliés par le nombre de côtés face.'),
-	('Rock Bullet','ColorlessColorlessColorlessColorless','40','Does 20 more damage for each Fighting Energy attached to this Pokémon.'),
-	('Rapace','IncoloreIncoloreIncolore','90','Ce Pokémon s''inflige 30 dégâts.'),
-	('Pied Voltige','ObscuritéObscuritéIncolore','70',null),
-	('Dragon Claw','FireWater','20',null),
-	('Magnetic Blast','LightningColorlessColorless','50',null),
-	('Feuille Sangsue','PlantePlante','30','Lancez une pièce. Si c''est face, soignez 30 dégâts à ce Pokémon.'),
-	('Point Poison','PlanteIncoloreIncolore','60','Le Pokémon Défenseur est maintenant Empoisonné.'),
-	('Violente Déflagration','IncoloreIncoloreIncolore','100','Lancez une pièce. Si c''est pile, défaussez une Énergie attachée à ce Pokémon.'),
-	('Fire Punch','FireFireColorlessColorless','70','The Defending Pokémon is now Burned.'),
-	('Brise-Fer','MétalMétalIncolore','80','Le Pokémon Défenseur ne peut pas attaquer pendant le prochain tour de votre adversaire.'),
-	('Feint','FightingColorlessColorless','40','This attack''s damage isn''t affected by Resistance.'),
-	('Reckless Charge','GrassColorlessColorless','80','This Pokémon does 10 damage to itself.'),
-	('Chant Canon','IncoloreIncoloreIncoloreIncolore','50','Inflige 50 dégâts multipliés par le nombre de vos Pokémon possédant l''attaque Chant Canon.'),
-	('Dragon Headbutt','PsychicDarknessColorless','40',null),
-	('Tricherie','IncoloreIncolore',null,'Choisissez 1 des attaques du Pokémon Défenseur et utilisez-la à la place de cette attaque.'),
-	('Healwing','GrassLightningColorlessColorless','90','Heal 30 damage from this Pokémon.'),
-	('Psychic','PsychicColorlessColorless','40','Does 10 more damage for each Energy attached to the Defending Pokémon.'),
-	('Triple Décharge','Eau',null,'Cette attaque inflige 30 dégâts à 3 des Pokémon de votre adversaire. (N''appliquez ni la Faiblesse ni la Résistance aux Pokémon de Banc.)'),
-	('Echoed Voice','PsychicColorlessColorless','50','During your next turn, this Pokémon''s Echoed Voice attack does 50 more damage (before applying Weakness and Resistance).'),
-	('Coupe','PlanteIncolore','20',null),
-	('U-turn','GrassGrass','40','Switch this Pokémon with 1 of your Benched Pokémon.'),
-	('Mégaphone','IncoloreIncoloreIncolore','50',null),
-	('Lumi-Éclat','EauPsyIncolore','150','Défaussez toutes les Énergies attachées à ce Pokémon.'),
-	('Explosion Magnétique','ÉlectriqueIncoloreIncolore','50',null),
-	('Round','ColorlessColorlessColorlessColorless','50','Does 50 damage times the number of your Pokémon that have the Round attack.'),
-	('Blazing Claws','DarknessColorlessColorless','60','If the Defending Pokémon is a Team Plasma Pokémon, this attack does 60 more damage, and the Defending Pokémon is now Burned.'),
-	('Swift Lunge','PsychicColorlessColorless','80','Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'),
-	('Vice Grip','ColorlessColorless','30',null);
+	('Acrobatie','IncoloreIncolore','10','Lancez 2 pièces. Cette attaque inflige 20 dégâts supplémentaires pour chaque côté face.'),
+	('Brave Fire','FireFireColorlessColorless','150','Flip a coin. If tails, this Pokémon does 50 damage to itself.'),
+	('Poing Tire-Bouchon','ObscuritéIncoloreIncolore','50',null),
+	('Poison Jab','PsychicColorlessColorless','60','The Defending Pokémon is now Poisoned.'),
+	('Coud''Pied Éjecteur','IncoloreIncoloreIncolore','60','Votre adversaire échange le Pokémon Défenseur avec 1 de ses Pokémon de Banc.'),
+	('Drill Peck','ColorlessColorlessColorless','60',null),
+	('Lame Sainte','MétalMétalIncolore','100','Ce Pokémon ne peut pas utiliser Lame Sainte pendant votre prochain tour.'),
+	('Acrobatics','ColorlessColorless','10','Flip 2 coins. This attack does 20 more damage for each heads.'),
+	('Payback','GrassColorless','30','If your opponent has only 1 Prize card left, this attack does 60 more damage and discard an Energy attached to the Defending Pokémon.'),
+	('Leaf Wallop','GrassColorless','40','During your next turn, this Pokémon''s Leaf Wallop attack does 40 more damage (before applying Weakness and Resistance).'),
+	('Explosion de Chaleur','FeuIncoloreIncolore','70',null),
+	('Gust','PsychicColorless','20',null),
+	('Roulade','IncoloreIncolore','20',null),
+	('Impact-Flash','ÉlectriqueIncoloreIncolore','80','Inflige 20 dégâts à 1 de vos Pokémon. (N''appliquez ni la Faiblesse ni la Résistance aux Pokémon de Banc.)'),
+	('Steamroller','ColorlessColorlessColorless','40','This attack''s damage isn''t affected by Resistance.'),
+	('Iron Head','MetalColorless','30','Flip a coin until you get tails. This attack does 30 damage times the number of heads.'),
+	('Gold Breaker','WaterColorless','30','If the Defending Pokémon is a Pokémon-EX, this attack does 50 more damage.'),
+	('Super Psy','PsyIncoloreIncolore','50',null),
+	('DaruMax','IncoloreIncolore','50','Lancez une pièce pour chaque Énergie attachée à ce Pokémon. Cette attaque inflige 50 dégâts multipliés par le nombre de côtés face.'),
+	('Rollout','PsychicColorless','20',null),
+	('Double Coup d''Boule','PlantePlante','10','Lancez 2 pièces. Cette attaque inflige 10 dégâts supplémentaires pour chaque côté face.'),
+	('Vol-Vie','PlanteIncolore','10','Soignez 10 dégâts à ce Pokémon.'),
+	('Psyko','PsyIncoloreIncolore','40','Inflige 10 dégâts supplémentaires pour chaque Énergie attachée au Pokémon Défenseur.'),
+	('Power Gem','FightingFightingColorlessColorless','80',null),
+	('Ère Glaciaire','EauEauIncolore',null,'Cette attaque inflige 30 dégâts à chacun des Pokémon de votre adversaire. (N''appliquez ni la Faiblesse ni la Résistance aux Pokémon de Banc.)'),
+	('Crocs à Vif','Eau','40','Si, avant que ce Pokémon inflige des dégâts, le Pokémon Défenseur n''a aucun marqueur de dégâts, cette attaque ne fait rien.'),
+	('Petal Dance','GrassColorlessColorless','50','Flip 3 coins. This attack does 50 damage times the number of heads. This Pokémon is now Confused.'),
+	('Morsure','CombatIncoloreIncolore','50',null),
+	('Hammer In','FightingColorlessColorless','30',null),
+	('Boutefeu','FeuFeuIncoloreIncolore','150','Défaussez toutes les Énergies Fire attachées à ce Pokémon.'),
+	('Flare','FireColorless','20',null),
+	('Flamme Croix','FeuIncoloreIncoloreIncolore','80','Si Zekrom est sur votre Banc, cette attaque inflige 40 dégâts supplémentaires.'),
+	('Take Down','GrassColorless','60','This Pokémon does 20 damage to itself.'),
+	('Hypnoblast','IncoloreIncoloreIncolore','60','Lancez une pièce. Si c''est face, le Pokémon Défenseur est maintenant Endormi.'),
+	('Wing Attack','DarknessColorless','20',null),
+	('Attaque Imprudente','IncoloreIncolore','30','Ce Pokémon s''inflige 10 dégâts.'),
+	('Grosse Gamelle','CombatIncoloreIncolore','60','Lancez une pièce. Si c''est face, cette attaque inflige 20 dégâts supplémentaires. Si c''est pile, ce Pokémon s''inflige 20 dégâts.'),
+	('Coup d''Boule Sans Fin','EauEauIncoloreIncolore','90','Lancez une pièce jusqu''à ce que vous obteniez un côté pile. Cette attaque inflige 90 dégâts multipliés par le nombre de côtés face.'),
+	('Giant Wave','WaterColorlessColorlessColorless','80','This Pokémon can''t use Giant Wave during your next turn.'),
+	('Vive-Attaque','CombatIncolore','10','Lancez une pièce. Si c''est face, cette attaque inflige 20 dégâts supplémentaires.'),
+	('Headbutt','MetalColorlessColorless','30',null),
+	('Déchiquetage','FeuÉlectriqueIncolore','90','Les dégâts de cette attaque ne sont affectés par aucun effet en action sur le Pokémon Défenseur.'),
+	('Léchouilles Incendiaires','FeuFeuFeu','50','Défaussez les 4 cartes du dessus de votre deck. Cette attaque inflige 50 dégâts multipliés par le nombre de cartes Énergie Fire que vous avez défaussées.'),
+	('Calomnie','ObscuritéIncolore','30','Défaussez autant de Pokémon que vous voulez de votre main. Cette attaque inflige 30 dégâts multipliés par le nombre de Pokémon que vous avez défaussés.'),
+	('Hurricane','ColorlessColorlessColorless','80','Move a basic Energy from this Pokémon to 1 of your Benched Pokémon.'),
+	('Absorption','EauEauIncolore','30','Soignez 30 dégâts à ce Pokémon.'),
+	('Feu Glacé','FeuFeuEauIncolore','150','Défaussez 2 Énergies Fire attachées à ce Pokémon. Le Pokémon Défenseur est maintenant Brûlé.'),
+	('Dragon Burst','FireLightning','60','Discard all basic Fire Energy or all basic Lightning Energy attached to this Pokémon. This attack does 60 damage times the number of Energy cards you discarded.'),
+	('Aile Glace','EauIncoloreIncoloreIncolore','80',null),
+	('Thrash','FireColorlessColorless','70','Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself.'),
+	('Defog','WaterColorlessColorless','60','You may discard any Stadium card in play. If you do, this attack does 40 more damage.');
 
 INSERT INTO P10_Resistance(resistanceType,resistanceValue) VALUES 
-	('Combat','-20'),
-	('Électrique','-20'),
-	('Psychic','-20'),
-	('Eau','-20'),
-	('Water','-20'),
 	('Psy','-20'),
-	('Fighting','-20');
+	('Fighting','-20'),
+	('Psychic','-20'),
+	('Water','-20'),
+	('Eau','-20'),
+	('Combat','-20'),
+	('Électrique','-20');
 
 INSERT INTO P10_Weakness(weaknessType,weaknessValue) VALUES 
-	('Fighting','×2'),
-	('Électrique','×2'),
 	('Eau','×2'),
+	('Combat','×2'),
+	('Fighting','×2'),
 	('Water','×2'),
+	('Plante','×2'),
+	('Psychic','×2'),
+	('Lightning','×2'),
 	('Feu','×2'),
 	('Fire','×2'),
-	('Psy','×2'),
-	('Combat','×2'),
-	('Métal','×2'),
-	('Metal','×2'),
-	('Psychic','×2'),
-	('Grass','×2'),
 	('Obscurité','×2'),
 	('Dragon','×2'),
-	('Lightning','×2'),
-	('Plante','×2');
+	('Psy','×2'),
+	('Darkness','×2'),
+	('Grass','×2'),
+	('Métal','×2'),
+	('Électrique','×2'),
+	('Metal','×2');
 
 INSERT INTO P10_Card(cardCategory,cardName,cardHP,cardRarity,cardImg,cardType,cardExtension,cardRetreat,cardLang,abilityId,resistanceId,weaknessId) VALUES
-	('Dresseur','Multi Exp',null,'Peu Commune','https://assets.tcgdex.net/fr/bw/bw4/87/high.webp',null,'Destinées Futures',null,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityEffect = 'Lorsque votre Pokémon Actif est mis K.O. par les dégâts d’une attaque de votre adversaire, vous pouvez déplacer 1 carte Énergie de base qui était attachée au Pokémon mis K.O. vers le Pokémon auquel cette carte est attachée.'),null,null),
-	('Pokemon','Wigglytuff','90','Rare','https://assets.tcgdex.net/en/bw/bw4/79/high.webp','Colorless','Next Destinies',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
-	('Énergie','Énergie Amalgamée GrassFirePsychicDarkness',null,'Peu Commune','https://assets.tcgdex.net/fr/bw/bw6/117/high.webp',null,'Dragons Éxaltés',null,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityEffect = 'Cette carte fournit de l’Énergie Colorless. Lorsque cette carte est attachée à un Pokémon, cette carte fournit de l’Énergie Grass, Fire, Psychic ou Darkness mais ne fournit qu’une Énergie à la fois.'),null,null),
-	('Trainer','Professor Juniper',null,'Uncommon','https://assets.tcgdex.net/en/bw/bw1/101/high.webp',null,'Black & White',null,'en',null,null,null),
-	('Pokémon','Poichigeon','60','Commune','https://assets.tcgdex.net/fr/bw/bw7/123/high.webp','Incolore','Frontières Franchies',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Électrique' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Combat' AND resistanceValue = '-20')),
-	('Pokemon','Slaking','150','Rare','https://assets.tcgdex.net/en/bw/bw6/103/high.webp','Colorless','Dragons Exalted',4,'en',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Unobservant' AND abilityEffect = 'If your opponent’s Active Pokémon is a Basic Pokémon, this Pokémon can’t attack.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
-	('Pokémon','Grotichon','100','Peu Commune','https://assets.tcgdex.net/fr/bw/bw1/17/high.webp','Feu','Noir & Blanc',3,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),null),
-	('Pokemon','Victini','70','Rare','https://assets.tcgdex.net/en/bw/bw3/15/high.webp','Fire','Noble Victories',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Water' AND weaknessValue = '×2'),null),
-	('Pokémon','Scorplane','70','Commune','https://assets.tcgdex.net/fr/bw/bw7/80/high.webp','Combat','Frontières Franchies',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Électrique' AND resistanceValue = '-20')),
-	('Pokemon','Pawniard','50','Common','https://assets.tcgdex.net/en/bw/bw9/72/high.webp','Darkness','Plasma Freeze',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psychic' AND resistanceValue = '-20')),
-	('Pokémon','Saquedeneu','80','Commune','https://assets.tcgdex.net/fr/bw/bw7/5/high.webp','Plante','Frontières Franchies',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Eau' AND resistanceValue = '-20')),
-	('Pokemon','Cradily','120','Rare','https://assets.tcgdex.net/en/bw/bw10/4/high.webp','Grass','Plasma Blast',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Water' AND resistanceValue = '-20')),
-	('Pokémon','Marill','70','Commune','https://assets.tcgdex.net/fr/bw/bw7/36/high.webp','Eau','Frontières Franchies',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Électrique' AND weaknessValue = '×2'),null),
-	('Pokemon','Voltorb','60','Common','https://assets.tcgdex.net/en/bw/bw9/32/high.webp','Lightning','Plasma Freeze',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
-	('Pokémon','Mushana','100','Rare','https://assets.tcgdex.net/fr/bw/bw4/59/high.webp','Psy','Destinées Futures',3,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Prédiction' AND abilityEffect = 'Une seule fois pendant votre tour (avant votre attaque), vous pouvez regarder les 2 cartes du dessus de votre deck, en choisir 1 et l’ajouter à votre main. Replacez l’autre carte sur le dessus de votre deck.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psy' AND weaknessValue = '×2'),null),
-	('Pokemon','Electivire','120','Rare','https://assets.tcgdex.net/en/bw/bw7/54/high.webp','Lightning','Boundaries Crossed',3,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
-	('Pokémon','Frison','100','Rare','https://assets.tcgdex.net/fr/bw/bw1/91/high.webp','Incolore','Noir & Blanc',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
-	('Trainer','Plume Fossil',null,'Uncommon','https://assets.tcgdex.net/en/bw/bw10/82/high.webp',null,'Plasma Blast',null,'en',null,null,null),
-	('Pokémon','Électrode','100','Commune','https://assets.tcgdex.net/fr/bw/bwp/BW76/high.webp','Électrique','Promo BW',null,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
-	('Energy','Plasma Energy',null,'Uncommon','https://assets.tcgdex.net/en/bw/bw8/127/high.webp',null,'Plasma Storm',null,'en',null,null,null),
-	('Pokémon','Polagriffe','130','Rare','https://assets.tcgdex.net/fr/bw/bw8/41/high.webp','Eau','Tempète Plasma',4,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Métal' AND weaknessValue = '×2'),null),
-	('Pokemon','Delibird','80','Uncommon','https://assets.tcgdex.net/en/bw/bw7/38/high.webp','Water','Boundaries Crossed',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Metal' AND weaknessValue = '×2'),null),
-	('Pokémon','Fulguris','110','Ultra Rare','https://assets.tcgdex.net/fr/bw/bw2/97/high.webp','Électrique','Pouvoirs Émergents',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
-	('Trainer','Heavy Ball',null,'Uncommon','https://assets.tcgdex.net/en/bw/bw4/88/high.webp',null,'Next Destinies',null,'en',null,null,null),
-	('Pokémon','Ponchien','80','Peu Commune','https://assets.tcgdex.net/fr/bw/bw5/87/high.webp','Incolore','Explorateurs Obscurs',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
-	('Pokemon','Lairon','90','Uncommon','https://assets.tcgdex.net/en/bw/bw6/79/high.webp','Metal','Dragons Exalted',3,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psychic' AND resistanceValue = '-20')),
-	('Pokémon','Rhinolove','80','Peu Commune','https://assets.tcgdex.net/fr/bw/bw1/51/high.webp','Psy','Noir & Blanc',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Électrique' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Combat' AND resistanceValue = '-20')),
-	('Pokemon','Gothorita','80','Uncommon','https://assets.tcgdex.net/en/bw/bw2/46/high.webp','Psychic','Emerging Powers',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
-	('Pokémon','Shaofouine','90','Peu Commune','https://assets.tcgdex.net/fr/bw/bw4/68/high.webp','Combat','Destinées Futures',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psy' AND weaknessValue = '×2'),null),
-	('Pokemon','Nosepass','80','Common','https://assets.tcgdex.net/en/bw/bw6/62/high.webp','Fighting','Dragons Exalted',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Grass' AND weaknessValue = '×2'),null),
-	('Pokémon','Victini','60','Rare','https://assets.tcgdex.net/fr/bw/bw3/14/high.webp','Feu','Nobles Victoires',1,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Victorieux' AND abilityEffect = 'Une seule fois pendant votre tour, après avoir lancé des pièces pour une attaque, vous pouvez ignorer les effets de ces lancers de pièce et lancer ces pièces à nouveau. Vous ne pouvez pas utiliser la capacité spéciale Victorieux plus d’une fois par tour.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),null),
-	('Pokemon','Dwebble','60','Common','https://assets.tcgdex.net/en/bw/bw11/13/high.webp','Grass','Legendary Treasures',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),null),
-	('Pokémon','Lugulabre','130','Rare','https://assets.tcgdex.net/fr/bw/bw9/16/high.webp','Feu','Glaciation Plasma',2,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Navigation Flamboyante' AND abilityEffect = 'Une seule fois pendant votre tour (avant votre attaque), vous pouvez chercher une carte Énergie Fire dans votre deck et l''attacher à 1 de vos Pokémon. Dans ce cas, placez 1 marqueur de dégâts sur le Pokémon auquel l''Énergie a été attachée. Mélangez ensuite votre deck.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),null),
-	('Pokemon','Virizion','110','Rare','https://assets.tcgdex.net/en/bw/bw11/15/high.webp','Grass','Legendary Treasures',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Water' AND resistanceValue = '-20')),
-	('Pokémon','Téraclope','80','Peu Commune','https://assets.tcgdex.net/fr/bw/bw7/62/high.webp','Psy','Frontières Franchies',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Obscurité' AND weaknessValue = '×2'),null),
-	('Pokemon','Xatu','90','Rare','https://assets.tcgdex.net/en/bw/bw11/56/high.webp','Psychic','Legendary Treasures',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
-	('Pokémon','Maracachi','80','Peu Commune','https://assets.tcgdex.net/fr/bw/bw1/11/high.webp','Plante','Noir & Blanc',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Eau' AND resistanceValue = '-20')),
-	('Pokemon','Shelmet','60','Common','https://assets.tcgdex.net/en/bw/bw5/10/high.webp','Grass','Dark Explorers',3,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),null),
-	('Pokémon','Altaria','70','Commune','https://assets.tcgdex.net/fr/bw/bwp/BW48/high.webp','Dragon','Promo BW',1,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Hymne au Combat' AND abilityEffect = 'Les attaques de vos Pokémon Dragon infligent 20 dégâts supplémentaires aux Pokémon Actifs (avant application de la Faiblesse et de la Résistance).'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
-	('Pokemon','Garbodor','100','Secret Rare','https://assets.tcgdex.net/en/bw/bw9/119/high.webp','Psychic','Plasma Freeze',3,'en',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Garbotoxin' AND abilityEffect = 'If this Pokémon has a Pokémon Tool card attached to it, each Pokémon in play, in each player’s hand, and in each player’s discard pile has no Abilities (except for Garbotoxin).'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
-	('Pokémon','Darkrai-EX','180','Ultra Rare','https://assets.tcgdex.net/fr/bw/bw5/107/high.webp','Obscurité','Explorateurs Obscurs',2,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Cape Obscure' AND abilityEffect = 'Chacun de vos Pokémon auquel de l’Énergie Darkness est attachée n’a pas de coût de Retraite.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psy' AND resistanceValue = '-20')),
-	('Trainer','PlusPower',null,'Uncommon','https://assets.tcgdex.net/en/bw/bw1/96/high.webp',null,'Black & White',null,'en',null,null,null),
+	('Pokémon','Darumarond','60','Commune','https://assets.tcgdex.net/fr/bw/bwp/BW18/high.webp','Feu','Promo BW',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),null),
+	('Trainer','Devolution Spray',null,'Uncommon','https://assets.tcgdex.net/en/bw/bw6/113/high.webp',null,'Dragons Exalted',null,'en',null,null,null),
 	('Pokémon','Luxray','140','Rare','https://assets.tcgdex.net/fr/bw/bw4/46/high.webp','Électrique','Destinées Futures',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
 	('Pokemon','Electrike','60','Common','https://assets.tcgdex.net/en/bw/bw6/42/high.webp','Lightning','Dragons Exalted',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
-	('Pokémon','Chovsourir','60','Commune','https://assets.tcgdex.net/fr/bw/bw2/36/high.webp','Psy','Pouvoirs Émergents',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psy' AND weaknessValue = '×2'),null),
-	('Pokemon','Psyduck','70','Common','https://assets.tcgdex.net/en/bw/bw7/33/high.webp','Water','Boundaries Crossed',3,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Lightning' AND weaknessValue = '×2'),null),
-	('Pokémon','Altaria','70','Rare','https://assets.tcgdex.net/fr/bw/bw6/84/high.webp','Dragon','Dragons Éxaltés',1,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Hymne au Combat' AND abilityEffect = 'Les attaques de vos Pokémon Dragon infligent 20 dégâts supplémentaires aux Pokémon Actifs (avant application de la Faiblesse et de la Résistance).'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
-	('Pokemon','Bisharp','90','Uncommon','https://assets.tcgdex.net/en/bw/bw3/76/high.webp','Darkness','Noble Victories',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psychic' AND resistanceValue = '-20')),
-	('Pokémon','Galegon','90','Peu Commune','https://assets.tcgdex.net/fr/bw/bw10/58/high.webp','Métal','Explosion Plasma',4,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psy' AND resistanceValue = '-20')),
-	('Pokemon','Gigalith','140','Rare','https://assets.tcgdex.net/en/bw/bw2/53/high.webp','Fighting','Emerging Powers',4,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Grass' AND weaknessValue = '×2'),null),
-	('Pokémon','Gueriaigle','100','Rare','https://assets.tcgdex.net/fr/bw/bw2/88/high.webp','Incolore','Pouvoirs Émergents',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Électrique' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Combat' AND resistanceValue = '-20')),
-	('Pokemon','Pidove','50','Common','https://assets.tcgdex.net/en/bw/bw2/80/high.webp','Colorless','Emerging Powers',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Lightning' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Fighting' AND resistanceValue = '-20')),
-	('Pokémon','Baggaïd','90','Rare','https://assets.tcgdex.net/fr/bw/bw1/69/high.webp','Obscurité','Noir & Blanc',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psy' AND resistanceValue = '-20')),
-	('Pokemon','Bagon','50','Common','https://assets.tcgdex.net/en/bw/bw10/62/high.webp','Dragon','Plasma Blast',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
-	('Pokémon','Judokrak','90','Peu Commune','https://assets.tcgdex.net/fr/bw/bw2/58/high.webp','Combat','Pouvoirs Émergents',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psy' AND weaknessValue = '×2'),null),
-	('Pokemon','Electabuzz','80','Common','https://assets.tcgdex.net/en/bw/bw7/53/high.webp','Lightning','Boundaries Crossed',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
-	('Pokémon','Shaymin','70','Rare','https://assets.tcgdex.net/fr/bw/bw7/10/high.webp','Plante','Frontières Franchies',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),null),
-	('Pokemon','Cascoon','80','Uncommon','https://assets.tcgdex.net/en/bw/bw6/9/high.webp','Grass','Dragons Exalted',3,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),null),
-	('Dresseur','Multi Exp',null,'Peu Commune','https://assets.tcgdex.net/fr/bw/bw4/87/high.webp',null,'Destinées Futures',null,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityEffect = 'Lorsque votre Pokémon Actif est mis K.O. par les dégâts d’une attaque de votre adversaire, vous pouvez déplacer 1 carte Énergie de base qui était attachée au Pokémon mis K.O. vers le Pokémon auquel cette carte est attachée.'),null,null),
-	('Pokemon','Wigglytuff','90','Rare','https://assets.tcgdex.net/en/bw/bw4/79/high.webp','Colorless','Next Destinies',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
-	('Pokémon','Nostenfer','130','Rare','https://assets.tcgdex.net/fr/bw/bwp/BW51/high.webp','Psy','Promo BW',null,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Vision de Nuit' AND abilityEffect = 'Une seule fois pendant votre tour (avant votre attaque), vous pouvez piocher une carte.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Électrique' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Combat' AND resistanceValue = '-20')),
-	('Pokemon','Mew-EX','120','Ultra Rare','https://assets.tcgdex.net/en/bw/bw6/120/high.webp','Psychic','Dragons Exalted',1,'en',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Versatile' AND abilityEffect = 'This Pokémon can use the attacks of any Pokémon in play (both yours and your opponent’s). (You still need the necessary Energy to use each attack.)'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
-	('Pokémon','Roserade','90','Peu Commune','https://assets.tcgdex.net/fr/bw/bw6/14/high.webp','Plante','Dragons Éxaltés',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Eau' AND resistanceValue = '-20')),
-	('Pokemon','Axew','50','Rare','/high.webp','Dragon','Dragon Vault',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
-	('Pokémon','Boréas ex','170','Commune','https://assets.tcgdex.net/fr/bw/bwp/BW96/high.webp','Incolore','Promo BW',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Électrique' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Combat' AND resistanceValue = '-20')),
-	('Trainer','Town Map',null,'Uncommon','https://assets.tcgdex.net/en/bw/bw7/136/high.webp',null,'Boundaries Crossed',null,'en',null,null,null),
-	('Pokémon','Stari','60','Commune','https://assets.tcgdex.net/fr/bw/bw4/23/high.webp','Eau','Destinées Futures',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Électrique' AND weaknessValue = '×2'),null),
-	('Pokemon','Darmanitan','100','Rare','https://assets.tcgdex.net/en/bw/bw2/21/high.webp','Fire','Emerging Powers',3,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Water' AND weaknessValue = '×2'),null),
-	('Pokémon','Lakmécygne','90','Rare','https://assets.tcgdex.net/fr/bw/bw5/36/high.webp','Eau','Explorateurs Obscurs',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Électrique' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Combat' AND resistanceValue = '-20')),
-	('Pokemon','Carvanha','60','Common','https://assets.tcgdex.net/en/bw/bw8/32/high.webp','Water','Plasma Storm',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Lightning' AND weaknessValue = '×2'),null),
-	('Pokémon','Cobaltium','120','Rare','https://assets.tcgdex.net/fr/bw/bw3/84/high.webp','Métal','Nobles Victoires',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psy' AND resistanceValue = '-20')),
-	('Pokemon','Riolu','70','Common','https://assets.tcgdex.net/en/bw/bw8/76/high.webp','Fighting','Plasma Storm',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
-	('Pokémon','Drattak','140','Rare','https://assets.tcgdex.net/fr/bw/dv1/8/high.webp','Dragon','Coffre des Dragons',2,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Vent Méprisant' AND abilityEffect = 'Une seule fois pendant votre tour (avant votre attaque), vous pouvez demander à votre adversaire de défausser des cartes de sa main jusqu''à ce qu''il ne reste que 4 cartes dans sa main.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
-	('Pokemon','Crustle','100','Uncommon','https://assets.tcgdex.net/en/bw/bw3/7/high.webp','Grass','Noble Victories',3,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),null),
-	('Pokémon','Brouhabam','140','Rare','https://assets.tcgdex.net/fr/bw/bw8/107/high.webp','Incolore','Tempète Plasma',4,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
-	('Pokemon','Zweilous','90','Uncommon','https://assets.tcgdex.net/en/bw/bw6/96/high.webp','Dragon','Dragons Exalted',3,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
-	('Pokémon','Zoroark','100','Rare','https://assets.tcgdex.net/fr/bw/bwp/BW09/high.webp','Obscurité','Promo BW',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psy' AND resistanceValue = '-20')),
-	('Trainer','Crushing Hammer',null,'Uncommon','https://assets.tcgdex.net/en/bw/bw11/111/high.webp',null,'Legendary Treasures',null,'en',null,null,null),
-	('Dresseur','Griffe Obscure',null,'Peu Commune','https://assets.tcgdex.net/fr/bw/bw5/92/high.webp',null,'Explorateurs Obscurs',null,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityEffect = 'Si cette carte est attachée à un Pokémon Darkness, chacune de ses attaques inflige 20 dégâts supplémentaires aux Pokémon Actifs (avant application de la Faiblesse et de la Résistance).'),null,null),
-	('Pokemon','Dragonite','150','Rare','https://assets.tcgdex.net/en/bw/bw9/83/high.webp','Dragon','Plasma Freeze',3,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
-	('Pokémon','Ténéfix','70','Peu Commune','https://assets.tcgdex.net/fr/bw/bw5/62/high.webp','Obscurité','Explorateurs Obscurs',1,'fr',null,null,null),
-	('Pokemon','Kirlia','80','Uncommon','https://assets.tcgdex.net/en/bw/bw4/56/high.webp','Psychic','Next Destinies',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
-	('Pokémon','Hyporoi','140','Rare','https://assets.tcgdex.net/fr/bw/bw9/84/high.webp','Dragon','Glaciation Plasma',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
-	('Pokemon','Meloetta','80','Rare','https://assets.tcgdex.net/en/bw/bw7/77/high.webp','Psychic','Boundaries Crossed',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
-	('Pokémon','Chlorobule','50','Commune','https://assets.tcgdex.net/fr/bw/bw2/13/high.webp','Plante','Pouvoirs Émergents',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Eau' AND resistanceValue = '-20')),
-	('Pokemon','Whimsicott','80','Rare','https://assets.tcgdex.net/en/bw/bw2/12/high.webp','Grass','Emerging Powers',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Water' AND resistanceValue = '-20')),
-	('Pokémon','Ramboum','90','Peu Commune','https://assets.tcgdex.net/fr/bw/bw8/106/high.webp','Incolore','Tempète Plasma',3,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
-	('Trainer','Scoop Up Cyclone',null,'Rare','https://assets.tcgdex.net/en/bw/bw10/95/high.webp',null,'Plasma Blast',null,'en',null,null,null),
-	('Pokémon','Latios-EX','170','Ultra Rare','https://assets.tcgdex.net/fr/bw/bw9/113/high.webp','Dragon','Glaciation Plasma',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
-	('Pokemon','Aipom','60','Common','https://assets.tcgdex.net/en/bw/bw6/99/high.webp','Colorless','Dragons Exalted',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
-	('Pokémon','Élektek','80','Commune','https://assets.tcgdex.net/fr/bw/bw7/53/high.webp','Électrique','Frontières Franchies',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
-	('Pokemon','Shedinja','60','Rare','https://assets.tcgdex.net/en/bw/bw6/48/high.webp','Psychic','Dragons Exalted',0,'en',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Empty Shell' AND abilityEffect = 'If this Pokémon is Knocked Out, your opponent can’t take any Prize cards for it.'),null,null),
-	('Pokémon','Tortank','140','Magnifique rare','https://assets.tcgdex.net/fr/bw/bw8/137/high.webp','Eau','Tempète Plasma',4,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Déluge' AND abilityEffect = 'Autant de fois que vous le voulez pendant votre tour (avant votre attaque), vous pouvez attacher une carte Énergie Water de votre main à 1 de vos Pokémon.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Plante' AND weaknessValue = '×2'),null),
-	('Pokemon','Exploud','140','Rare','https://assets.tcgdex.net/en/bw/bw8/107/high.webp','Colorless','Plasma Storm',4,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
-	('Pokémon','Crocorible','140','Rare','https://assets.tcgdex.net/fr/bw/bw2/62/high.webp','Combat','Pouvoirs Émergents',3,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Œil Noir' AND abilityEffect = 'Une seule fois pendant votre tour (avant votre attaque), si ce Pokémon est votre Pokémon Actif, vous pouvez lancer une pièce. Si c’est face, défaussez une Énergie attachée au Pokémon Actif de votre adversaire.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Électrique' AND resistanceValue = '-20')),
-	('Pokemon','Houndoom','100','Rare','https://assets.tcgdex.net/en/bw/bw10/56/high.webp','Darkness','Plasma Blast',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psychic' AND resistanceValue = '-20')),
-	('Pokémon','Munna','60','Peu Commune','https://assets.tcgdex.net/fr/bw/bw7/68/high.webp','Psy','Frontières Franchies',2,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Téléhypnose' AND abilityEffect = 'Une seule fois pendant votre tour (avant votre attaque), vous pouvez lancer une pièce. Si c’est face, le Pokémon Actif de votre adversaire est maintenant Endormi. Si c’est pile, votre Pokémon Actif est maintenant Endormi.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psy' AND weaknessValue = '×2'),null),
-	('Pokemon','Gallade','140','Rare','https://assets.tcgdex.net/en/bw/bw8/61/high.webp','Psychic','Plasma Storm',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
-	('Dresseur','Récupération d’Énergie',null,'Peu Commune','https://assets.tcgdex.net/fr/bw/bw1/92/high.webp',null,'Noir & Blanc',null,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityEffect = 'Prenez 2 cartes Énergie de base dans votre pile de défausse et ajoutez-les à votre main.'),null,null),
-	('Pokemon','Durant','70','Uncommon','https://assets.tcgdex.net/en/bw/bw3/83/high.webp','Metal','Noble Victories',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psychic' AND resistanceValue = '-20'));
+	('Pokémon','Emolga','70','Commune','https://assets.tcgdex.net/fr/bw/bw2/32/high.webp','Électrique','Pouvoirs Émergents',0,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
+	('Pokemon','Reshiram-EX','180','Rare','https://assets.tcgdex.net/en/bw/bw11/29/high.webp','Fire','Legendary Treasures',3,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Water' AND weaknessValue = '×2'),null),
+	('Pokémon','Keldeo ex','170','Rare','https://assets.tcgdex.net/fr/bw/bwp/BW61/high.webp','Eau','Promo BW',2,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Intervention' AND abilityEffect = 'Une seule fois pendant votre tour (avant votre attaque), si ce Pokémon est sur votre Banc, vous pouvez échanger ce Pokémon avec votre Pokémon Actif.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Plante' AND weaknessValue = '×2'),null),
+	('Trainer','Eviolite',null,'Uncommon','https://assets.tcgdex.net/en/bw/bw8/122/high.webp',null,'Plasma Storm',null,'en',null,null,null),
+	('Pokémon','Escroco','90','Peu Commune','https://assets.tcgdex.net/fr/bw/bw9/69/high.webp','Obscurité','Glaciation Plasma',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psy' AND resistanceValue = '-20')),
+	('Pokemon','Toxicroak','90','Rare','https://assets.tcgdex.net/en/bw/bw11/63/high.webp','Psychic','Legendary Treasures',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
+	('Pokémon','Lockpin','90','Peu Commune','https://assets.tcgdex.net/fr/bw/bw7/117/high.webp','Incolore','Frontières Franchies',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
+	('Pokemon','Dodrio','90','Rare','https://assets.tcgdex.net/en/bw/bw8/100/high.webp','Colorless','Plasma Storm',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Lightning' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Fighting' AND resistanceValue = '-20')),
+	('Pokémon','Cobaltium','110','Rare','https://assets.tcgdex.net/fr/bw/bw2/77/high.webp','Métal','Pouvoirs Émergents',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psy' AND resistanceValue = '-20')),
+	('Pokemon','Ferroseed','60','Common','https://assets.tcgdex.net/en/bw/bw2/70/high.webp','Metal','Emerging Powers',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psychic' AND resistanceValue = '-20')),
+	('Pokémon','Lugulabre','130','Rare','https://assets.tcgdex.net/fr/bw/bw3/60/high.webp','Psy','Nobles Victoires',2,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Ombre Maudite' AND abilityEffect = 'Une seule fois pendant votre tour (avant votre attaque), si ce Pokémon est votre Pokémon Actif, vous pouvez placer 3 marqueurs de dégâts sur les Pokémon de votre adversaire, de la manière que vous voulez.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Obscurité' AND weaknessValue = '×2'),null),
+	('Pokemon','Chinchou','60','Common','https://assets.tcgdex.net/en/bw/bw7/55/high.webp','Lightning','Boundaries Crossed',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
+	('Pokémon','Zébibron','60','Commune','https://assets.tcgdex.net/fr/bw/bw3/35/high.webp','Électrique','Nobles Victoires',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
+	('Pokemon','Emolga','70','Common','https://assets.tcgdex.net/en/bw/bw2/32/high.webp','Lightning','Emerging Powers',0,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
+	('Pokémon','Togepi','40','Commune','https://assets.tcgdex.net/fr/bw/bw8/102/high.webp','Incolore','Tempète Plasma',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
+	('Trainer','Dark Patch',null,'Uncommon','https://assets.tcgdex.net/en/bw/bw5/93/high.webp',null,'Dark Explorers',null,'en',null,null,null),
+	('Pokémon','Trioxhydre','150','Rare','https://assets.tcgdex.net/fr/bw/bw6/97/high.webp','Dragon','Dragons Éxaltés',3,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Transe Obscure' AND abilityEffect = 'Autant de fois que vous le voulez pendant votre tour (avant votre attaque), vous pouvez déplacer une Énergie Darkness attachée à 1 de vos Pokémon vers un autre de vos Pokémon.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
+	('Pokemon','Darkrai-EX','180','Rare','https://assets.tcgdex.net/en/bw/bw11/88/high.webp','Darkness','Legendary Treasures',2,'en',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Dark Cloak' AND abilityEffect = 'Each of your Pokémon that has any Darkness Energy attached to it has no Retreat Cost.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psychic' AND resistanceValue = '-20')),
+	('Pokémon','Genesect EX','170','Rare','https://assets.tcgdex.net/fr/bw/bw10/11/high.webp','Plante','Explosion Plasma',1,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Signal Rouge' AND abilityEffect = 'Lorsque vous attachez une Énergie Plasma de votre main à ce Pokémon, vous pouvez échanger 1 des Pokémon de Banc de votre adversaire avec son Pokémon Actif.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),null),
+	('Pokemon','Cacturne','90','Rare','https://assets.tcgdex.net/en/bw/bw9/10/high.webp','Grass','Plasma Freeze',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Water' AND resistanceValue = '-20')),
+	('Dresseur','Hyper Ball',null,'Peu Commune','https://assets.tcgdex.net/fr/bw/bw5/102/high.webp',null,'Explorateurs Obscurs',null,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityEffect = 'Défaussez 2 cartes de votre main. (Si vous ne pouvez pas défausser 2 cartes, vous ne pouvez pas jouer cette carte.) Cherchez un Pokémon dans votre deck, montrez-le, puis ajoutez-le à votre main. Mélangez ensuite votre deck.'),null,null),
+	('Trainer','N',null,'Uncommon','https://assets.tcgdex.net/en/bw/bw3/92/high.webp',null,'Noble Victories',null,'en',null,null,null),
+	('Pokémon','Lugulabre','130','Rare','https://assets.tcgdex.net/fr/bw/bw9/16/high.webp','Feu','Glaciation Plasma',2,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Navigation Flamboyante' AND abilityEffect = 'Une seule fois pendant votre tour (avant votre attaque), vous pouvez chercher une carte Énergie Fire dans votre deck et l''attacher à 1 de vos Pokémon. Dans ce cas, placez 1 marqueur de dégâts sur le Pokémon auquel l''Énergie a été attachée. Mélangez ensuite votre deck.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),null),
+	('Pokemon','Virizion','110','Rare','https://assets.tcgdex.net/en/bw/bw11/15/high.webp','Grass','Legendary Treasures',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Water' AND resistanceValue = '-20')),
+	('Pokémon','Arcanin','120','Peu Commune','https://assets.tcgdex.net/fr/bw/bw4/13/high.webp','Feu','Destinées Futures',3,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),null),
+	('Pokemon','Leavanny','130','Rare','https://assets.tcgdex.net/en/bw/bw11/12/high.webp','Grass','Legendary Treasures',2,'en',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Leaf Tailor' AND abilityEffect = 'Each of your Pokémon that has any Energy attached to it has no Weakness.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),null),
+	('Pokémon','Scrutella','50','Commune','https://assets.tcgdex.net/fr/bw/bw6/55/high.webp','Psy','Dragons Éxaltés',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psy' AND weaknessValue = '×2'),null),
+	('Pokemon','Drifloon','60','Common','https://assets.tcgdex.net/en/bw/bw6/50/high.webp','Psychic','Dragons Exalted',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Darkness' AND weaknessValue = '×2'),null),
+	('Pokémon','Darumarond','70','Peu Commune','https://assets.tcgdex.net/fr/bw/bw1/24/high.webp','Feu','Noir & Blanc',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),null),
+	('Pokemon','Wooper','70','Common','https://assets.tcgdex.net/en/bw/bw9/21/high.webp','Water','Plasma Freeze',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Grass' AND weaknessValue = '×2'),null),
+	('Pokémon','Élecsprint','90','Rare','https://assets.tcgdex.net/fr/bw/bw6/43/high.webp','Électrique','Dragons Éxaltés',0,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
+	('Pokemon','Whirlipede','90','Uncommon','https://assets.tcgdex.net/en/bw/bw2/39/high.webp','Psychic','Emerging Powers',3,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
+	('Dresseur','Évoluroc',null,'Peu Commune','https://assets.tcgdex.net/fr/bw/bw3/91/high.webp',null,'Nobles Victoires',null,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityEffect = 'Si le Pokémon auquel cette carte est attachée est un Pokémon de base, tous les dégâts infligés à ce Pokémon par des attaques sont réduits de 20 (après application de la Faiblesse et de la Résistance).'),null,null),
+	('Pokemon','Durant','70','Uncommon','https://assets.tcgdex.net/en/bw/bw6/83/high.webp','Metal','Dragons Exalted',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psychic' AND resistanceValue = '-20')),
+	('Pokémon','Maraiste','100','Rare','https://assets.tcgdex.net/fr/bw/bw9/22/high.webp','Eau','Glaciation Plasma',3,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Tranquillou' AND abilityEffect = 'Tous les dégâts infligés à ce Pokémon par des attaques sont réduits de 20 (après application de la Faiblesse et de la Résistance).'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Plante' AND weaknessValue = '×2'),null),
+	('Pokemon','Vaporeon','110','Uncommon','https://assets.tcgdex.net/en/bw/bw9/20/high.webp','Water','Plasma Freeze',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Grass' AND weaknessValue = '×2'),null),
+	('Pokémon','Mesmérella','80','Peu Commune','https://assets.tcgdex.net/fr/bw/bw2/46/high.webp','Psy','Pouvoirs Émergents',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psy' AND weaknessValue = '×2'),null),
+	('Pokemon','Joltik','30','Common','https://assets.tcgdex.net/en/bw/bw5/42/high.webp','Lightning','Dark Explorers',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
+	('Pokémon','Darumacho','110','Rare','https://assets.tcgdex.net/fr/bw/bw4/60/high.webp','Psy','Destinées Futures',3,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psy' AND weaknessValue = '×2'),null),
+	('Pokemon','Solosis','30','Common','https://assets.tcgdex.net/en/bw/bw1/55/high.webp','Psychic','Black & White',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
+	('Pokémon','Doudouvet','50','Commune','https://assets.tcgdex.net/fr/bw/bw2/10/high.webp','Plante','Pouvoirs Émergents',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Eau' AND resistanceValue = '-20')),
+	('Pokemon','Foongus','40','Common','https://assets.tcgdex.net/en/bw/bw3/9/high.webp','Grass','Noble Victories',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Water' AND resistanceValue = '-20')),
+	('Pokémon','Crikzik','60','Commune','https://assets.tcgdex.net/fr/bw/bw4/3/high.webp','Plante','Destinées Futures',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),null),
+	('Pokemon','Jumpluff','90','Rare','https://assets.tcgdex.net/en/bw/bw6/3/high.webp','Grass','Dragons Exalted',0,'en',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Leave It to the Wind' AND abilityEffect = 'Once during your turn (before your attack), you may return this Pokémon and all cards attached to it to your hand.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Water' AND resistanceValue = '-20')),
+	('Pokémon','Chlorobule','60','Commune','https://assets.tcgdex.net/fr/bw/bw3/4/high.webp','Plante','Nobles Victoires',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Eau' AND resistanceValue = '-20')),
+	('Pokemon','Yanma','70','Common','https://assets.tcgdex.net/en/bw/bw6/4/high.webp','Grass','Dragons Exalted',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Lightning' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Fighting' AND resistanceValue = '-20')),
+	('Pokémon','Mascaïman','70','Commune','https://assets.tcgdex.net/fr/bw/bw5/64/high.webp','Obscurité','Explorateurs Obscurs',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psy' AND resistanceValue = '-20')),
+	('Pokemon','Throh','90','Uncommon','https://assets.tcgdex.net/en/bw/bw2/58/high.webp','Fighting','Emerging Powers',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
+	('Pokémon','Kirlia','80','Peu Commune','https://assets.tcgdex.net/fr/bw/bw4/56/high.webp','Psy','Destinées Futures',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psy' AND weaknessValue = '×2'),null),
+	('Pokemon','Boldore','90','Uncommon','https://assets.tcgdex.net/en/bw/bw2/51/high.webp','Fighting','Emerging Powers',3,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Grass' AND weaknessValue = '×2'),null),
+	('Pokémon','Kyurem','130','Rare','https://assets.tcgdex.net/fr/bw/bwp/BW44/high.webp','Eau','Promo BW',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Métal' AND weaknessValue = '×2'),null),
+	('Pokemon','Sigilyph','90','Secret Rare','https://assets.tcgdex.net/en/bw/bw9/118/high.webp','Psychic','Plasma Freeze',1,'en',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Safeguard' AND abilityEffect = 'Prevent all effects of attacks, including damage, done to this Pokémon by Pokémon-EX.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
+	('Pokémon','Bargantua','80','Peu Commune','https://assets.tcgdex.net/fr/bw/bw4/30/high.webp','Eau','Destinées Futures',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Électrique' AND weaknessValue = '×2'),null),
+	('Pokemon','Tirtouga','90','Uncommon','https://assets.tcgdex.net/en/bw/bw10/27/high.webp','Water','Plasma Blast',3,'en',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Prehistoric Call' AND abilityEffect = 'Once during your turn (before your attack), if this Pokémon is in your discard pile, you may put this Pokémon on the bottom of your deck.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Grass' AND weaknessValue = '×2'),null),
+	('Pokémon','Statitik','40','Commune','https://assets.tcgdex.net/fr/bw/bw1/44/high.webp','Électrique','Noir & Blanc',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
+	('Pokemon','Blitzle','60','Common','https://assets.tcgdex.net/en/bw/bw1/40/high.webp','Lightning','Black & White',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fighting' AND weaknessValue = '×2'),null),
+	('Pokémon','Yanma','70','Commune','https://assets.tcgdex.net/fr/bw/bw6/4/high.webp','Plante','Dragons Éxaltés',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Électrique' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Combat' AND resistanceValue = '-20')),
+	('Pokemon','Bellossom','110','Rare','https://assets.tcgdex.net/en/bw/bw7/4/high.webp','Grass','Boundaries Crossed',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Water' AND resistanceValue = '-20')),
+	('Pokémon','Escroco','90','Peu Commune','https://assets.tcgdex.net/fr/bw/bw1/64/high.webp','Combat','Noir & Blanc',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Électrique' AND resistanceValue = '-20')),
+	('Pokemon','Timburr','60','Common','https://assets.tcgdex.net/en/bw/bw5/58/high.webp','Fighting','Dark Explorers',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psychic' AND weaknessValue = '×2'),null),
+	('Pokémon','Nénupiot','60','Commune','https://assets.tcgdex.net/fr/bw/bw8/29/high.webp','Eau','Tempète Plasma',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Électrique' AND weaknessValue = '×2'),null),
+	('Pokemon','Piplup','60','Common','https://assets.tcgdex.net/en/bw/bw5/27/high.webp','Water','Dark Explorers',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Lightning' AND weaknessValue = '×2'),null),
+	('Pokémon','Roitiflam','150','Rare','https://assets.tcgdex.net/fr/bw/bw1/19/high.webp','Feu','Noir & Blanc',4,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),null),
+	('Pokemon','Charmander','70','Common','https://assets.tcgdex.net/en/bw/bw11/17/high.webp','Fire','Legendary Treasures',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Water' AND weaknessValue = '×2'),null),
+	('Pokémon','Reshiram','130','Rare','https://assets.tcgdex.net/fr/bw/bw9/17/high.webp','Feu','Glaciation Plasma',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),null),
+	('Pokemon','Sawsbuck','100','Rare','https://assets.tcgdex.net/en/bw/bw2/16/high.webp','Grass','Emerging Powers',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Water' AND resistanceValue = '-20')),
+	('Dresseur','Cherch’Objet',null,'Rare','https://assets.tcgdex.net/fr/bw/bw8/128/high.webp',null,'Tempète Plasma',null,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityEffect = 'Défaussez 2 cartes de votre main. (Si vous ne pouvez pas défausser 2 cartes, vous ne pouvez pas jouer cette carte.) Placez une carte Dresseur de votre pile de défausse dans votre main.'),null,null),
+	('Pokemon','Swablu','40','Common','https://assets.tcgdex.net/en/bw/bw6/105/high.webp','Colorless','Dragons Exalted',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Lightning' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Fighting' AND resistanceValue = '-20')),
+	('Pokémon','Grodoudou','90','Rare','https://assets.tcgdex.net/fr/bw/bw4/79/high.webp','Incolore','Destinées Futures',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
+	('Pokemon','Murkrow','70','Common','https://assets.tcgdex.net/en/bw/bw6/72/high.webp','Darkness','Dragons Exalted',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Lightning' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Fighting' AND resistanceValue = '-20')),
+	('Pokémon','Chinchidou','60','Commune','https://assets.tcgdex.net/fr/bw/bw6/109/high.webp','Incolore','Dragons Éxaltés',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),null),
+	('Trainer','Old Amber Aerodactyl',null,'Uncommon','https://assets.tcgdex.net/en/bw/bw5/97/high.webp',null,'Dark Explorers',null,'en',null,null,null),
+	('Pokémon','Géolithe','90','Peu Commune','https://assets.tcgdex.net/fr/bw/bw2/52/high.webp','Combat','Pouvoirs Émergents',3,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Plante' AND weaknessValue = '×2'),null),
+	('Pokemon','Cofagrigus','90','Rare','https://assets.tcgdex.net/en/bw/bw3/47/high.webp','Psychic','Noble Victories',2,'en',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Durable Body' AND abilityEffect = 'If this Pokémon would be Knocked Out by damage from an attack, flip a coin. If heads, this Pokémon is not Knocked Out and its remaining HP becomes 10 instead.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Darkness' AND weaknessValue = '×2'),null),
+	('Pokémon','Maskadra','80','Rare','https://assets.tcgdex.net/fr/bw/bw10/2/high.webp','Plante','Explosion Plasma',1,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Aspire-Outil' AND abilityEffect = 'Autant de fois que vous le voulez pendant votre tour (avant votre attaque), vous pouvez placer une carte Outil Pokémon attachée à 1 de vos Pokémon dans votre main.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Feu' AND weaknessValue = '×2'),null),
+	('Pokemon','Seedot','40','Common','https://assets.tcgdex.net/en/bw/bw4/2/high.webp','Grass','Next Destinies',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Water' AND resistanceValue = '-20')),
+	('Pokémon','Mammochon','150','Rare','https://assets.tcgdex.net/fr/bw/bw8/28/high.webp','Eau','Tempète Plasma',4,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Métal' AND weaknessValue = '×2'),null),
+	('Pokemon','Wailord','200','Rare','https://assets.tcgdex.net/en/bw/bw6/26/high.webp','Water','Dragons Exalted',4,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Lightning' AND weaknessValue = '×2'),null),
+	('Pokémon','Riolu','70','Commune','https://assets.tcgdex.net/fr/bw/bw4/63/high.webp','Combat','Destinées Futures',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psy' AND weaknessValue = '×2'),null),
+	('Pokemon','Aron','60','Common','https://assets.tcgdex.net/en/bw/bw10/57/high.webp','Metal','Plasma Blast',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psychic' AND resistanceValue = '-20')),
+	('Pokémon','Rayquaza','120','Rare','https://assets.tcgdex.net/fr/bw/dv1/11/high.webp','Dragon','Coffre des Dragons',3,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
+	('Pokemon','Cottonee','50','Common','https://assets.tcgdex.net/en/bw/bw2/10/high.webp','Grass','Emerging Powers',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Water' AND resistanceValue = '-20')),
+	('Pokémon','Aflamanoir','90','Peu Commune','https://assets.tcgdex.net/fr/bw/bw8/23/high.webp','Feu','Tempète Plasma',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Eau' AND weaknessValue = '×2'),null),
+	('Pokemon','Snorunt','60','Common','https://assets.tcgdex.net/en/bw/bw10/21/high.webp','Water','Plasma Blast',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Metal' AND weaknessValue = '×2'),null),
+	('Pokémon','Dimoret','90','Rare','https://assets.tcgdex.net/fr/bw/bw9/66/high.webp','Obscurité','Glaciation Plasma',1,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Combat' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psy' AND resistanceValue = '-20')),
+	('Pokemon','Jirachi-EX','90','Rare','https://assets.tcgdex.net/en/bw/bw10/60/high.webp','Metal','Plasma Blast',1,'en',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Stellar Guidance' AND abilityEffect = 'When you play this Pokémon from your hand onto your Bench, you may search your deck for a Supporter card, reveal it, and put it into your hand. Shuffle your deck afterward.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Fire' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Psychic' AND resistanceValue = '-20')),
+	('Pokémon','Deoxys-EX','170','Ultra Rare','https://assets.tcgdex.net/fr/bw/bw9/111/high.webp','Psy','Glaciation Plasma',2,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Connexion Renforcée' AND abilityEffect = 'Les attaques de vos Pokémon de la Team Plasma (excepté Deoxys-EX) infligent 10 dégâts supplémentaires aux Pokémon Actifs (avant application de la Faiblesse et de la Résistance).'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psy' AND weaknessValue = '×2'),null),
+	('Pokemon','Tornadus','110','Ultra Rare','https://assets.tcgdex.net/en/bw/bw2/98/high.webp','Colorless','Emerging Powers',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Lightning' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Fighting' AND resistanceValue = '-20')),
+	('Pokémon','Moyade','120','Rare','https://assets.tcgdex.net/fr/bw/bw4/35/high.webp','Eau','Destinées Futures',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Électrique' AND weaknessValue = '×2'),null),
+	('Pokemon','Buizel','70','Common','https://assets.tcgdex.net/en/bw/bw6/32/high.webp','Water','Dragons Exalted',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Lightning' AND weaknessValue = '×2'),null),
+	('Pokémon','Kyurem Blanc ex','180','Rare','https://assets.tcgdex.net/fr/bw/bwp/BW63/high.webp','Dragon','Promo BW',3,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
+	('Pokemon','Rayquaza-EX','170','Ultra Rare','https://assets.tcgdex.net/en/bw/bw6/123/high.webp','Dragon','Dragons Exalted',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Dragon' AND weaknessValue = '×2'),null),
+	('Pokémon','Artikodin','120','Rare','https://assets.tcgdex.net/fr/bw/bw4/27/high.webp','Eau','Destinées Futures',2,'fr',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Métal' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Combat' AND resistanceValue = '-20')),
+	('Pokemon','Darmanitan','120','Rare','https://assets.tcgdex.net/en/bw/bw1/25/high.webp','Fire','Black & White',2,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Water' AND weaknessValue = '×2'),null),
+	('Pokémon','Sidérella','130','Rare','https://assets.tcgdex.net/fr/bw/bw2/47/high.webp','Psy','Pouvoirs Émergents',2,'fr',(SELECT abilityId FROM P10_Ability WHERE abilityName = 'Zone Magique' AND abilityEffect = 'Tant que ce Pokémon est votre Pokémon Actif, votre adversaire ne peut pas jouer de cartes Objet de sa main.'),(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Psy' AND weaknessValue = '×2'),null),
+	('Pokemon','Swanna','90','Uncommon','https://assets.tcgdex.net/en/bw/bw7/43/high.webp','Water','Boundaries Crossed',1,'en',null,(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = 'Lightning' AND weaknessValue = '×2'),(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = 'Fighting' AND resistanceValue = '-20'));
 
 INSERT INTO P10_Contient(cardId, attackId) VALUES
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw4/79/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Round' AND attackCost = 'ColorlessColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw4/79/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Hypnoblast' AND attackCost = 'ColorlessColorlessColorless' AND attackDamage = '60'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/123/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Coupe-Vent' AND attackCost = 'IncoloreIncolore' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/103/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Crushing Blow' AND attackCost = 'ColorlessColorlessColorlessColorless' AND attackDamage = '100'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/17/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Nitrocharge' AND attackCost = 'Incolore' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/17/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Tacle Feu' AND attackCost = 'FeuFeuIncolore' AND attackDamage = '50'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw3/15/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'V-create' AND attackCost = 'FireColorless' AND attackDamage = '100'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/80/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Coup de Queue' AND attackCost = 'Combat' AND attackDamage = '10'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/80/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Piqûre Infernale' AND attackCost = 'CombatIncolore' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw9/72/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Cut' AND attackCost = 'DarknessColorless' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/5/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Tit''Sieste' AND attackCost = 'Plante' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/5/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Fouet Lianes' AND attackCost = 'PlanteIncoloreIncolore' AND attackDamage = '50'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw10/4/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Lifesplosion' AND attackCost = 'Grass' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw10/4/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Spiral Drain' AND attackCost = 'GrassColorlessColorless' AND attackDamage = '60'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/36/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Roulade' AND attackCost = 'IncoloreIncolore' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/36/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Pistolet à O' AND attackCost = 'EauIncoloreIncolore' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw9/32/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Rollout' AND attackCost = 'LightningColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/59/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Rêve Douillet' AND attackCost = 'PsyPsy' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/54/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Electriwave' AND attackCost = 'LightningColorlessColorless' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/54/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Shock Wave' AND attackCost = 'LightningColorlessColorlessColorless' AND attackDamage = '80'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/91/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Vendetta' AND attackCost = 'IncoloreIncolore' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/91/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Peignée' AND attackCost = 'IncoloreIncoloreIncoloreIncolore' AND attackDamage = '80'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW76/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Rayon Électrique' AND attackCost = 'Électrique' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW76/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Destruction' AND attackCost = 'ÉlectriqueIncoloreIncolore' AND attackDamage = '100'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/41/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Rage Massive' AND attackCost = 'EauIncolore' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/41/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Chute de Glacier' AND attackCost = 'EauEauIncolore' AND attackDamage = '90'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/38/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Present' AND attackCost = 'Colorless' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/38/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Icy Wind' AND attackCost = 'WaterColorless' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/97/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Chargeur' AND attackCost = 'Incolore' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/97/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Éclair Désastre' AND attackCost = 'ÉlectriqueÉlectriqueIncolore' AND attackDamage = '80'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/79/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Metal Claw' AND attackCost = 'MetalColorless' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/79/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Wreak Havoc' AND attackCost = 'MetalMetalColorless' AND attackDamage = '60'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/51/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Attraction' AND attackCost = 'Incolore' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/51/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Crèvecœur' AND attackCost = 'PsyIncolore' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/46/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Deleting Glare' AND attackCost = 'Psychic' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/46/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Super Psy Bolt' AND attackCost = 'PsychicColorlessColorless' AND attackDamage = '50'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/68/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Mainmise' AND attackCost = 'Incolore' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/68/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Yoga' AND attackCost = 'CombatIncolore' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/62/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Rock Throw' AND attackCost = 'ColorlessColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw3/14/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Force Ajoutée' AND attackCost = 'FeuIncolore' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/13/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Bug Bite' AND attackCost = 'GrassColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/16/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Absorption' AND attackCost = 'FeuFeuIncolore' AND attackDamage = '70'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/15/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Double Draw' AND attackCost = 'Colorless' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/15/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Leaf Wallop' AND attackCost = 'GrassColorless' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/62/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Étonnement' AND attackCost = 'Psy' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/62/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Piqûre Psy' AND attackCost = 'PsyIncoloreIncolore' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/56/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Fortunate Draw' AND attackCost = 'Psychic' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/56/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Miracle Wing' AND attackCost = 'PsychicColorlessColorless' AND attackDamage = '60'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/11/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Méga-Sangsue' AND attackCost = 'Plante' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/11/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Dard-Nuée' AND attackCost = 'PlantePlanteIncolore' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw5/10/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Body Slam' AND attackCost = 'GrassGrass' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW48/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Glissement' AND attackCost = 'EauMétalIncolore' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw9/119/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Sludge Toss' AND attackCost = 'PsychicPsychicColorless' AND attackDamage = '60'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/46/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Impact-Flash' AND attackCost = 'Électrique' AND attackDamage = '60'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/46/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Mâchouille' AND attackCost = 'ÉlectriqueÉlectriqueIncolore' AND attackDamage = '80'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/42/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Quick Turn' AND attackCost = 'LightningColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/36/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Choc Mental' AND attackCost = 'PsyIncolore' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/33/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Firefighting' AND attackCost = 'Water' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw6/84/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Glissement' AND attackCost = 'EauMétalIncolore' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw3/76/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Finishing Blow' AND attackCost = 'Darkness' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw3/76/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Night Slash' AND attackCost = 'DarknessColorless' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw10/58/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Griffe Acier' AND attackCost = 'Métal' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw10/58/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Tête de Fer' AND attackCost = 'MétalIncoloreIncolore' AND attackDamage = '50'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/53/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Shear' AND attackCost = 'Fighting' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/53/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Rock Bullet' AND attackCost = 'ColorlessColorlessColorlessColorless' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/88/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Cru-Aile' AND attackCost = 'IncoloreIncolore' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/88/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Rapace' AND attackCost = 'IncoloreIncoloreIncolore' AND attackDamage = '90'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/80/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Gust' AND attackCost = 'ColorlessColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/69/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Crachat d’Acide' AND attackCost = 'Obscurité' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/69/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Pied Voltige' AND attackCost = 'ObscuritéObscuritéIncolore' AND attackDamage = '70'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw10/62/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Headbutt' AND attackCost = 'Colorless' AND attackDamage = '10'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw10/62/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Dragon Claw' AND attackCost = 'FireWater' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/58/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Kesa-Gatame' AND attackCost = 'CombatIncolore' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/53/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Low Kick' AND attackCost = 'LightningColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/53/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Magnetic Blast' AND attackCost = 'LightningColorlessColorless' AND attackDamage = '50'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/10/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Appel à la Famille' AND attackCost = 'Incolore' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/10/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Feuille Sangsue' AND attackCost = 'PlantePlante' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/9/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Tangle Drag' AND attackCost = 'Colorless' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/9/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Spiral Drain' AND attackCost = 'ColorlessColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw4/79/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Round' AND attackCost = 'ColorlessColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw4/79/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Hypnoblast' AND attackCost = 'ColorlessColorlessColorless' AND attackDamage = '60'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW51/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Croc Ultratoxik' AND attackCost = 'PsyIncoloreIncolore' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/120/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Replace' AND attackCost = 'Psychic' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw6/14/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Fouets Croisés' AND attackCost = 'Plante' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw6/14/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Point Poison' AND attackCost = 'PlanteIncoloreIncolore' AND attackDamage = '60'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = '/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Lunge' AND attackCost = 'FightingMetal' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW96/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Grosse Bourrasque' AND attackCost = 'IncoloreIncolore' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW96/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Violente Déflagration' AND attackCost = 'IncoloreIncoloreIncolore' AND attackDamage = '100'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/23/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Soin' AND attackCost = 'Incolore' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/23/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Pistolet à O' AND attackCost = 'Eau' AND attackDamage = '10'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/21/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Rock Smash' AND attackCost = 'ColorlessColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/21/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Fire Punch' AND attackCost = 'FireFireColorlessColorless' AND attackDamage = '70'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw8/32/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Bite' AND attackCost = 'WaterColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw3/84/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Pression Énergétique' AND attackCost = 'MétalIncolore' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw3/84/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Brise-Fer' AND attackCost = 'MétalMétalIncolore' AND attackDamage = '80'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw8/76/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Kick' AND attackCost = 'ColorlessColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw8/76/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Feint' AND attackCost = 'FightingColorlessColorless' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/dv1/8/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Déchiquetage' AND attackCost = 'FeuEauIncoloreIncolore' AND attackDamage = '90'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw3/7/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'X-Scissor' AND attackCost = 'GrassColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw3/7/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Reckless Charge' AND attackCost = 'GrassColorlessColorless' AND attackDamage = '80'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/107/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Son Destructeur' AND attackCost = 'IncoloreIncoloreIncolore' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/107/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Chant Canon' AND attackCost = 'IncoloreIncoloreIncoloreIncolore' AND attackDamage = '50'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/96/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Draw In' AND attackCost = 'Colorless' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/96/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Dragon Headbutt' AND attackCost = 'PsychicDarknessColorless' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW09/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Machination' AND attackCost = 'Obscurité' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW09/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Tricherie' AND attackCost = 'IncoloreIncolore' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw9/83/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Deafen' AND attackCost = 'ColorlessColorlessColorless' AND attackDamage = '60'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw9/83/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Healwing' AND attackCost = 'GrassLightningColorlessColorless' AND attackDamage = '90'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw4/56/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Smack' AND attackCost = 'ColorlessColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw4/56/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Psychic' AND attackCost = 'PsychicColorlessColorless' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/84/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Vortex Draconique' AND attackCost = 'Incolore' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/84/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Triple Décharge' AND attackCost = 'Eau' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/77/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Psychic' AND attackCost = 'Psychic' AND attackDamage = '10'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/77/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Echoed Voice' AND attackCost = 'PsychicColorlessColorless' AND attackDamage = '50'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/13/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Para-Spore' AND attackCost = 'Plante' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/13/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Coupe' AND attackCost = 'PlanteIncolore' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/12/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Encore' AND attackCost = 'Colorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/12/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'U-turn' AND attackCost = 'GrassGrass' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/106/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Ultrason' AND attackCost = 'Incolore' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/106/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Mégaphone' AND attackCost = 'IncoloreIncoloreIncolore' AND attackDamage = '50'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/113/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Vol Supersonique' AND attackCost = 'PsyIncolore' AND attackDamage = '40'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/113/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Lumi-Éclat' AND attackCost = 'EauPsyIncolore' AND attackDamage = '150'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/99/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Double Hit' AND attackCost = 'Colorless' AND attackDamage = '10'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/53/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Balayage' AND attackCost = 'ÉlectriqueIncolore' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/53/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Explosion Magnétique' AND attackCost = 'ÉlectriqueIncoloreIncolore' AND attackDamage = '50'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/48/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Cursed Drop' AND attackCost = 'Psychic' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/137/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Hydrocanon' AND attackCost = 'IncoloreIncoloreIncoloreIncolore' AND attackDamage = '60'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw8/107/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Destructive Sound' AND attackCost = 'ColorlessColorlessColorless' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw8/107/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Round' AND attackCost = 'ColorlessColorlessColorlessColorless' AND attackDamage = '50'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/62/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Mania' AND attackCost = 'CombatCombatIncolore' AND attackDamage = '70'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw10/56/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Dark Clamp' AND attackCost = 'DarknessColorless' AND attackDamage = '30'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw10/56/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Blazing Claws' AND attackCost = 'DarknessColorlessColorless' AND attackDamage = '60'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/68/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Piqûre Psy' AND attackCost = 'PsyIncolore' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw8/61/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Powerful Storm' AND attackCost = 'ColorlessColorless' AND attackDamage = '20'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw8/61/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Swift Lunge' AND attackCost = 'PsychicColorlessColorless' AND attackDamage = '80'))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw3/83/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Devour' AND attackCost = 'Metal' AND attackDamage = null))
-	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw3/83/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Vice Grip' AND attackCost = 'ColorlessColorless' AND attackDamage = '30'))
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW18/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Flammes Calcinantes' AND attackCost = 'FeuIncolore' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/46/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Impact-Flash' AND attackCost = 'Électrique' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/46/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Mâchouille' AND attackCost = 'ÉlectriqueÉlectriqueIncolore' AND attackDamage = '80')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/42/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Quick Turn' AND attackCost = 'LightningColorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/32/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Éclair' AND attackCost = 'Électrique' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/32/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Acrobatie' AND attackCost = 'IncoloreIncolore' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/29/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Glinting Claw' AND attackCost = 'FireColorlessColorless' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/29/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Brave Fire' AND attackCost = 'FireFireColorlessColorless' AND attackDamage = '150')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW61/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Lame Ointe' AND attackCost = 'IncoloreIncoloreIncolore' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/69/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Morsure' AND attackCost = 'Obscurité' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/69/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Poing Tire-Bouchon' AND attackCost = 'ObscuritéIncoloreIncolore' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/63/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Revenge' AND attackCost = 'Colorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/63/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Poison Jab' AND attackCost = 'PsychicColorlessColorless' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/117/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Mélodie Apaisante' AND attackCost = 'Incolore' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw7/117/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Coud''Pied Éjecteur' AND attackCost = 'IncoloreIncoloreIncolore' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw8/100/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Raging Pecks' AND attackCost = 'Colorless' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw8/100/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Drill Peck' AND attackCost = 'ColorlessColorlessColorless' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/77/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Cornes de Métal' AND attackCost = 'MétalIncolore' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/77/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Lame Sainte' AND attackCost = 'MétalMétalIncolore' AND attackDamage = '100')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/70/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Pin Missile' AND attackCost = 'MetalColorless' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw3/60/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Lueur Sinistre' AND attackCost = 'PsyPsyIncolore' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/55/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Electripult' AND attackCost = 'LightningColorless' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw3/35/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Hâte' AND attackCost = 'Électrique' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/32/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Thundershock' AND attackCost = 'Lightning' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/32/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Acrobatics' AND attackCost = 'ColorlessColorless' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/102/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Bâillement' AND attackCost = 'Incolore' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw6/97/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Dracoxplosion' AND attackCost = 'PsyObscuritéObscuritéIncolore' AND attackDamage = '140')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/88/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Night Spear' AND attackCost = 'DarknessDarknessColorless' AND attackDamage = '90')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw10/11/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Mégalo Canon' AND attackCost = 'PlantePlanteIncolore' AND attackDamage = '100')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw9/10/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Rapid-Fire Needles' AND attackCost = 'Grass' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw9/10/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Payback' AND attackCost = 'GrassColorless' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/16/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Absorption' AND attackCost = 'FeuFeuIncolore' AND attackDamage = '70')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/15/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Double Draw' AND attackCost = 'Colorless' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/15/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Leaf Wallop' AND attackCost = 'GrassColorless' AND attackDamage = '40')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/13/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Mâchouille' AND attackCost = 'FeuIncolore' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/13/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Explosion de Chaleur' AND attackCost = 'FeuIncoloreIncolore' AND attackDamage = '70')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/12/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Cutting Arm' AND attackCost = 'GrassColorlessColorless' AND attackDamage = '40')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw6/55/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Prescience' AND attackCost = 'Psy' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/50/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Beat' AND attackCost = 'Colorless' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/50/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Gust' AND attackCost = 'PsychicColorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/24/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Roussi' AND attackCost = 'Feu' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/24/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Roulade' AND attackCost = 'IncoloreIncolore' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw9/21/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Slam' AND attackCost = 'WaterColorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw6/43/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Écras''Énergie' AND attackCost = 'Électrique' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw6/43/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Impact-Flash' AND attackCost = 'ÉlectriqueIncoloreIncolore' AND attackDamage = '80')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/39/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Venoshock' AND attackCost = 'Psychic' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/39/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Steamroller' AND attackCost = 'ColorlessColorlessColorless' AND attackDamage = '40')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/83/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Pull Out' AND attackCost = 'Colorless' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/83/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Iron Head' AND attackCost = 'MetalColorless' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/22/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Giclée de Boue' AND attackCost = 'EauIncoloreIncolore' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw9/20/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Refreshing Rain' AND attackCost = 'Colorless' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw9/20/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Gold Breaker' AND attackCost = 'WaterColorless' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/46/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Regard Dépouillant' AND attackCost = 'Psy' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/46/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Super Psy' AND attackCost = 'PsyIncoloreIncolore' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw5/42/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Static Shock' AND attackCost = 'Lightning' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/60/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Pioche Synchro' AND attackCost = 'Psy' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/60/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'DaruMax' AND attackCost = 'IncoloreIncolore' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw1/55/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Cell Culture' AND attackCost = 'Psychic' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw1/55/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Rollout' AND attackCost = 'PsychicColorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/10/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Cotogarde' AND attackCost = 'Plante' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw3/9/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Rollout' AND attackCost = 'Grass' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/3/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Bataille' AND attackCost = 'Plante' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/3/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Double Coup d''Boule' AND attackCost = 'PlantePlante' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/3/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Acrobatics' AND attackCost = 'Grass' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw3/4/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Collision' AND attackCost = 'Incolore' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw3/4/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Vol-Vie' AND attackCost = 'PlanteIncolore' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/4/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Whirlwind' AND attackCost = 'ColorlessColorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/58/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Scarf Hold' AND attackCost = 'FightingColorless' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/56/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Claque' AND attackCost = 'IncoloreIncolore' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/56/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Psyko' AND attackCost = 'PsyIncoloreIncolore' AND attackDamage = '40')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/51/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Smack Down' AND attackCost = 'FightingColorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/51/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Power Gem' AND attackCost = 'FightingFightingColorlessColorless' AND attackDamage = '80')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW44/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Colère' AND attackCost = 'IncoloreIncolore' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW44/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Ère Glaciaire' AND attackCost = 'EauEauIncolore' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw9/118/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Psychic' AND attackCost = 'PsychicColorlessColorless' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/30/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Morsure' AND attackCost = 'Incolore' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/30/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Crocs à Vif' AND attackCost = 'Eau' AND attackDamage = '40')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw10/27/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Slam' AND attackCost = 'WaterColorlessColorless' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/44/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Para-Dard' AND attackCost = 'Électrique' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw1/40/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Rear Kick' AND attackCost = 'LightningColorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw6/4/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Cyclone' AND attackCost = 'IncoloreIncolore' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/4/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Grass Knot' AND attackCost = 'Grass' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/4/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Petal Dance' AND attackCost = 'GrassColorlessColorless' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/64/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Tourmente' AND attackCost = 'Incolore' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/64/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Morsure' AND attackCost = 'CombatIncoloreIncolore' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw5/58/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Low Kick' AND attackCost = 'Colorless' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw5/58/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Hammer In' AND attackCost = 'FightingColorlessColorless' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/29/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Bulles d''O' AND attackCost = 'EauIncolore' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw5/27/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Fury Attack' AND attackCost = 'Water' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/19/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Tacle Feu' AND attackCost = 'FeuIncoloreIncolore' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw1/19/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Boutefeu' AND attackCost = 'FeuFeuIncoloreIncolore' AND attackDamage = '150')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/17/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Draw In' AND attackCost = 'Fire' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw11/17/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Flare' AND attackCost = 'FireColorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/17/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Flamme Purifiante' AND attackCost = 'FeuIncoloreIncolore' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/17/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Flamme Croix' AND attackCost = 'FeuIncoloreIncoloreIncolore' AND attackDamage = '80')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/16/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Push Down' AND attackCost = 'ColorlessColorless' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/16/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Take Down' AND attackCost = 'GrassColorless' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/105/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Peck' AND attackCost = 'Colorless' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/79/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Chant Canon' AND attackCost = 'IncoloreIncolore' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/79/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Hypnoblast' AND attackCost = 'IncoloreIncoloreIncolore' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/72/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Peck' AND attackCost = 'Colorless' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/72/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Wing Attack' AND attackCost = 'DarknessColorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw6/109/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Écras''Face' AND attackCost = 'Incolore' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw6/109/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Attaque Imprudente' AND attackCost = 'IncoloreIncolore' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/52/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Coup d''Boule' AND attackCost = 'IncoloreIncolore' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/52/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Grosse Gamelle' AND attackCost = 'CombatIncoloreIncolore' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw3/47/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Ambush' AND attackCost = 'PsychicColorless' AND attackDamage = '40')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw10/2/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Piqûre' AND attackCost = 'IncoloreIncoloreIncolore' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw4/2/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Trip Over' AND attackCost = 'Colorless' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/28/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Roc Gelé' AND attackCost = 'EauIncoloreIncolore' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/28/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Coup d''Boule Sans Fin' AND attackCost = 'EauEauIncoloreIncolore' AND attackDamage = '90')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/26/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Water Cannon' AND attackCost = 'Water' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/26/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Giant Wave' AND attackCost = 'WaterColorlessColorlessColorless' AND attackDamage = '80')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/63/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Koud''Poing' AND attackCost = 'Incolore' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/63/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Vive-Attaque' AND attackCost = 'CombatIncolore' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw10/57/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Iron Head' AND attackCost = 'Metal' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw10/57/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Headbutt' AND attackCost = 'MetalColorlessColorless' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/dv1/11/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Dracochoc' AND attackCost = 'Électrique' AND attackDamage = '40')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/dv1/11/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Déchiquetage' AND attackCost = 'FeuÉlectriqueIncolore' AND attackDamage = '90')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/10/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Cotton Guard' AND attackCost = 'Grass' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/23/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Flamme Attrayante' AND attackCost = 'Feu' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw8/23/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Léchouilles Incendiaires' AND attackCost = 'FeuFeuFeu' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw10/21/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Powder Snow' AND attackCost = 'Water' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw10/21/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Headbutt' AND attackCost = 'WaterColorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/66/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Grêle' AND attackCost = 'Incolore' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/66/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Calomnie' AND attackCost = 'ObscuritéIncolore' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw10/60/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Hypnostrike' AND attackCost = 'MetalColorlessColorless' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw9/111/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Force Spirale' AND attackCost = 'PsyIncolore' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/98/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Energy Wheel' AND attackCost = 'Colorless' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw2/98/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Hurricane' AND attackCost = 'ColorlessColorlessColorless' AND attackDamage = '80')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/35/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Désir de Vengeance' AND attackCost = 'Incolore' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/35/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Absorption' AND attackCost = 'EauEauIncolore' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/32/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Wave Splash' AND attackCost = 'Colorless' AND attackDamage = '10')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW63/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Flux Draconique' AND attackCost = 'FeuIncoloreIncolore' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bwp/BW63/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Feu Glacé' AND attackCost = 'FeuFeuEauIncolore' AND attackDamage = '150')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/123/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Celestial Roar' AND attackCost = 'Colorless' AND attackDamage = null)),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw6/123/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Dragon Burst' AND attackCost = 'FireLightning' AND attackDamage = '60')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/27/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Laser Glace' AND attackCost = 'EauIncoloreIncolore' AND attackDamage = '50')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw4/27/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Aile Glace' AND attackCost = 'EauIncoloreIncoloreIncolore' AND attackDamage = '80')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw1/25/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Fire Fang' AND attackCost = 'FireColorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw1/25/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Thrash' AND attackCost = 'FireColorlessColorless' AND attackDamage = '70')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/fr/bw/bw2/47/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Mentalisme' AND attackCost = 'IncoloreIncoloreIncolore' AND attackDamage = '30')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/43/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Aerial Ace' AND attackCost = 'ColorlessColorless' AND attackDamage = '20')),
+	((SELECT cardId FROM P10_Card WHERE cardImg = 'https://assets.tcgdex.net/en/bw/bw7/43/high.webp'), (SELECT attackId FROM P10_Attack WHERE attackName = 'Defog' AND attackCost = 'WaterColorlessColorless' AND attackDamage = '60'));

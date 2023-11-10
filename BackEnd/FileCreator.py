@@ -360,7 +360,7 @@ class Gestionnaire:
                     self.cible.write(
                         f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), "
                         f"(SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' "
-                        f"AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
+                        f"AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}')),")
                 else:
                     self.cible.write(
                         f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES "
@@ -371,9 +371,9 @@ class Gestionnaire:
             elif donnes[12] != "null" and donnes[16] != "null":
                 if not self.oracle:
                     self.cible.write(
-                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
+                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[12]}' AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}')),")
                     self.cible.write(
-                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[16]}' AND attackCost = '{donnes[17]}' AND attackDamage = '{donnes[18]}'))")
+                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[16]}' AND attackCost = '{donnes[17]}' AND attackDamage = '{donnes[18]}')),")
                 else:
                     self.cible.write(
                         f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
@@ -386,6 +386,9 @@ class Gestionnaire:
                         f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
                         f"WHERE attackName {data16} AND attackCost {data17} AND "
                         f"attackDamage {data18}));")
+        if not self.oracle:
+            self.cible.seek(self.cible.tell() - 1)
+            self.cible.write(";")
 
     def nettoyage(self):
         self.cible.seek(0)
