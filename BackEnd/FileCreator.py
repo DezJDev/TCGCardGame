@@ -110,7 +110,7 @@ class Gestionnaire:
                     self.cible.write(f"{chaine}")
 
             else:
-                header = f"\n\tINTO P10_{nameTable}("
+                header = f"\nINSERT INTO P10_{nameTable}("
                 for i in range(nbAttributs):
                     if i == nbAttributs - 1:
                         header += f"{attributsTable[i]}) VALUES ("
@@ -174,11 +174,10 @@ class Gestionnaire:
 
     def implementsCardOracle(self):
         Gestionnaire.newSource.seek(0)
-        self.cible.write(f"\nINSERT ALL")
         for lignes in Gestionnaire.newSource.readlines():
             donnees = traitementLigne(lignes)
 
-            chaine = "\n\tINTO P10_Card(cardCatergory,cardName," \
+            chaine = "\nINSERT INTO P10_Card(cardCatergory,cardName," \
                      "cardHP,cardRarity,cardImg,cardType,cardExtension," \
                      "cardRetreat,cardLang,abilityId,resistanceId,weaknessId) VALUES "
 
@@ -209,7 +208,6 @@ class Gestionnaire:
 
             chaine = chaine.replace("'null'", "null")
             self.cible.write(chaine + ")")
-        self.cible.write("\nSELECT * FROM dual;")
 
     def sqlTable(self):
         types = ["Incolore", "Feu", "Eau", "Plante", "Combat", "Métal", "Électrique", "Psy", "Obscurité", "Dragon",
@@ -367,7 +365,7 @@ class Gestionnaire:
                         f"AND attackCost = '{donnes[13]}' AND attackDamage = '{donnes[14]}'))")
                 else:
                     self.cible.write(
-                        f"\n\tINSERT INTO P10_Contient(cardId,attackId) VALUES "
+                        f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES "
                         f"((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), "
                         f"(SELECT attackId FROM P10_Attack WHERE attackName {data12}), "
                         f"AND attackCost {data13} AND attackDamage {data14}))")
@@ -379,12 +377,12 @@ class Gestionnaire:
                     self.cible.write(
                         f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName = '{donnes[16]}' AND attackCost = '{donnes[17]}' AND attackDamage = '{donnes[18]}'))")
                 else:
-                    self.cible.write(f"\n\tINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
+                    self.cible.write(f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
                                      f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
                                      f"WHERE attackName {data12} AND attackCost {data13} AND "
                                      f"attackDamage {data14}))")
 
-                    self.cible.write(f"\n\tINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
+                    self.cible.write(f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
                                      f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
                                      f"WHERE attackName {data16} AND attackCost {data17} AND "
                                      f"attackDamage {data18}))")
@@ -426,13 +424,11 @@ if __name__ == "__main__":
 
     gesteOracle = Gestionnaire("P10_PokemonOracle.sql", "oracle")
     gesteOracle.oracleTable()
-    gesteOracle.cible.write("INSERT ALL")
     gesteOracle.writeDataInFile([10, 11])
     gesteOracle.writeDataInFile([12, 13, 14, 15])
     gesteOracle.writeDataInFile([16, 17, 18, 19])
     gesteOracle.writeDataInFile([20, 21])
     gesteOracle.writeDataInFile([22, 23])
-    gesteOracle.cible.write("\nSELECT * FROM dual;")
     gesteOracle.implementsCardOracle()
     gesteOracle.assocTable()
     gesteOracle.nettoyage()
