@@ -83,6 +83,7 @@ class Gestionnaire:
         Gestionnaire.newSource.seek(0)
         Existing = []
         ExistingAbility = []
+
         nbAttributs = len(attributs)
         attributsTable = getAttributsFromTable(Gestionnaire.newSource.readline(), attributs)
         nameTable = getNameTable(attributsTable[0])
@@ -94,6 +95,8 @@ class Gestionnaire:
         for lignes in Gestionnaire.newSource.readlines():
             donnees = traitementLigne(lignes)
 
+            if donnees[attributs[0]] == "Métal":
+                donnees[attributs[0]] = "Metal"
             if not self.oracle:
                 if donnees[attributs[0]] != "null" and donnees[attributs[0]] not in Existing and donnees[attributs[0]] not in ExistingAbility:
                     if attributs[0] == 10:
@@ -223,7 +226,7 @@ class Gestionnaire:
 
         tbl = "DROP TABLE IF EXISTS"
         drop = f"{tbl} P10_Card;\n{tbl} P10_Attack;\n{tbl} P10_Resistance;\n{tbl} " \
-               f"P10_Weakness;\n{tbl} P10_User;\n{tbl} P10_Abitility;\n{tbl} P10_Contient;\n{tbl} P10_Collection;\n"
+               f"P10_Weakness;\n{tbl} P10_User;\n{tbl} P10_Ability;\n{tbl} P10_Contient;\n{tbl} P10_Collection;\n"
 
         abilityTable = f"CREATE TABLE IF NOT EXISTS P10_Ability(\n\tabilityId {auto} PRIMARY KEY,\n\t" \
                        f"abilityName varchar(50) NOT NULL,\n\tabilityEffect TEXT NOT NULL);\n"
