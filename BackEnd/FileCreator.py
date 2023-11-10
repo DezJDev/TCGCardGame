@@ -178,7 +178,7 @@ class Gestionnaire:
         for lignes in Gestionnaire.newSource.readlines():
             donnees = traitementLigne(lignes)
 
-            chaine = "\nINSERT INTO P10_Card(cardCatergory,cardName," \
+            chaine = "\nINSERT INTO P10_Card(cardCategory,cardName," \
                      "cardHP,cardRarity,cardImg,cardType,cardExtension," \
                      "cardRetreat,cardLang,abilityId,resistanceId,weaknessId) VALUES "
 
@@ -314,12 +314,12 @@ class Gestionnaire:
         userTable = f"CREATE TABLE P10_User(\n\tuserId NUMBER DEFAULT seq_user.nextval PRIMARY KEY,\n\t" \
                     "userName VARCHAR2(20),\n\tuserDob DATE,\n\tuserStatus VARCHAR2(10) DEFAULT 'user'," \
                     "\n\tuserLogin VARCHAR2(255),\n\tuserPass VARCHAR2(255),\n\t" \
-                    f"CONSTRAINT CheckStatus CHECK (cardCategory IN ('root', 'user')));\n"
+                    f"CONSTRAINT CheckStatus CHECK (userStatus IN ('root', 'user')));\n"
 
-        contientTable = (f"CREATE TABLE IF NOT EXISTS P10_Contient(\n\tcardId NUMBER REFERENCES P10_Card(cardId)"
+        contientTable = (f"CREATE TABLE P10_Contient(\n\tcardId NUMBER REFERENCES P10_Card(cardId)"
                          f",\n\tattackId NUMBER REFERENCES P10_Attack(attackId));\n")
 
-        collectionTable = f"CREATE TABLE IF NOT EXISTS P10_Collection(\n\tcardId NUMBER REFERENCES P10_Card(cardId)" \
+        collectionTable = f"CREATE TABLE P10_Collection(\n\tcardId NUMBER REFERENCES P10_Card(cardId)" \
                           f",\n\tuserId NUMBER REFERENCES P10_User(userId));\n"
 
         self.cible.write(
@@ -368,7 +368,7 @@ class Gestionnaire:
                     self.cible.write(
                         f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES "
                         f"((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), "
-                        f"(SELECT attackId FROM P10_Attack WHERE attackName {data12}), "
+                        f"(SELECT attackId FROM P10_Attack WHERE attackName {data12} "
                         f"AND attackCost {data13} AND attackDamage {data14}));")
 
             elif donnes[12] != "null" and donnes[16] != "null":
