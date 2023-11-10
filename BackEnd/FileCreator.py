@@ -101,7 +101,8 @@ class Gestionnaire:
                 if donnees[attributs[0]] != "null" and donnees[attributs[0]] not in Existing and donnees[attributs[0]] not in ExistingAbility:
                     if attributs[0] == 10:
                         ExistingAbility.append(donnees[attributs[0]])
-                    Existing.append(donnees[attributs[0]])
+                    if not nbAttributs > 3:
+                        Existing.append(donnees[attributs[0]])
                     chaine = f"\n\t("
                     for i in range(nbAttributs):
                         if i == (nbAttributs - 1):
