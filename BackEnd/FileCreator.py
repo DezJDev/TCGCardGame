@@ -187,8 +187,8 @@ class Gestionnaire:
                      "cardHP,cardRarity,cardImg,cardType,cardExtension," \
                      "cardRetreat,cardLang,abilityId,resistanceId,weaknessId) VALUES "
 
-            chaine += f"(seq_card.nextval,'{donnees[1]}','{donnees[2]}','{donnees[3]}',{donnees[4]},'{donnees[5]}','{donnees[6]}'," \
-                      f"'{donnees[7]}',{donnees[8]},{donnees[9]}"
+            chaine += f"(seq_card.nextval,'{donnees[1]}','{donnees[2]}',{donnees[3]},'{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
+                      f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
 
             if donnees[10] == "null" and donnees[11] != "null":
                 chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityEffect = '{donnees[11]}')"
