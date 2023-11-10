@@ -222,13 +222,13 @@ class Gestionnaire:
                f"P10_Weakness;\n{tbl} P10_User;\n{tbl} P10_Abitility;\n{tbl} P10_Contient;\n{tbl} P10_Collection;\n"
 
         abilityTable = f"CREATE TABLE IF NOT EXISTS P10_Ability(\n\tabilityId {auto} PRIMARY KEY,\n\t" \
-                       f"abilityName varchar(50) NOT NULL,\n\tabilityEffect varchar(255) NOT NULL);\n"
+                       f"abilityName varchar(50) NOT NULL,\n\tabilityEffect TEXT NOT NULL);\n"
 
         resistanceTable = f"CREATE TABLE IF NOT EXISTS P10_Resistance(\n\tresistanceId {auto} PRIMARY KEY,\n\t" \
                           f"resistanceType varchar(10) CHECK (resistanceType IN {types}),\n\tresistanceValue varchar(5) CHECK (resistanceValue IN ('/2','-20','-10','-30')));\n"
 
         weaknessTable = f"CREATE TABLE IF NOT EXISTS P10_Weakness(\n\tweaknessId {auto} PRIMARY KEY,\n\t" \
-                        f"weaknessType varchar(10) CHECK (weaknessValue IN {types}),\n\tweaknessValue varchar(5) CHECK (weaknessValue IN ('x2','+20','+10','+30')));\n"
+                        f"weaknessType varchar(10) CHECK (weaknessType IN {types}),\n\tweaknessValue varchar(5) CHECK (weaknessValue IN ('x2','+20','+10','+30')));\n"
 
         attackTable = f"CREATE TABLE IF NOT EXISTS P10_Attack(\n\tattackId {auto} PRIMARY KEY,\n\t" \
                       f"attackName varchar(50) NOT NULL,\n\tattackCost varchar(50),\n\tattackDamage varchar(4)," \
@@ -239,7 +239,7 @@ class Gestionnaire:
                     f"cardRarity varchar(50) DEFAULT 'Commune' CHECK (cardRarity IN ('Commune','Common','Uncommon','Peu Commune','Rare','Ultra Rare','Secret Rare','Magnifique','Maginfic')),\n\tcardImg varchar(20) NOT NULL,\n\tcardType varchar(10) CHECK (cardType IN {types}),\n\t" \
                     f"cardExtension TEXT NOT NULL,\n\tcardRetreat INT,\n\tcardLang varchar(20) CHECK(cardLang IN ('fr','en')),\n\t" \
                     f"abilityId INT REFERENCES P10_Ability(abilityId),\n\t" \
-                    f"resistanceId INT REFERENCES P10_Resistance(resistanceId,\n\t" \
+                    f"resistanceId INT REFERENCES P10_Resistance(resistanceId),\n\t" \
                     f"weaknessId INT REFERENCES P10_Weakness(weaknessId));\n"
 
         userTable = f"CREATE TABLE IF NOT EXISTS P10_User(\n\tuserId {auto} PRIMARY KEY,\n\t" \
