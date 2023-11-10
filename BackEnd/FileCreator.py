@@ -225,8 +225,8 @@ class Gestionnaire:
             auto = "INT AUTO_INCREMENT"
 
         tbl = "DROP TABLE IF EXISTS"
-        drop = f"{tbl} P10_Card;\n{tbl} P10_Attack;\n{tbl} P10_Resistance;\n{tbl} " \
-               f"P10_Weakness;\n{tbl} P10_User;\n{tbl} P10_Ability;\n{tbl} P10_Contient;\n{tbl} P10_Collection;\n"
+        drop = f"{tbl} P10_Contient;\n{tbl} P10_Collection;\n{tbl} P10_Card;\n{tbl} " \
+               f"P10_Weakness;\n{tbl} P10_User;\n{tbl} P10_Ability;\n{tbl} P10_Resistance;\n{tbl} P10_Attack;\n"
 
         abilityTable = f"CREATE TABLE IF NOT EXISTS P10_Ability(\n\tabilityId {auto} PRIMARY KEY,\n\t" \
                        f"abilityName varchar(50) NOT NULL,\n\tabilityEffect TEXT NOT NULL);\n"
