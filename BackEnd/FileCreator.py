@@ -122,12 +122,13 @@ class Gestionnaire:
                     chaine = header
                     for i in range(nbAttributs):
                         if i == nbAttributs - 1:
-                            chaine += f"'{donnees[attributs[i]]}')"
+                            chaine += f"'{donnees[attributs[i]]}');"
                         else:
                             chaine += f"'{donnees[attributs[i]]}',"
 
                     chaine = chaine.replace("'null'", "null")
                     self.cible.write(f"{chaine}")
+
         if not self.oracle:
             self.cible.seek(self.cible.tell() - 1)
             self.cible.write(";")
@@ -207,7 +208,7 @@ class Gestionnaire:
                 chaine += ",'null'"
 
             chaine = chaine.replace("'null'", "null")
-            self.cible.write(chaine + ")")
+            self.cible.write(chaine + ");")
 
     def sqlTable(self):
         types = ["Incolore", "Feu", "Eau", "Plante", "Combat", "Métal", "Électrique", "Psy", "Obscurité", "Dragon",
@@ -368,7 +369,7 @@ class Gestionnaire:
                         f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES "
                         f"((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), "
                         f"(SELECT attackId FROM P10_Attack WHERE attackName {data12}), "
-                        f"AND attackCost {data13} AND attackDamage {data14}))")
+                        f"AND attackCost {data13} AND attackDamage {data14}));")
 
             elif donnes[12] != "null" and donnes[16] != "null":
                 if not self.oracle:
@@ -380,12 +381,12 @@ class Gestionnaire:
                     self.cible.write(f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
                                      f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
                                      f"WHERE attackName {data12} AND attackCost {data13} AND "
-                                     f"attackDamage {data14}))")
+                                     f"attackDamage {data14}));")
 
                     self.cible.write(f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
                                      f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
                                      f"WHERE attackName {data16} AND attackCost {data17} AND "
-                                     f"attackDamage {data18}))")
+                                     f"attackDamage {data18}));")
 
     def nettoyage(self):
         self.cible.seek(0)
