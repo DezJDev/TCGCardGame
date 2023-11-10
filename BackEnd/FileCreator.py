@@ -375,7 +375,7 @@ class Gestionnaire:
             elif donnes[12] != "null" and donnes[16] != "null":
                 if not self.oracle:
                     self.cible.write(
-                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName {data12}' AND attackCost {data13}' AND attackDamage {data14})),")
+                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName {data12} AND attackCost {data13} AND attackDamage {data14})),")
                     self.cible.write(
                         f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName {data16} AND attackCost {data17} AND attackDamage {data18})),")
                 else:
