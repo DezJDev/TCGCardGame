@@ -186,7 +186,7 @@ class Gestionnaire:
 
             chaine = "\nINSERT INTO P10_Card(cardId,cardCategory,cardName," \
                      "cardHP,cardRarity,cardImg,cardType,cardExtension," \
-                     "cardRetreat,cardLang,abilityId,resistanceId,weaknessId) VALUES "
+                     "cardRetreat,cardLang,abilityId,weaknessId,resistanceId) VALUES "
 
             chaine += f"(seq_card.nextval,'{donnees[1]}','{donnees[2]}',{donnees[3]},'{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
                       f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
