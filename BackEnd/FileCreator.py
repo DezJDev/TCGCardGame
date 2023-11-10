@@ -82,6 +82,7 @@ class Gestionnaire:
     def writeDataInFile(self, attributs: list[int]):
         Gestionnaire.newSource.seek(0)
         Existing = []
+        ExistingAbility = []
         nbAttributs = len(attributs)
         attributsTable = getAttributsFromTable(Gestionnaire.newSource.readline(), attributs)
         nameTable = getNameTable(attributsTable[0])
@@ -94,7 +95,9 @@ class Gestionnaire:
             donnees = traitementLigne(lignes)
 
             if not self.oracle:
-                if donnees[attributs[0]] != "null" and donnees[attributs[0]] not in Existing:
+                if donnees[attributs[0]] != "null" and donnees[attributs[0]] not in Existing and donnees[attributs[0]] not in ExistingAbility:
+                    if attributs[0] == 10:
+                        ExistingAbility.append(donnees[attributs[0]])
                     Existing.append(donnees[attributs[0]])
                     chaine = f"\n\t("
                     for i in range(nbAttributs):
@@ -149,6 +152,7 @@ class Gestionnaire:
                 chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityEffect = '{donnees[11]}')"
 
             elif donnees[10] != "null" and donnees[11] != "null":
+
                 chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityName = '{donnees[10]}' " \
                           f"AND abilityEffect = '{donnees[11]}')"
             else:
