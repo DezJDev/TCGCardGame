@@ -105,10 +105,7 @@ class Gestionnaire:
                     chaine = f"\n\t("
                     for i in range(nbAttributs):
                         if i == (nbAttributs - 1):
-                            if nameTable == "Attack":
-                                chaine += f"'{donnees[attributs[i]]}'),"
-                            else:
-                                chaine += f"'{donnees[attributs[i]]}'),"
+                            chaine += f"'{donnees[attributs[i]]}'),"
                         else:
                             chaine += f"'{donnees[attributs[i]]}',"
                     self.cible.write(f"{chaine}")
@@ -148,7 +145,7 @@ class Gestionnaire:
         for lignes in Gestionnaire.newSource.readlines():
             donnees = traitementLigne(lignes)
 
-            chaine = f"\n\t('{donnees[1]}','{donnees[2]}','{donnees[3]}','{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
+            chaine = f"\n\t('{donnees[1]}','{donnees[2]}',{donnees[3]},'{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
                      f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
 
             if donnees[10] == "null" and donnees[11] != "null":
