@@ -289,7 +289,7 @@ class Gestionnaire:
                     "CREATE SEQUENCE seq_user;\n"
 
         abilityTable = f"CREATE TABLE P10_Ability(\n\tabilityId NUMBER PRIMARY KEY,\n\t" \
-                       "abilityName VARCHAR2(50) NOT NULL,\n\tabilityEffect CLOB NOT NULL);\n"
+                       "abilityName VARCHAR2(50) NOT NULL,\n\tabilityEffect varchar2(255) NOT NULL);\n"
 
         resistanceTable = f"CREATE TABLE P10_Resistance(\n\tresistanceId NUMBER PRIMARY KEY,\n\t" \
                           "resistanceType VARCHAR2(20) NOT NULL,\n\tresistanceValue VARCHAR2(5) DEFAULT '-20',\n\t" \
