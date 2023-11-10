@@ -243,7 +243,7 @@ class Gestionnaire:
                       f"\n\tattackEffect varchar(255));\n"
 
         cardTable = f"CREATE TABLE IF NOT EXISTS P10_Card(\n\tcardId {auto} PRIMARY KEY,\n\t" \
-                    f"cardCategory varchar(50) DEFAULT 'Pokémon' CHECK (cardCategory IN ('Pokémon','Pokemon','Dresseur','Trainer', 'Energy')),\n\tcardName varchar(50) NOT NULL,\n\tcardHP INT,\n\t" \
+                    f"cardCategory varchar(50) DEFAULT 'Pokémon' CHECK (cardCategory IN ('Pokémon','Pokemon','Dresseur','Trainer','Énergie','Energy')),\n\tcardName varchar(50) NOT NULL,\n\tcardHP INT,\n\t" \
                     f"cardRarity varchar(50) DEFAULT 'Commune' CHECK (cardRarity IN ('Commune','Common','Uncommon','Peu Commune','Rare','Ultra Rare','Secret Rare','Magnifique','Magnifique rare')),\n\tcardImg varchar(100) NOT NULL,\n\tcardType varchar(10) CHECK (cardType IN {types}),\n\t" \
                     f"cardExtension TEXT NOT NULL,\n\tcardRetreat INT,\n\tcardLang varchar(20) CHECK(cardLang IN ('fr','en')),\n\t" \
                     f"abilityId INT REFERENCES P10_Ability(abilityId),\n\t" \
@@ -315,7 +315,7 @@ class Gestionnaire:
                     "resistanceId NUMBER REFERENCES P10_Resistance(resistanceId),\n\t" \
                     "weaknessId NUMBER REFERENCES P10_Weakness(weaknessId),\n\t" \
                     f"CONSTRAINT CheckRarity CHECK (cardRarity IN ('Commune','Common','Uncommon','Peu Commune','Rare','Ultra Rare','Secret Rare','Magnifique','Magnifique rare')),\n\t" \
-                    f"CONSTRAINT CheckCategory CHECK (cardCategory IN ('Pokémon','Pokemon','Dresseur','Trainer')));\n"
+                    f"CONSTRAINT CheckCategory CHECK (cardCategory IN ('Pokémon','Pokemon','Dresseur','Trainer', 'Énergie', 'Energy')));\n"
 
         userTable = f"CREATE TABLE P10_User(\n\tuserId NUMBER DEFAULT seq_user.nextval PRIMARY KEY,\n\t" \
                     "userName VARCHAR2(20),\n\tuserDob DATE,\n\tuserStatus VARCHAR2(10) DEFAULT 'user'," \
