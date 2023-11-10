@@ -183,11 +183,11 @@ class Gestionnaire:
         for lignes in Gestionnaire.newSource.readlines():
             donnees = traitementLigne(lignes)
 
-            chaine = "\nINSERT INTO P10_Card(cardCategory,cardName," \
+            chaine = "\nINSERT INTO P10_Card(cardId,cardCategory,cardName," \
                      "cardHP,cardRarity,cardImg,cardType,cardExtension," \
                      "cardRetreat,cardLang,abilityId,resistanceId,weaknessId) VALUES "
 
-            chaine += f"('{donnees[1]}','{donnees[2]}','{donnees[3]}','{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
+            chaine += f"(seq_card.nextval,'{donnees[1]}','{donnees[2]}','{donnees[3]}','{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
                       f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
 
             if donnees[10] == "null" and donnees[11] != "null":
