@@ -56,15 +56,32 @@ class Gestionnaire:
         for j in range(nblignealea):
             francais.readline()
             anglais.readline()
+        ligneanglaise = anglais.readline()
+        check = True
+
+        while check:
+            attributsanglais = ligneanglaise.split("|")
+            valeuranglaises = []
+            for element in attributsanglais:
+                valeuranglaises.append(element.split(":")[1])
+            if valeuranglaises[5] == "/high.webp":
+                nblignealea = randint(0, numberLignes)
+                while nblignealea in ExistingLines:
+                    nblignealea = randint(0, numberLignes)
+                ExistingLines.append(nblignealea)
+                for j in range(nblignealea):
+                    ligneanglaise = anglais.readline()
+            else:
+                check = False
 
         newSource.write(francais.readline())
-        newSource.write(anglais.readline())
+        newSource.write(ligneanglaise)
 
     def __init__(self, fichierNameCible: str, extension: str):
         self.cible = open(fichierNameCible, "w+")
         self.nameCible = fichierNameCible
         self.extension = extension.capitalize()
-
+        self.attaques = []
         if extension.capitalize() == "Oracle":
             self.oracle = True
         else:
@@ -83,7 +100,6 @@ class Gestionnaire:
         Gestionnaire.newSource.seek(0)
         Existing = []
         ExistingAbility = []
-
         nbAttributs = len(attributs)
         attributsTable = getAttributsFromTable(Gestionnaire.newSource.readline(), attributs)
         nameTable = getNameTable(attributsTable[0])
@@ -105,16 +121,29 @@ class Gestionnaire:
             if not self.oracle:
                 if not isObject:
                     if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
-                        if attributs[0] == 10:
-                            ExistingAbility.append(donnees[attributs[0]])
-                        Existing.append(listeattributs)
-                        chaine = f"\n\t("
-                        for i in range(nbAttributs):
-                            if i == (nbAttributs - 1):
-                                chaine += f"'{donnees[attributs[i]]}'),"
-                            else:
-                                chaine += f"'{donnees[attributs[i]]}',"
-                        self.cible.write(f"{chaine}")
+                        if nbAttributs > 2:
+                            attaquesattributs = [donnees[attributs[0]], donnees[attributs[1]], donnees[attributs[2]],
+                                                 donnees[attributs[3]]]
+                            if attaquesattributs not in self.attaques:
+                                self.attaques.append(attaquesattributs)
+                                chaine = f"\n\t("
+                                for i in range(nbAttributs):
+                                    if i == (nbAttributs - 1):
+                                        chaine += f"'{donnees[attributs[i]]}'),"
+                                    else:
+                                        chaine += f"'{donnees[attributs[i]]}',"
+                                self.cible.write(f"{chaine}")
+                        else:
+                            if attributs[0] == 10:
+                                ExistingAbility.append(donnees[attributs[0]])
+                            Existing.append(listeattributs)
+                            chaine = f"\n\t("
+                            for i in range(nbAttributs):
+                                if i == (nbAttributs - 1):
+                                    chaine += f"'{donnees[attributs[i]]}'),"
+                                else:
+                                    chaine += f"'{donnees[attributs[i]]}',"
+                            self.cible.write(f"{chaine}")
                 else:
                     if listeattributs not in Existing:
                         chaine = f"\n\t("
@@ -134,18 +163,33 @@ class Gestionnaire:
 
                 if not isObject:
                     if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
-                        if attributs[0] == 10:
-                            ExistingAbility.append(donnees[attributs[0]])
-                        Existing.append(listeattributs)
-                        chaine = header
-                        for i in range(nbAttributs):
-                            if i == nbAttributs - 1:
-                                chaine += f"'{donnees[attributs[i]]}');"
-                            else:
-                                chaine += f"'{donnees[attributs[i]]}',"
+                        if nbAttributs > 2:
+                            attaquesattributs = [donnees[attributs[0]], donnees[attributs[1]], donnees[attributs[2]], donnees[attributs[3]]]
+                            if attaquesattributs not in self.attaques:
+                                self.attaques.append(attaquesattributs)
+                                chaine = header
+                                for i in range(nbAttributs):
+                                    if i == nbAttributs - 1:
+                                        chaine += f"'{donnees[attributs[i]]}');"
+                                    else:
+                                        chaine += f"'{donnees[attributs[i]]}',"
 
-                        chaine = chaine.replace("'null'", "null")
-                        self.cible.write(f"{chaine}")
+                                chaine = chaine.replace("'null'", "null")
+                                self.cible.write(f"{chaine}")
+
+                        else:
+                            if attributs[0] == 10:
+                                ExistingAbility.append(donnees[attributs[0]])
+                            Existing.append(listeattributs)
+                            chaine = header
+                            for i in range(nbAttributs):
+                                if i == nbAttributs - 1:
+                                    chaine += f"'{donnees[attributs[i]]}');"
+                                else:
+                                    chaine += f"'{donnees[attributs[i]]}',"
+
+                            chaine = chaine.replace("'null'", "null")
+                            self.cible.write(f"{chaine}")
                 else:
                     if listeattributs not in Existing:
                         chaine = f"\n\t("
