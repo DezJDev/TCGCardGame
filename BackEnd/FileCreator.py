@@ -121,8 +121,7 @@ class Gestionnaire:
                 listeattributs.append(donnees[attributs[i]])
             if not self.oracle:
                 if not isObject:
-                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[
-                        attributs[0]] not in ExistingAbility:
+                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
                         if nbAttributs > 2:
                             attaquesattributs = [donnees[attributs[0]], donnees[attributs[1]], donnees[attributs[2]],
                                                  donnees[attributs[3]]]
@@ -164,8 +163,7 @@ class Gestionnaire:
                         header += f"{attributsTable[i]},"
 
                 if not isObject:
-                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[
-                        attributs[0]] not in ExistingAbility:
+                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
                         if nbAttributs > 2:
                             attaquesattributs = [donnees[attributs[0]], donnees[attributs[1]], donnees[attributs[2]],
                                                  donnees[attributs[3]]]
@@ -478,6 +476,10 @@ class Gestionnaire:
             if donnes[14] == "null":
                 data14 = data14.replace("= 'null'", "IS NULL")
 
+            data15 = f"= '{donnes[15]}'"
+            if donnes[15] == "null":
+                data15 = data15.replace("= 'null'", "IS NULL")
+
             data16 = f"= '{donnes[16]}'"
             if donnes[16] == "null":
                 data16 = data16.replace("= 'null'", "IS NULL")
@@ -490,37 +492,41 @@ class Gestionnaire:
             if donnes[18] == "null":
                 data18 = data18.replace("= 'null'", "IS NULL")
 
+            data19 = f"= '{donnes[19]}'"
+            if donnes[19] == "null":
+                data19 = data19.replace("= 'null'", "IS NULL")
+
             if donnes[12] != "null" and donnes[16] == "null":
                 if not self.oracle:
                     self.cible.write(
                         f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), "
                         f"(SELECT attackId FROM P10_Attack WHERE attackName {data12} "
-                        f"AND attackCost {data13} AND attackDamage {data14})),")
+                        f"AND attackCost {data13} AND attackDamage {data14} AND attackEffect {data15})),")
                 else:
                     self.cible.write(
                         f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES "
                         f"((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), "
                         f"(SELECT attackId FROM P10_Attack WHERE attackName {data12} "
-                        f"AND attackCost {data13} AND attackDamage {data14}));")
+                        f"AND attackCost {data13} AND attackDamage {data14} AND attackEffect {data15}));")
 
             elif donnes[12] != "null" and donnes[16] != "null":
                 if not self.oracle:
                     self.cible.write(
-                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName {data12} AND attackCost {data13} AND attackDamage {data14})),")
+                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName {data12} AND attackCost {data13} AND attackDamage {data14} AND attackEffect {data15})),")
                     self.cible.write(
-                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName {data16} AND attackCost {data17} AND attackDamage {data18})),")
+                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName {data16} AND attackCost {data17} AND attackDamage {data18} AND attackEffect {data19})),")
                 else:
                     self.cible.write(
                         f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
                         f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
                         f"WHERE attackName {data12} AND attackCost {data13} AND "
-                        f"attackDamage {data14}));")
+                        f"attackDamage {data14} AND attackEffect {data15}));")
 
                     self.cible.write(
                         f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
                         f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
                         f"WHERE attackName {data16} AND attackCost {data17} AND "
-                        f"attackDamage {data18}));")
+                        f"attackDamage {data18} AND attackEffect {data19}));")
         if not self.oracle:
             self.cible.seek(self.cible.tell() - 1)
             self.cible.write(";")
