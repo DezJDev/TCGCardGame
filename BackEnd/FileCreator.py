@@ -121,7 +121,8 @@ class Gestionnaire:
                 listeattributs.append(donnees[attributs[i]])
             if not self.oracle:
                 if not isObject:
-                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
+                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[
+                        attributs[0]] not in ExistingAbility:
                         if nbAttributs > 2:
                             attaquesattributs = [donnees[attributs[0]], donnees[attributs[1]], donnees[attributs[2]],
                                                  donnees[attributs[3]]]
@@ -163,7 +164,8 @@ class Gestionnaire:
                         header += f"{attributsTable[i]},"
 
                 if not isObject:
-                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
+                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[
+                        attributs[0]] not in ExistingAbility:
                         if nbAttributs > 2:
                             attaquesattributs = [donnees[attributs[0]], donnees[attributs[1]], donnees[attributs[2]],
                                                  donnees[attributs[3]]]
@@ -398,7 +400,6 @@ class Gestionnaire:
         self.cible.write(
             f"{drops}\n{sequences}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}\n")
 
-
     def assocCollectionSQL(self):
         self.perso.seek(0)
         Gestionnaire.newSource.seek(0)
@@ -425,10 +426,37 @@ class Gestionnaire:
                     element = traitementLigne(element)
                     print(element)
                     lien = element[5]
-                    self.cible.write(f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{lien}'),(SELECT userId FROM P10_User WHERE userName = '{pseudo}')),")
+                    self.cible.write(
+                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{lien}'),(SELECT userId FROM P10_User WHERE userName = '{pseudo}')),")
         self.cible.seek(self.cible.tell() - 1)
         self.cible.write(";")
 
+    def assocCollectionOracle(self):
+        self.perso.seek(0)
+        Gestionnaire.newSource.seek(0)
+        for lignes in self.perso.readlines():
+            alea = randint(3, 7)
+            toWrite = []
+            while len(toWrite) < alea:
+                Gestionnaire.newSource.seek(0)
+                lignealea = randint(0, Gestionnaire.numberLignes)
+                courrante = ""
+                for i in range(lignealea):
+                    courrante = Gestionnaire.newSource.readline()
+                if courrante not in toWrite:
+                    toWrite.append(courrante)
+            lignes = traitementLigne(lignes)
+            pseudo = lignes[0]
+
+            print(toWrite)
+            for element in toWrite:
+                if '' == element:
+                    toWrite.remove(element)
+                else:
+                    element = traitementLigne(element)
+                    print(element)
+                    lien = element[5]
+                    self.cible.write(f"\nINSERT INTO P10_Collection(cardId,userId) VALUES ((SELECT cardId FROM P10_Card WHERE cardImg = '{lien}'),(SELECT userId FROM P10_User WHERE userName = '{pseudo}'));")
 
     def assocTable(self):
         Gestionnaire.newSource.seek(0)
@@ -566,4 +594,5 @@ if __name__ == "__main__":
     gesteOracle.writeDataInFile([22, 23])
     gesteOracle.implementsCardOracle()
     gesteOracle.assocTable()
+    gesteOracle.assocCollectionOracle()
     gesteOracle.nettoyage()
