@@ -482,7 +482,7 @@ class Gestionnaire:
         for lignes in self.perso.readlines():
             data = traitementLigne(lignes)
             date = data[1].split("-")
-            self.cible.write(f"\n\t('{data[0]}','{date[2]}-{date[1]}-{date[0]}','{data[2]}','{data[3]}','{data[4]}'),")
+            self.cible.write(f"\n\t('{data[0]}','{date[2]}-{date[0]}-{date[1]}','{data[2]}','{data[3]}','{data[4]}'),")
         self.cible.seek(self.cible.tell() - 1)
         self.cible.write(";")
 
@@ -492,7 +492,7 @@ class Gestionnaire:
             data = traitementLigne(lignes)
             date = data[1].split("-")
             self.cible.write(
-                f"INSERT INTO P10_User(userName,userDob,userStatus,userLogin,userPass) VALUES('{data[0]}',TO_DATE('{date[2]}/{date[1]}/{date[0]}','yyyy/mm/dd'),'{data[2]}','{data[3]}','{data[4]}');\n")
+                f"INSERT INTO P10_User(userName,userDob,userStatus,userLogin,userPass) VALUES('{data[0]}',TO_DATE('{date[2]}/{date[0]}/{date[1]}','yyyy/mm/dd'),'{data[2]}','{data[3]}','{data[4]}');\n")
         self.cible.seek(self.cible.tell() - 1)
         self.cible.write(";")
 
