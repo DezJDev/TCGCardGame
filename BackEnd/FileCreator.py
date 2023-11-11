@@ -95,6 +95,7 @@ class Gestionnaire:
         for lignes in Gestionnaire.newSource.readlines():
             donnees = traitementLigne(lignes)
 
+            isObject = donnees[attributs[0]] == "null" and attributs[1] == 11 and donnees[attributs[1]] != "null"
             if donnees[attributs[0]] == "Métal":
                 donnees[attributs[0]] = "Metal"
 
@@ -102,18 +103,27 @@ class Gestionnaire:
             for i in range(nbAttributs):
                 listeattributs.append(donnees[attributs[i]])
             if not self.oracle:
-                if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
-                    if attributs[0] == 10:
-                        ExistingAbility.append(donnees[attributs[0]])
-                    Existing.append(listeattributs)
-                    chaine = f"\n\t("
-                    for i in range(nbAttributs):
-                        if i == (nbAttributs - 1):
-                            chaine += f"'{donnees[attributs[i]]}'),"
-                        else:
-                            chaine += f"'{donnees[attributs[i]]}',"
-                    self.cible.write(f"{chaine}")
-
+                if not isObject:
+                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
+                        if attributs[0] == 10:
+                            ExistingAbility.append(donnees[attributs[0]])
+                        Existing.append(listeattributs)
+                        chaine = f"\n\t("
+                        for i in range(nbAttributs):
+                            if i == (nbAttributs - 1):
+                                chaine += f"'{donnees[attributs[i]]}'),"
+                            else:
+                                chaine += f"'{donnees[attributs[i]]}',"
+                        self.cible.write(f"{chaine}")
+                else:
+                    if listeattributs not in Existing:
+                        chaine = f"\n\t("
+                        for i in range(nbAttributs):
+                            if i == (nbAttributs - 1):
+                                chaine += f"'{donnees[attributs[i]]}'),"
+                            else:
+                                chaine += f"'{donnees[attributs[i]]}',"
+                        self.cible.write(f"{chaine}")
             else:
                 header = f"\nINSERT INTO P10_{nameTable}({nameTable.lower()}Id,"
                 for i in range(nbAttributs):
@@ -122,17 +132,29 @@ class Gestionnaire:
                     else:
                         header += f"{attributsTable[i]},"
 
-                if donnees[attributs[0]] != "null" and listeattributs not in Existing:
-                    Existing.append(listeattributs)
-                    chaine = header
-                    for i in range(nbAttributs):
-                        if i == nbAttributs - 1:
-                            chaine += f"'{donnees[attributs[i]]}');"
-                        else:
-                            chaine += f"'{donnees[attributs[i]]}',"
+                if not isObject:
+                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
+                        if attributs[0] == 10:
+                            ExistingAbility.append(donnees[attributs[0]])
+                        Existing.append(listeattributs)
+                        chaine = header
+                        for i in range(nbAttributs):
+                            if i == nbAttributs - 1:
+                                chaine += f"'{donnees[attributs[i]]}');"
+                            else:
+                                chaine += f"'{donnees[attributs[i]]}',"
 
-                    chaine = chaine.replace("'null'", "null")
-                    self.cible.write(f"{chaine}")
+                        chaine = chaine.replace("'null'", "null")
+                        self.cible.write(f"{chaine}")
+                else:
+                    if listeattributs not in Existing:
+                        chaine = f"\n\t("
+                        for i in range(nbAttributs):
+                            if i == (nbAttributs - 1):
+                                chaine += f"'{donnees[attributs[i]]}'),"
+                            else:
+                                chaine += f"'{donnees[attributs[i]]}',"
+                        self.cible.write(f"{chaine}")
 
         if not self.oracle:
             self.cible.seek(self.cible.tell() - 1)
@@ -153,10 +175,10 @@ class Gestionnaire:
                      f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
 
             if donnees[10] == "null" and donnees[11] != "null":
+                print("Je suis sensé être un Dresseur ou un Trainer: " + donnees[1])
                 chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityEffect = '{donnees[11]}')"
 
             elif donnees[10] != "null" and donnees[11] != "null":
-
                 chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityName = '{donnees[10]}' " \
                           f"AND abilityEffect = '{donnees[11]}')"
             else:

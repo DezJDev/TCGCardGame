@@ -78,7 +78,9 @@ function filterDataFromCardtoArray($Card, $langue): array{
     $retrait = $Card["retreat"];
 
     //if(($category != "Pokémon" and $langue != "fr") or ($category != "Pokemon" and $langue != "en")) {$nomAbility = null; $effectAbility = $Card["effect"];}
-    /*else{*/$nomAbility = $Card["abilities"][0]["name"]; $effectAbility = $Card["abilities"][0]["effect"];//}
+    /*else{*/$nomAbility = $Card["abilities"][0]["name"];
+    if $Card["category"] == "Trainer"
+    $effectAbility = $Card["abilities"][0]["effect"];//}
 
     $Attaque1_cost = $Card["attacks"][0]["cost"][0].$Card["attacks"][0]["cost"][1].$Card["attacks"][0]["cost"][2].$Card["attacks"][0]["cost"][3];
     $Attaque1_name = $Card["attacks"][0]["name"];
