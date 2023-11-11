@@ -47,7 +47,7 @@ class Gestionnaire:
     perso = open("perso.txt", "r", encoding="UTF-8")
     numberLignes = sum(1 for _ in francais)
     ExistingLines = []
-    for i in range(50):
+    for i in range(120):
         francais.seek(0)
         anglais.seek(0)
         nblignealea = randint(0, numberLignes)
