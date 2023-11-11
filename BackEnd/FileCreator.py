@@ -230,7 +230,7 @@ class Gestionnaire:
                f"P10_Weakness;\n{tbl} P10_User;\n{tbl} P10_Ability;\n{tbl} P10_Resistance;\n{tbl} P10_Attack;\n"
 
         abilityTable = f"CREATE TABLE IF NOT EXISTS P10_Ability(\n\tabilityId {auto} PRIMARY KEY,\n\t" \
-                       f"abilityName varchar(50) NOT NULL,\n\tabilityEffect TEXT NOT NULL);\n"
+                       f"abilityName varchar(50),\n\tabilityEffect TEXT NOT NULL);\n"
 
         resistanceTable = f"CREATE TABLE IF NOT EXISTS P10_Resistance(\n\tresistanceId {auto} PRIMARY KEY,\n\t" \
                           f"resistanceType varchar(10) CHECK (resistanceType IN {types}),\n\tresistanceValue varchar(5) CHECK (resistanceValue IN ('/2','-20','-10','-30')));\n"
@@ -290,7 +290,7 @@ class Gestionnaire:
                     "CREATE SEQUENCE seq_user;\n"
 
         abilityTable = f"CREATE TABLE P10_Ability(\n\tabilityId NUMBER PRIMARY KEY,\n\t" \
-                       "abilityName VARCHAR2(50) NOT NULL,\n\tabilityEffect varchar2(500) NOT NULL);\n"
+                       "abilityName VARCHAR2(50),\n\tabilityEffect varchar2(500) NOT NULL);\n"
 
         resistanceTable = f"CREATE TABLE P10_Resistance(\n\tresistanceId NUMBER PRIMARY KEY,\n\t" \
                           "resistanceType VARCHAR2(20) NOT NULL,\n\tresistanceValue VARCHAR2(5) DEFAULT '-20',\n\t" \
