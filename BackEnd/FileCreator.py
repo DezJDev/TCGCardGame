@@ -16,7 +16,8 @@ def traitementLigne(ligne: str) -> list[str]:
         tableauProvisoire = element.split(":")
         if len(tableauProvisoire) > 2:
             tableauProvisoire[1] += ":" + tableauProvisoire[2]
-        attributsTraites.append(tableauProvisoire[1])
+        if not tableauProvisoire == ['']:
+            attributsTraites.append(tableauProvisoire[1])
 
     return attributsTraites
 
@@ -43,7 +44,7 @@ class Gestionnaire:
     newSource = open("school_data.txt", "w+")
     francais = open("FR-DataBlackWhiteWithoutDoublon.txt", "r", encoding="UTF-8")
     anglais = open("EN-DataBlackWhiteWithoutDoublon.txt", "r", encoding="UTF-8")
-
+    perso = open("perso.txt", "r", encoding="UTF-8")
     numberLignes = sum(1 for _ in francais)
     ExistingLines = []
     for i in range(50):
@@ -60,11 +61,12 @@ class Gestionnaire:
         check = True
 
         while check:
-            attributsanglais = ligneanglaise.split("|")
-            valeuranglaises = []
-            for element in attributsanglais:
-                valeuranglaises.append(element.split(":")[1])
-            if valeuranglaises[5] == "/high.webp":
+            print(ligneanglaise)
+            valeuranglaises = traitementLigne(ligneanglaise)
+            if not valeuranglaises:
+                check = False
+                break
+            if valeuranglaises[5] == "/high.webp" or valeuranglaises[1] == "Trainer":
                 nblignealea = randint(0, numberLignes)
                 while nblignealea in ExistingLines:
                     nblignealea = randint(0, numberLignes)
@@ -120,7 +122,8 @@ class Gestionnaire:
                 listeattributs.append(donnees[attributs[i]])
             if not self.oracle:
                 if not isObject:
-                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
+                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[
+                        attributs[0]] not in ExistingAbility:
                         if nbAttributs > 2:
                             attaquesattributs = [donnees[attributs[0]], donnees[attributs[1]], donnees[attributs[2]],
                                                  donnees[attributs[3]]]
@@ -162,9 +165,11 @@ class Gestionnaire:
                         header += f"{attributsTable[i]},"
 
                 if not isObject:
-                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
+                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[
+                        attributs[0]] not in ExistingAbility:
                         if nbAttributs > 2:
-                            attaquesattributs = [donnees[attributs[0]], donnees[attributs[1]], donnees[attributs[2]], donnees[attributs[3]]]
+                            attaquesattributs = [donnees[attributs[0]], donnees[attributs[1]], donnees[attributs[2]],
+                                                 donnees[attributs[3]]]
                             if attaquesattributs not in self.attaques:
                                 self.attaques.append(attaquesattributs)
                                 chaine = header
@@ -475,10 +480,31 @@ class Gestionnaire:
         fichier.close()
         self.cible.close()
 
+    def implementsUsersSQL(self):
+        Gestionnaire.perso.seek(0)
+        self.cible.write("\n\nINSERT INTO P10_User(userName,userDob,userStatus,userLogin,userPass) VALUES ")
+        for lignes in self.perso.readlines():
+            data = traitementLigne(lignes)
+            date = data[1].split("-")
+            self.cible.write(f"\n\t('{data[0]}','{data[1]}','{data[2]}','{date[2]}-{date[1]}-{date[0]}','{data[4]}'),")
+        self.cible.seek(self.cible.tell() - 1)
+        self.cible.write(";")
+
+    def implementsUsersOracle(self):
+        Gestionnaire.perso.seek(0)
+        for lignes in self.perso.readlines():
+            data = traitementLigne(lignes)
+            date = data[1].split("-")
+            self.cible.write(
+                f"INSERT INTO P10_User(userName,userDob,userStatus,userLogin,userPass) VALUES('{data[0]}',TO_DATE('{date[2]}/{date[1]}/{date[0]}','yyyy/mm/dd','{data[2]}','{data[3]}','{data[4]}');\n")
+        self.cible.seek(self.cible.tell() - 1)
+        self.cible.write(";")
+
 
 if __name__ == "__main__":
     gesteSQL = Gestionnaire("P10_PokemonMySQL.sql", "mysql")
     gesteSQL.sqlTable()
+    gesteSQL.implementsUsersSQL()
     gesteSQL.writeDataInFile([10, 11])
     gesteSQL.writeDataInFile([12, 13, 14, 15])
     gesteSQL.writeDataInFile([16, 17, 18, 19])
@@ -490,6 +516,7 @@ if __name__ == "__main__":
 
     gestePostgreSQL = Gestionnaire("P10_PokemonPostgresql.sql", "postgresql")
     gestePostgreSQL.sqlTable()
+    gestePostgreSQL.implementsUsersSQL()
     gestePostgreSQL.writeDataInFile([10, 11])
     gestePostgreSQL.writeDataInFile([12, 13, 14, 15])
     gestePostgreSQL.writeDataInFile([16, 17, 18, 19])
@@ -501,6 +528,7 @@ if __name__ == "__main__":
 
     gesteOracle = Gestionnaire("P10_PokemonOracle.sql", "oracle")
     gesteOracle.oracleTable()
+    gesteOracle.implementsUsersOracle()
     gesteOracle.writeDataInFile([10, 11])
     gesteOracle.writeDataInFile([12, 13, 14, 15])
     gesteOracle.writeDataInFile([16, 17, 18, 19])
