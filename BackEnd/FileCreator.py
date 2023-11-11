@@ -194,10 +194,10 @@ class Gestionnaire:
                             self.cible.write(f"{chaine}")
                 else:
                     if listeattributs not in Existing:
-                        chaine = f"\n\t("
+                        chaine = header
                         for i in range(nbAttributs):
                             if i == (nbAttributs - 1):
-                                chaine += f"'{donnees[attributs[i]]}'),"
+                                chaine += f"'{donnees[attributs[i]]}');"
                             else:
                                 chaine += f"'{donnees[attributs[i]]}',"
                         self.cible.write(f"{chaine}")
@@ -398,6 +398,38 @@ class Gestionnaire:
         self.cible.write(
             f"{drops}\n{sequences}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}\n")
 
+
+    def assocCollectionSQL(self):
+        self.perso.seek(0)
+        Gestionnaire.newSource.seek(0)
+        alea = randint(3, 7)
+        self.cible.write("\n\nINSERT INTO P10_Collection(cardId,userId) VALUES")
+        for lignes in self.perso.readlines():
+            toWrite = []
+            while len(toWrite) < alea:
+                Gestionnaire.newSource.seek(0)
+                lignealea = randint(0, Gestionnaire.numberLignes)
+                courrante = ""
+                for i in range(lignealea):
+                    courrante = Gestionnaire.newSource.readline()
+                if courrante not in toWrite:
+                    toWrite.append(courrante)
+            lignes = traitementLigne(lignes)
+            pseudo = lignes[0]
+
+            print(toWrite)
+            for element in toWrite:
+                if '' == element:
+                    toWrite.remove(element)
+                else:
+                    element = traitementLigne(element)
+                    print(element)
+                    lien = element[5]
+                    self.cible.write(f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{lien}'),(SELECT userId FROM P10_User WHERE userName = '{pseudo}')),")
+        self.cible.seek(self.cible.tell() - 1)
+        self.cible.write(";")
+
+
     def assocTable(self):
         Gestionnaire.newSource.seek(0)
         if not self.oracle:
@@ -508,6 +540,7 @@ if __name__ == "__main__":
     gesteSQL.writeDataInFile([22, 23])
     gesteSQL.implementsCardsNoOracle()
     gesteSQL.assocTable()
+    gesteSQL.assocCollectionSQL()
     gesteSQL.nettoyage()
 
     gestePostgreSQL = Gestionnaire("P10_PokemonPostgresql.sql", "postgresql")
@@ -520,6 +553,7 @@ if __name__ == "__main__":
     gestePostgreSQL.writeDataInFile([22, 23])
     gestePostgreSQL.implementsCardsNoOracle()
     gestePostgreSQL.assocTable()
+    gestePostgreSQL.assocCollectionSQL()
     gestePostgreSQL.nettoyage()
 
     gesteOracle = Gestionnaire("P10_PokemonOracle.sql", "oracle")
