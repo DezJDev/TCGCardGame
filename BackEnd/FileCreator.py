@@ -482,7 +482,7 @@ class Gestionnaire:
         for lignes in self.perso.readlines():
             data = traitementLigne(lignes)
             date = data[1].split("-")
-            self.cible.write(f"\n\t('{data[0]}','{data[1]}','{data[2]}','{date[2]}-{date[1]}-{date[0]}','{data[4]}'),")
+            self.cible.write(f"\n\t('{data[0]}','{data[1]}','{data[2]}','{data[3]}','{data[4]}'),")
         self.cible.seek(self.cible.tell() - 1)
         self.cible.write(";")
 
