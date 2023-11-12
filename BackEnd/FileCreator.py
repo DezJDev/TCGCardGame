@@ -82,6 +82,7 @@ class Gestionnaire:
         self.extension = extension.capitalize()
         self.nameCible = fileName
 
+# ------------------------ SQL ------------------------------
     def sqlTable(self):
         types = ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon',
                  'Colorless', 'Fire', 'Water', 'Grass', 'Fighting', 'Metal', 'Lightning', 'Psychic', 'Darkness')
