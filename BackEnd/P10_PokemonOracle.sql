@@ -65,7 +65,7 @@ CREATE TABLE P10_Card(
 	cardHP NUMBER,
 	cardRarity VARCHAR2(50) DEFAULT 'Commune',
 	cardImg VARCHAR2(100),
-	cardType VARCHAR2(10),
+	cardType VARCHAR2(20),
 	cardExtension VARCHAR2(255),
 	cardRetreat NUMBER DEFAULT 1,
 	cardLang VARCHAR2(20) DEFAULT 'fr',

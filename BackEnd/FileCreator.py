@@ -393,7 +393,7 @@ class Gestionnaire:
 
         cardTable = f"CREATE TABLE P10_Card(\n\tcardId NUMBER DEFAULT seq_card.nextval PRIMARY KEY,\n\t" \
                     "cardCategory VARCHAR2(50) DEFAULT 'Pokémon',\n\tcardName VARCHAR2(50),\n\tcardHP NUMBER,\n\t" \
-                    "cardRarity VARCHAR2(50) DEFAULT 'Commune',\n\tcardImg VARCHAR2(100),\n\tcardType VARCHAR2(10),\n\t" \
+                    "cardRarity VARCHAR2(50) DEFAULT 'Commune',\n\tcardImg VARCHAR2(100),\n\tcardType VARCHAR2(20),\n\t" \
                     "cardExtension VARCHAR2(255),\n\tcardRetreat NUMBER DEFAULT 1,\n\tcardLang VARCHAR2(20) DEFAULT 'fr',\n\t" \
                     "abilityId NUMBER REFERENCES P10_Ability(abilityId),\n\t" \
                     "resistanceId NUMBER REFERENCES P10_Resistance(resistanceId),\n\t" \
