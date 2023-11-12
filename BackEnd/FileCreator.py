@@ -488,7 +488,45 @@ class Gestionnaire:
                 cardsExisting.append(chaine)
                 self.cible.write(chaine + ");")
 
+    def implementsContientOracle(self):
+        Gestionnaire.newSource.seek(0)
+        header = "\nINSERT INTO P10_Contient(cardId,attackId) VALUES "
+        for lignes in Gestionnaire.newSource.readlines(0):
+            data = traitementLigne(lignes)
+            attack1 = (data[12], data[13], data[14], data[15])
+            attack2 = (data[16], data[17], data[18], data[19])
+            data = self.checkifNull(data)
+            attacksclean = self.checkattacksareclean(data)
 
+            if attack1 != ("null", "null", "null", "null") and attacksclean[0]:
+                self.cible.write(f"{header}((SELECT cardId INTO P10_Card WHERE cardImg = '{data[5]}'),"
+                                 f"(SELECT attackId FROM P10_Attack WHERE attackName {data[12]} AND "
+                                 f"attackCost {data[13]} AND attackDamage {data[14]} AND attackEffect {data[15]}));")
+
+            if attack2 != ("null", "null", "null", "null") and attacksclean[1]:
+                self.cible.write(f"{header}((SELECT cardId INTO P10_Card WHERE cardImg = '{data[5]}'),"
+                                 f"(SELECT attackId FROM P10_Attack WHERE attackName {data[16]} AND "
+                                 f"attackCost {data[17]} AND attackDamage {data[18]} AND attackEffect {data[19]}));")
+
+    def implementsCollectionOracle(self):
+        Gestionnaire.newSource.seek(0)
+        Gestionnaire.perso.seek(0)
+        schoolNbLines = sum(1 for _ in Gestionnaire.newSource)
+        header = f"\nINSERT INTO P10_Collection(cardId,userId) VALUES "
+        for personnages in Gestionnaire.perso.readlines():
+            personnagesData = traitementLigne(personnages)
+            nombreAlea = randint(0, 7)
+            for i in range(nombreAlea):
+                Gestionnaire.newSource.seek(0)
+                nbLigneAlea = randint(0, schoolNbLines-1)
+                for j in range(nbLigneAlea):
+                    Gestionnaire.newSource.readline()
+                LinetoGive = Gestionnaire.newSource.readline()
+                LinetoGive = traitementLigne(LinetoGive)
+                self.cible.write(f"{header}((SELECT userId FROM P10_User WHERE userName = '{personnagesData[0]}'),"
+                                 f"SELECT cardId FROM P10_Card WHERE cardImg = '{LinetoGive[5]}'));")
+        self.cible.seek(self.cible.tell() - 1)
+        self.cible.write(";")
 
     def nettoyage(self):
         self.cible.seek(0)
@@ -501,9 +539,6 @@ class Gestionnaire:
             fichier.write(newLine)
         fichier.close()
         self.cible.close()
-
-
-
 
 
 
@@ -540,6 +575,6 @@ if __name__ == "__main__":
     gesteOracle.implementsWeaknessOracle()
     gesteOracle.implementsResistancesOracle()
     gesteOracle.implementsCardsOracle()
-    #gesteOracle.assocTable()
-    #gesteOracle.assocCollectionOracle()
+    gesteOracle.implementsContientOracle()
+    gesteOracle.implementsCollectionOracle()
     gesteOracle.nettoyage()
