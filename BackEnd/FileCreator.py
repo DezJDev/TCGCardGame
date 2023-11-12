@@ -284,7 +284,7 @@ class Gestionnaire:
             attacksclean = self.checkattacksareclean(data)
 
             if attack1 != ("null", "null", "null", "null") and attacksclean[0]:
-                self.cible.write(f"\n\t((SELECT cardId INTO P10_Card WHERE cardImg = '{data[5]}'),"
+                self.cible.write(f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{data[5]}'),"
                                  f"(SELECT attackId FROM P10_Attack WHERE attackName {data[12]} AND "
                                  f"attackCost {data[13]} AND attackDamage {data[14]} AND attackEffect {data[15]})),")
 
