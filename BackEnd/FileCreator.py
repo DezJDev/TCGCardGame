@@ -400,11 +400,11 @@ class Gestionnaire:
         abilitiesExisting = []
         for lignes in Gestionnaire.newSource.readlines():
             data = traitementLigne(lignes)
-            chaineImp = "\nINSERT INTO P10_Ability(abiltyName,abiltiyEffect) VALUES ("
+            chaineImp = "\nINSERT INTO P10_Ability(abiltyName,abiltiyEffect) VALUES "
             ability = (data[10],data[11])
             if ability not in abilitiesExisting and ability != ("null","null"):
                 abilitiesExisting.append(ability)
-                chaineImp += f"{ability});"
+                chaineImp += f"{ability};"
                 self.cible.write(chaineImp)
 
     def implementsAttacksOracle(self):
@@ -527,7 +527,7 @@ class Gestionnaire:
                 LinetoGive = Gestionnaire.newSource.readline()
                 LinetoGive = traitementLigne(LinetoGive)
                 self.cible.write(f"{header}((SELECT userId FROM P10_User WHERE userName = '{personnagesData[0]}'),"
-                                 f"SELECT cardId FROM P10_Card WHERE cardImg = '{LinetoGive[5]}'));")
+                                 f"(SELECT cardId FROM P10_Card WHERE cardImg = '{LinetoGive[5]}'));")
         self.cible.seek(self.cible.tell() - 1)
         self.cible.write(";")
 
