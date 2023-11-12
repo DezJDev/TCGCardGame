@@ -400,7 +400,7 @@ class Gestionnaire:
         abilitiesExisting = []
         for lignes in Gestionnaire.newSource.readlines():
             data = traitementLigne(lignes)
-            chaineImp = "\nINSERT INTO P10_Ability(abiltyName,abilityEffect) VALUES "
+            chaineImp = "\nINSERT INTO P10_Ability(abilityName,abilityEffect) VALUES "
             ability = (data[10],data[11])
             if ability not in abilitiesExisting and ability != ("null","null"):
                 abilitiesExisting.append(ability)
