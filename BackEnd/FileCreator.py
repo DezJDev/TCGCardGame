@@ -63,7 +63,10 @@ class Gestionnaire:
         FRExistingLines.append(FRLineAlea)
         for k in range(FRLineAlea):
             francais.readline()
-        FRLinetoAppend = francais.readline().replace("attackName1:null", "attackName1:Bug de l'API").replace("attackName2:null", "attackName2:Bug de l'API")
+        FRLinetoAppend = francais.readline()
+        dataLinetoAppend = traitementLigne(FRLinetoAppend)
+        if dataLinetoAppend[1] == "Pokémon" or not dataLinetoAppend[1] == "Pokemon":
+            FRLinetoAppend = FRLinetoAppend.replace("attackName1:null", "attackName1:Bug de l'API").replace("attackName2:null", "attackName2:Bug de l'API")
         newSource.write(FRLinetoAppend)
 
         ENLinetoAppend = "cardCategory:Trainer"
@@ -74,7 +77,10 @@ class Gestionnaire:
             ENExistingLines.append(ENLineAlea)
             for k in range(ENLineAlea):
                 anglais.readline()
-            ENLinetoAppend = anglais.readline().replace("attackName1:null", "attackName1:Bug de l'API").replace("attackName2:null", "attackName2:Bug de l'API")
+            ENLinetoAppend = anglais.readline()
+            dataLinetoAppend = traitementLigne(ENLinetoAppend)
+            if dataLinetoAppend[1] == "Pokémon" or not dataLinetoAppend[1] == "Pokemon":
+                ENLinetoAppend = ENLinetoAppend.replace("attackName1:null", "attackName1:Bug de l'API").replace("attackName2:null", "attackName2:Bug de l'API")
         newSource.write(ENLinetoAppend)
 
 
