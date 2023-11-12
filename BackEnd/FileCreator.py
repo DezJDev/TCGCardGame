@@ -51,7 +51,7 @@ class Gestionnaire:
     FRExistingLines = []
     ENExistingLines = []
 
-    for i in range(150):
+    for i in range(100):
         francais.seek(0)
         anglais.seek(0)
         FRLineAlea = randint(0, FRnumberLines)
