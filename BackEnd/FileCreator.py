@@ -51,7 +51,7 @@ class Gestionnaire:
     FRExistingLines = []
     ENExistingLines = []
 
-    for i in range(200):
+    for i in range(150):
         francais.seek(0)
         anglais.seek(0)
         FRLineAlea = randint(0, FRnumberLines)
@@ -270,7 +270,6 @@ class Gestionnaire:
             else:
                 data[i] = f"= '{data[i]}'"
         return data
-
 
 
     def implementsContientNoOracle(self):
