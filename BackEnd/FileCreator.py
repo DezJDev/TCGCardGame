@@ -65,6 +65,17 @@ class Gestionnaire:
             francais.readline()
         FRLinetoAppend = francais.readline()
         dataLinetoAppend = traitementLigne(FRLinetoAppend)
+
+        while not dataLinetoAppend:
+            francais.seek(0)
+            while FRLineAlea in FRExistingLines:
+                FRLineAlea = randint(0, FRnumberLines)
+            FRExistingLines.append(FRLineAlea)
+            for k in range(FRLineAlea):
+                francais.readline()
+            FRLinetoAppend = francais.readline()
+            dataLinetoAppend = traitementLigne(FRLinetoAppend)
+
         if dataLinetoAppend[1] == "Pokémon" or not dataLinetoAppend[1] == "Pokemon":
             FRLinetoAppend = FRLinetoAppend.replace("attackName1:null", "attackName1:Bug de l'API").replace("attackName2:null", "attackName2:Bug de l'API")
         newSource.write(FRLinetoAppend)
@@ -79,6 +90,17 @@ class Gestionnaire:
                 anglais.readline()
             ENLinetoAppend = anglais.readline()
             dataLinetoAppend = traitementLigne(ENLinetoAppend)
+
+            while not dataLinetoAppend:
+                anglais.seek(0)
+                while ENLineAlea in ENExistingLines:
+                    ENLineAlea = randint(0, ENnumberLines)
+                ENExistingLines.append(ENLineAlea)
+                for k in range(ENLineAlea):
+                    anglais.readline()
+                ENLinetoAppend = anglais.readline()
+                dataLinetoAppend = traitementLigne(ENLinetoAppend)
+
             if dataLinetoAppend[1] == "Pokémon" or not dataLinetoAppend[1] == "Pokemon":
                 ENLinetoAppend = ENLinetoAppend.replace("attackName1:null", "attackName1:Bug de l'API").replace("attackName2:null", "attackName2:Bug de l'API")
         newSource.write(ENLinetoAppend)
@@ -351,25 +373,25 @@ class Gestionnaire:
                     "CREATE SEQUENCE seq_card;\n" \
                     "CREATE SEQUENCE seq_user;\n"
 
-        abilityTable = f"CREATE TABLE P10_Ability(\n\tabilityId NUMBER PRIMARY KEY,\n\t" \
+        abilityTable = f"CREATE TABLE P10_Ability(\n\tabilityId NUMBER DEFAULT seq_ability.nextval PRIMARY KEY,\n\t" \
                        "abilityName VARCHAR2(50),\n\tabilityEffect varchar2(500) NOT NULL);\n"
 
-        resistanceTable = f"CREATE TABLE P10_Resistance(\n\tresistanceId NUMBER PRIMARY KEY,\n\t" \
+        resistanceTable = f"CREATE TABLE P10_Resistance(\n\tresistanceId NUMBER DEFAULT seq_resistance.nextval PRIMARY KEY,\n\t" \
                           "resistanceType VARCHAR2(20) NOT NULL,\n\tresistanceValue VARCHAR2(5) DEFAULT '-20',\n\t" \
                           f"CONSTRAINT CheckTypeResistance CHECK (resistanceType IN {types}),\n\t" \
                           f"CONSTRAINT CheckValueResistance CHECK (resistanceValue IN ('/2','-10','-20','-30')));\n"
 
-        weaknessTable = f"CREATE TABLE P10_Weakness(\n\tweaknessId NUMBER PRIMARY KEY,\n\t" \
+        weaknessTable = f"CREATE TABLE P10_Weakness(\n\tweaknessId NUMBER DEFAULT seq_weakness.nextval PRIMARY KEY,\n\t" \
                         "weaknessType VARCHAR2(20) NOT NULL,\n\tweaknessValue VARCHAR2(5) DEFAULT '×2',\n\t" \
                         f"CONSTRAINT CheckTypeWeakness CHECK (weaknessType IN {types}),\n\t" \
                         f"CONSTRAINT CheckValueWeakness CHECK (weaknessValue IN ('×2','x2','+10','+20','+30')));\n"
 
-        attackTable = f"CREATE TABLE P10_Attack(\n\tattackId NUMBER PRIMARY KEY,\n\t" \
+        attackTable = f"CREATE TABLE P10_Attack(\n\tattackId NUMBER DEFAULT seq_attack.nextval PRIMARY KEY,\n\t" \
                       "attackName VARCHAR2(50) NOT NULL,\n\tattackCost VARCHAR2(50),\n\tattackDamage VARCHAR2(4)," \
                       "\n\tattackEffect VARCHAR2(255),\n\tattackLang VARCHAR2(20) DEFAULT 'fr',\n\t" \
                       "CONSTRAINT checkLang CHECK (attackLang IN ('fr','en')));\n"
 
-        cardTable = f"CREATE TABLE P10_Card(\n\tcardId NUMBER PRIMARY KEY,\n\t" \
+        cardTable = f"CREATE TABLE P10_Card(\n\tcardId NUMBER DEFAULT seq_card.nextval PRIMARY KEY,\n\t" \
                     "cardCategory VARCHAR2(50) DEFAULT 'Pokémon',\n\tcardName VARCHAR2(50),\n\tcardHP NUMBER,\n\t" \
                     "cardRarity VARCHAR2(50) DEFAULT 'Commune',\n\tcardImg VARCHAR2(100),\n\tcardType VARCHAR2(10),\n\t" \
                     "cardExtension VARCHAR2(255),\n\tcardRetreat NUMBER DEFAULT 1,\n\tcardLang VARCHAR2(20) DEFAULT 'fr',\n\t" \
