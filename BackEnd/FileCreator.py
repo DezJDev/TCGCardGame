@@ -299,7 +299,7 @@ class Gestionnaire:
         Gestionnaire.newSource.seek(0)
         Gestionnaire.perso.seek(0)
         schoolNbLines = sum(1 for _ in Gestionnaire.newSource)
-        self.cible.write(f"\n\n INSERT INTO P10_Collection(cardId,userId) VALUES ")
+        self.cible.write(f"\n\n INSERT INTO P10_Collection(userId,cardId) VALUES ")
         for personnages in Gestionnaire.perso.readlines():
             personnagesData = traitementLigne(personnages)
             nombreAlea = randint(0, 7)
