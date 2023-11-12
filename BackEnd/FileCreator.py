@@ -459,7 +459,7 @@ class Gestionnaire:
 
             chaine = f"\nINSERT INTO P10_Card(cardCategory,cardName," \
                      f"cardHP,cardRarity,cardImg,cardType,cardExtension," \
-                     f"cardRetreat,cardLang,abilityId,weaknessId,resistanceId') VALUES ('{donnees[1]}','{donnees[2]}',{donnees[3]},'{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
+                     f"cardRetreat,cardLang,abilityId,weaknessId,resistanceId) VALUES ('{donnees[1]}','{donnees[2]}',{donnees[3]},'{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
                      f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
 
             if donnees[10] == "null" and donnees[11] != "null":
