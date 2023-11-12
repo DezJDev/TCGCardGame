@@ -66,7 +66,7 @@ class Gestionnaire:
         newSource.write(francais.readline())
 
         ENLinetoAppend = "cardCategory:Trainer"
-        while "cardCategory:Trainer" in ENLinetoAppend:
+        while "cardCategory:Trainer" in ENLinetoAppend or "cardImg:/high.webp" in ENLinetoAppend:
             anglais.seek(0)
             while ENLineAlea in ENExistingLines:
                 ENLineAlea = randint(0, ENnumberLines)
@@ -75,7 +75,6 @@ class Gestionnaire:
                 anglais.readline()
             ENLinetoAppend = anglais.readline()
         newSource.write(ENLinetoAppend)
-
 
 
     def __init__(self, fileName: str, extension: str):
@@ -297,6 +296,27 @@ class Gestionnaire:
         self.cible.seek(self.cible.tell() - 1)
         self.cible.write(";")
 
+    def implementsCollectionNoOracle(self):
+        Gestionnaire.newSource.seek(0)
+        Gestionnaire.perso.seek(0)
+        schoolNbLines = sum(1 for _ in Gestionnaire.newSource)
+        self.cible.write(f"\n\n INSERT INTO P10_Collection(cardId,userId) VALUES ")
+        for personnages in Gestionnaire.perso.readlines():
+            personnagesData = traitementLigne(personnages)
+            nombreAlea = randint(0, 7)
+            for i in range(nombreAlea):
+                Gestionnaire.newSource.seek(0)
+                nbLigneAlea = randint(0, schoolNbLines-1)
+                for j in range(nbLigneAlea):
+                    Gestionnaire.newSource.readline()
+                LinetoGive = Gestionnaire.newSource.readline()
+                LinetoGive = traitementLigne(LinetoGive)
+                self.cible.write(f"\n\t((SELECT userId FROM P10_User WHERE userName = '{personnagesData[0]}'),"
+                                 f"SELECT cardId FROM P10_Card WHERE cardImg = '{LinetoGive[5]}')),")
+        self.cible.seek(self.cible.tell() - 1)
+        self.cible.write(";")
+
+
     def oracleTable(self):
         types = ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon',
                  'Colorless', 'Fire', 'Water', 'Grass', 'Fighting', 'Metal', 'Lightning', 'Psychic', 'Darkness')
@@ -439,6 +459,7 @@ if __name__ == "__main__":
     gesteSQL.implementsWeaknessNoOracle()
     gesteSQL.implementsCardsNoOracle()
     gesteSQL.implementsContientNoOracle()
+    gesteSQL.implementsCollectionNoOracle()
     gesteSQL.nettoyage()
 
     gestePostgreSQL = Gestionnaire("P10_PokemonPostgresql.sql", "postgresql")
@@ -450,6 +471,7 @@ if __name__ == "__main__":
     gestePostgreSQL.implementsWeaknessNoOracle()
     gestePostgreSQL.implementsCardsNoOracle()
     gestePostgreSQL.implementsContientNoOracle()
+    gestePostgreSQL.implementsCollectionNoOracle()
     gestePostgreSQL.nettoyage()
 
     #gesteOracle = Gestionnaire("P10_PokemonOracle.sql", "oracle")
