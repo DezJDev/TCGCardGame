@@ -311,7 +311,7 @@ class Gestionnaire:
                 LinetoGive = Gestionnaire.newSource.readline()
                 LinetoGive = traitementLigne(LinetoGive)
                 self.cible.write(f"\n\t((SELECT userId FROM P10_User WHERE userName = '{personnagesData[0]}'),"
-                                 f"SELECT cardId FROM P10_Card WHERE cardImg = '{LinetoGive[5]}')),")
+                                 f"(SELECT cardId FROM P10_Card WHERE cardImg = '{LinetoGive[5]}')),")
         self.cible.seek(self.cible.tell() - 1)
         self.cible.write(";")
 
