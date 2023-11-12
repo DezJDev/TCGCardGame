@@ -57,13 +57,14 @@ class Gestionnaire:
         FRLineAlea = randint(0, FRnumberLines)
         ENLineAlea = randint(0, ENnumberLines)
 
+        francais.seek(0)
         while FRLineAlea in FRExistingLines:
             FRLineAlea = randint(0, FRnumberLines)
         FRExistingLines.append(FRLineAlea)
-        FRLinetoAppend = ""
-        for j in range(FRLineAlea):
+        for k in range(FRLineAlea):
             francais.readline()
-        newSource.write(francais.readline())
+        FRLinetoAppend = francais.readline().replace("attackName1:null", "attackName1:Bug de l'API").replace("attackName2:null", "attackName2:Bug de l'API")
+        newSource.write(FRLinetoAppend)
 
         ENLinetoAppend = "cardCategory:Trainer"
         while "cardCategory:Trainer" in ENLinetoAppend or "cardImg:/high.webp" in ENLinetoAppend:
@@ -73,7 +74,7 @@ class Gestionnaire:
             ENExistingLines.append(ENLineAlea)
             for k in range(ENLineAlea):
                 anglais.readline()
-            ENLinetoAppend = anglais.readline()
+            ENLinetoAppend = anglais.readline().replace("attackName1:null", "attackName1:Bug de l'API").replace("attackName2:null", "attackName2:Bug de l'API")
         newSource.write(ENLinetoAppend)
 
 
@@ -81,6 +82,7 @@ class Gestionnaire:
         self.cible = open(fileName, "w+")
         self.extension = extension.capitalize()
         self.nameCible = fileName
+        self.cardstoRemove = []
 
 # ------------------------ SQL ------------------------------
     def sqlTable(self):
@@ -158,10 +160,10 @@ class Gestionnaire:
     @staticmethod
     def checkattacksareclean(data: list[str]):
         attack1bool = True
-        if (data[12], data[15]) == ("null", "null") and (data[13],data[14]) != ("null", "null"):
+        if data[12] == "null" and (data[13],data[14]) != ("null", "null"):
             attack1bool = False
         attack2bool = True
-        if (data[16], data[19]) == ("null", "null") and (data[17], data[18]) != ("null", "null"):
+        if data[16] == "null" and (data[17], data[18]) != ("null", "null"):
             attack2bool = False
         return [attack1bool, attack2bool]
 
@@ -256,7 +258,8 @@ class Gestionnaire:
                 chaine += ",null"
 
             chaine = chaine.replace("'null'", "null")
-            if chaine not in cardsExisting:
+            attaquesClean = self.checkattacksareclean(donnees)
+            if chaine not in cardsExisting and attaquesClean[0] and attaquesClean[1]:
                 cardsExisting.append(chaine)
                 self.cible.write(chaine + "),")
         self.cible.seek(self.cible.tell() - 1)
@@ -537,6 +540,9 @@ class Gestionnaire:
         for ligne in lignes:
             newLine = ligne.replace("'null'", "null").replace(" ", " ").replace("Métal", "Metal").replace("\\xa0", " ").replace('"', "'")
             fichier.write(newLine)
+
+
+
         fichier.close()
         self.cible.close()
 
