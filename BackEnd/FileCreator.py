@@ -275,7 +275,7 @@ class Gestionnaire:
 
     def implementsContientNoOracle(self):
         Gestionnaire.newSource.seek(0)
-        self.cible.write("\n\nINSERT INTO P10_Contient(cardId,attackId) VALUES")
+        self.cible.write("\n\nINSERT FROM P10_Contient(cardId,attackId) VALUES")
         for lignes in Gestionnaire.newSource.readlines(0):
             data = traitementLigne(lignes)
             attack1 = (data[12], data[13], data[14], data[15])
@@ -289,7 +289,7 @@ class Gestionnaire:
                                  f"attackCost {data[13]} AND attackDamage {data[14]} AND attackEffect {data[15]})),")
 
             if attack2 != ("null", "null", "null", "null") and attacksclean[1]:
-                self.cible.write(f"\n\t((SELECT cardId INTO P10_Card WHERE cardImg = '{data[5]}'),"
+                self.cible.write(f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{data[5]}'),"
                                  f"(SELECT attackId FROM P10_Attack WHERE attackName {data[16]} AND "
                                  f"attackCost {data[17]} AND attackDamage {data[18]} AND attackEffect {data[19]})),")
 
@@ -500,12 +500,12 @@ class Gestionnaire:
             attacksclean = self.checkattacksareclean(data)
 
             if attack1 != ("null", "null", "null", "null") and attacksclean[0]:
-                self.cible.write(f"{header}((SELECT cardId INTO P10_Card WHERE cardImg = '{data[5]}'),"
+                self.cible.write(f"{header}((SELECT cardId FROM P10_Card WHERE cardImg = '{data[5]}'),"
                                  f"(SELECT attackId FROM P10_Attack WHERE attackName {data[12]} AND "
                                  f"attackCost {data[13]} AND attackDamage {data[14]} AND attackEffect {data[15]}));")
 
             if attack2 != ("null", "null", "null", "null") and attacksclean[1]:
-                self.cible.write(f"{header}((SELECT cardId INTO P10_Card WHERE cardImg = '{data[5]}'),"
+                self.cible.write(f"{header}((SELECT cardId FROM P10_Card WHERE cardImg = '{data[5]}'),"
                                  f"(SELECT attackId FROM P10_Attack WHERE attackName {data[16]} AND "
                                  f"attackCost {data[17]} AND attackDamage {data[18]} AND attackEffect {data[19]}));")
 
