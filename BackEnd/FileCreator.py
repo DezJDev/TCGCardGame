@@ -265,7 +265,7 @@ class Gestionnaire:
 
     @staticmethod
     def checkifNull(data: list[str]):
-        for i in range(12, 19):
+        for i in range(12, 20):
             if data[i] == "null":
                 data[i] = "IS NULL"
             else:
