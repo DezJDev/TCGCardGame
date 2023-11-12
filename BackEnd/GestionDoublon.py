@@ -1,13 +1,20 @@
 if __name__ == "__main__":
-    EN = open("sc", "r")
-    ENSansDoublon = open("school_data2", "w")
+    SourceTest = open("school_data.txt", "r")
+    Source = open("school_data.txt", "r")
+    Cible = open("school_dataWithoutDoublon.txt", "w")
 
-    line = EN.readline()
-    while line:
-        lignePrecedente = line
-        line = EN.readline()
-        if lignePrecedente != line:
-            ENSansDoublon.write(lignePrecedente)
+    indexTest = 0
+    indexLine = 0
+    for sc_lignestestees in SourceTest.readlines():
+        Source.seek(0)
+        indexLine = 0
+        for sc_lignes in Source.readlines():
+            if sc_lignestestees == sc_lignes and indexLine == indexTest:
+                Cible.write(sc_lignestestees)
+            indexLine += 1
 
-    EN.close()
-    ENSansDoublon.close()
+        indexTest += 1
+
+    SourceTest.close()
+    Source.close()
+    Cible.close()

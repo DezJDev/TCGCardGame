@@ -41,247 +41,47 @@ def getAttributsFromTable(ligne: str, attributs: list[int]) -> list[str]:
 
 
 class Gestionnaire:
-    newSource = open("school_data.txt", "w+")
-    francais = open("FR-DataBlackWhiteWithoutDoublon.txt", "r", encoding="UTF-8")
-    anglais = open("EN-DataBlackWhiteWithoutDoublon.txt", "r", encoding="UTF-8")
-    perso = open("perso.txt", "r", encoding="UTF-8")
-    numberLignes = sum(1 for _ in francais)
-    ExistingLines = []
-    for i in range(120):
+    newSource = open("school_data.txt", "w+", encoding="utf-8")
+    francais = open("FR-DataBlackWhiteWithoutDoublon.txt", "r", encoding="utf-8")
+    anglais = open("EN-DataBlackWhiteWithoutDoublon.txt", "r", encoding="utf-8")
+    perso = open("perso.txt", "r", encoding="utf-8")
+
+    FRnumberLines = sum(1 for _ in francais)
+    ENnumberLines = sum(1 for _ in anglais)
+    FRExistingLines = []
+    ENExistingLines = []
+
+    for i in range(200):
         francais.seek(0)
         anglais.seek(0)
-        nblignealea = randint(0, numberLignes)
-        while nblignealea in ExistingLines:
-            nblignealea = randint(0, numberLignes)
-        ExistingLines.append(nblignealea)
-        for j in range(nblignealea):
+        FRLineAlea = randint(0, FRnumberLines)
+        ENLineAlea = randint(0, ENnumberLines)
+
+        while FRLineAlea in FRExistingLines:
+            FRLineAlea = randint(0, FRnumberLines)
+        FRExistingLines.append(FRLineAlea)
+        FRLinetoAppend = ""
+        for j in range(FRLineAlea):
             francais.readline()
-            anglais.readline()
-        ligneanglaise = anglais.readline()
-        check = True
-
-        while check:
-            valeuranglaises = traitementLigne(ligneanglaise)
-            if not valeuranglaises:
-                check = False
-                break
-            if valeuranglaises[5] == "/high.webp" or valeuranglaises[1] == "Trainer":
-                nblignealea = randint(0, numberLignes)
-                while nblignealea in ExistingLines:
-                    nblignealea = randint(0, numberLignes)
-                ExistingLines.append(nblignealea)
-                for j in range(nblignealea):
-                    ligneanglaise = anglais.readline()
-            else:
-                check = False
-
         newSource.write(francais.readline())
-        newSource.write(ligneanglaise)
 
-    def __init__(self, fichierNameCible: str, extension: str):
-        self.cible = open(fichierNameCible, "w+")
-        self.nameCible = fichierNameCible
+        ENLinetoAppend = "cardCategory:Trainer"
+        while "cardCategory:Trainer" in ENLinetoAppend:
+            anglais.seek(0)
+            while ENLineAlea in ENExistingLines:
+                ENLineAlea = randint(0, ENnumberLines)
+            ENExistingLines.append(ENLineAlea)
+            for k in range(ENLineAlea):
+                anglais.readline()
+            ENLinetoAppend = anglais.readline()
+        newSource.write(ENLinetoAppend)
+
+
+
+    def __init__(self, fileName: str, extension: str):
+        self.cible = open(fileName, "w+")
         self.extension = extension.capitalize()
-        self.attaques = []
-        if extension.capitalize() == "Oracle":
-            self.oracle = True
-        else:
-            self.oracle = False
-
-    def writeRequestInFile(self, nameTable: str, nameAttributs: list[str], isoracle=False):
-        if not isoracle:
-            self.cible.write(f"\n\nINSERT INTO P10_{nameTable}(")
-            for i in range(len(nameAttributs)):
-                if i == len(nameAttributs) - 1:
-                    self.cible.write(f"{nameAttributs[i]}) VALUES ")
-                else:
-                    self.cible.write(f"{nameAttributs[i]},")
-
-    def writeDataInFile(self, attributs: list[int]):
-        Gestionnaire.newSource.seek(0)
-        Existing = []
-        ExistingAbility = []
-        nbAttributs = len(attributs)
-        attributsTable = getAttributsFromTable(Gestionnaire.newSource.readline(), attributs)
-        nameTable = getNameTable(attributsTable[0])
-        Gestionnaire.newSource.seek(0)
-
-        if not self.oracle:
-            self.writeRequestInFile(nameTable, attributsTable)
-
-        for lignes in Gestionnaire.newSource.readlines():
-            donnees = traitementLigne(lignes)
-
-            isObject = donnees[attributs[0]] == "null" and attributs[1] == 11 and donnees[attributs[1]] != "null"
-            if donnees[attributs[0]] == "Métal":
-                donnees[attributs[0]] = "Metal"
-
-            listeattributs = []
-            for i in range(nbAttributs):
-                listeattributs.append(donnees[attributs[i]])
-            if not self.oracle:
-                if not isObject:
-                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
-                        if nbAttributs > 2:
-                            attaquesattributs = [donnees[attributs[0]], donnees[attributs[1]], donnees[attributs[2]],
-                                                 donnees[attributs[3]]]
-                            if attaquesattributs not in self.attaques:
-                                self.attaques.append(attaquesattributs)
-                                chaine = f"\n\t("
-                                for i in range(nbAttributs):
-                                    if i == (nbAttributs - 1):
-                                        chaine += f"'{donnees[attributs[i]]}'),"
-                                    else:
-                                        chaine += f"'{donnees[attributs[i]]}',"
-                                self.cible.write(f"{chaine}")
-                        else:
-                            if attributs[0] == 10:
-                                ExistingAbility.append(donnees[attributs[0]])
-                            Existing.append(listeattributs)
-                            chaine = f"\n\t("
-                            for i in range(nbAttributs):
-                                if i == (nbAttributs - 1):
-                                    chaine += f"'{donnees[attributs[i]]}'),"
-                                else:
-                                    chaine += f"'{donnees[attributs[i]]}',"
-                            self.cible.write(f"{chaine}")
-                else:
-                    if listeattributs not in Existing:
-                        chaine = f"\n\t("
-                        for i in range(nbAttributs):
-                            if i == (nbAttributs - 1):
-                                chaine += f"'{donnees[attributs[i]]}'),"
-                            else:
-                                chaine += f"'{donnees[attributs[i]]}',"
-                        self.cible.write(f"{chaine}")
-            else:
-                header = f"\nINSERT INTO P10_{nameTable}({nameTable.lower()}Id,"
-                for i in range(nbAttributs):
-                    if i == nbAttributs - 1:
-                        header += f"{attributsTable[i]}) VALUES (seq_{nameTable.lower()}.nextval,"
-                    else:
-                        header += f"{attributsTable[i]},"
-
-                if not isObject:
-                    if donnees[attributs[0]] != "null" and listeattributs not in Existing and donnees[attributs[0]] not in ExistingAbility:
-                        if nbAttributs > 2:
-                            attaquesattributs = [donnees[attributs[0]], donnees[attributs[1]], donnees[attributs[2]],
-                                                 donnees[attributs[3]]]
-                            if attaquesattributs not in self.attaques:
-                                self.attaques.append(attaquesattributs)
-                                chaine = header
-                                for i in range(nbAttributs):
-                                    if i == nbAttributs - 1:
-                                        chaine += f"'{donnees[attributs[i]]}');"
-                                    else:
-                                        chaine += f"'{donnees[attributs[i]]}',"
-
-                                chaine = chaine.replace("'null'", "null")
-                                self.cible.write(f"{chaine}")
-
-                        else:
-                            if attributs[0] == 10:
-                                ExistingAbility.append(donnees[attributs[0]])
-                            Existing.append(listeattributs)
-                            chaine = header
-                            for i in range(nbAttributs):
-                                if i == nbAttributs - 1:
-                                    chaine += f"'{donnees[attributs[i]]}');"
-                                else:
-                                    chaine += f"'{donnees[attributs[i]]}',"
-
-                            chaine = chaine.replace("'null'", "null")
-                            self.cible.write(f"{chaine}")
-                else:
-                    if listeattributs not in Existing:
-                        chaine = header
-                        for i in range(nbAttributs):
-                            if i == (nbAttributs - 1):
-                                chaine += f"'{donnees[attributs[i]]}');"
-                            else:
-                                chaine += f"'{donnees[attributs[i]]}',"
-                        self.cible.write(f"{chaine}")
-
-        if not self.oracle:
-            self.cible.seek(self.cible.tell() - 1)
-            self.cible.write(";")
-            # self.cible.write(f"\n\tINTO {attributsTable[0]}(abilityId, abilityName, abilityEffect) "
-            #                 f"VALUES ({index}, '{donnees[10]}', '{donnees[11]}')")
-
-    def implementsCardsNoOracle(self):
-        Gestionnaire.newSource.seek(0)
-        self.cible.write("\n\nINSERT INTO P10_Card(cardCategory,cardName,"
-                         "cardHP,cardRarity,cardImg,cardType,cardExtension,"
-                         "cardRetreat,cardLang,abilityId,weaknessId,resistanceId) VALUES")
-
-        for lignes in Gestionnaire.newSource.readlines():
-            donnees = traitementLigne(lignes)
-
-            chaine = f"\n\t('{donnees[1]}','{donnees[2]}',{donnees[3]},'{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
-                     f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
-
-            if donnees[10] == "null" and donnees[11] != "null":
-                chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityEffect = '{donnees[11]}')"
-
-            elif donnees[10] != "null" and donnees[11] != "null":
-                chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityName = '{donnees[10]}' " \
-                          f"AND abilityEffect = '{donnees[11]}')"
-            else:
-                chaine += ",null"
-
-            if donnees[22] != "null":
-                chaine += f",(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = '{donnees[22]}' " \
-                          f"AND weaknessValue = '{donnees[23]}')"
-            else:
-                chaine += ",null"
-
-            if donnees[20] != "null":
-                chaine += f",(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = '{donnees[20]}' " \
-                          f"AND resistanceValue = '{donnees[21]}')"
-            else:
-                chaine += ",null"
-
-            chaine = chaine.replace("'null'", "null")
-            self.cible.write(chaine + "),")
-        self.cible.seek(self.cible.tell() - 1)
-        self.cible.write(";")
-
-    def implementsCardOracle(self):
-        Gestionnaire.newSource.seek(0)
-        for lignes in Gestionnaire.newSource.readlines():
-            donnees = traitementLigne(lignes)
-
-            chaine = "\nINSERT INTO P10_Card(cardId,cardCategory,cardName," \
-                     "cardHP,cardRarity,cardImg,cardType,cardExtension," \
-                     "cardRetreat,cardLang,abilityId,weaknessId,resistanceId) VALUES "
-
-            chaine += f"(seq_card.nextval,'{donnees[1]}','{donnees[2]}',{donnees[3]},'{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
-                      f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
-
-            if donnees[10] == "null" and donnees[11] != "null":
-                chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityEffect = '{donnees[11]}')"
-
-            elif donnees[10] != "null" and donnees[11] != "null":
-                chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityName = '{donnees[10]}' " \
-                          f"AND abilityEffect = '{donnees[11]}')"
-            else:
-                chaine += ",'null'"
-
-            if donnees[22] != "null":
-                chaine += f",(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = '{donnees[22]}' " \
-                          f"AND weaknessValue = '{donnees[23]}')"
-            else:
-                chaine += ",'null'"
-
-            if donnees[20] != "null":
-                chaine += f",(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = '{donnees[20]}' " \
-                          f"AND resistanceValue = '{donnees[21]}')"
-
-            else:
-                chaine += ",'null'"
-
-            chaine = chaine.replace("'null'", "null")
-            self.cible.write(chaine + ");")
+        self.nameCible = fileName
 
     def sqlTable(self):
         types = ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon',
@@ -329,6 +129,173 @@ class Gestionnaire:
 
         self.cible.write(
             f"{drop}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}")
+
+    def implementsUsersSQL(self):
+        Gestionnaire.perso.seek(0)
+        self.cible.write("\n\nINSERT INTO P10_User(userName,userDob,userStatus,userLogin,userPass) VALUES ")
+        for lignes in self.perso.readlines():
+            data = traitementLigne(lignes)
+            date = data[1].split("-")
+            self.cible.write(f"\n\t('{data[0]}','{date[2]}-{date[0]}-{date[1]}','{data[2]}','{data[3]}','{data[4]}'),")
+        self.cible.seek(self.cible.tell() - 1)
+        self.cible.write(";")
+
+    def implementsAbilityNoOracle(self):
+        Gestionnaire.newSource.seek(0)
+        self.cible.write("\n\nINSERT INTO P10_Ability(abilityName,abilityEffect) VALUES")
+        abilitiesExisting = []
+        for lignes in Gestionnaire.newSource.readlines():
+            data = traitementLigne(lignes)
+            chaineImp = ""
+            ability = (data[10],data[11])
+            if ability not in abilitiesExisting and ability != ("null","null"):
+                abilitiesExisting.append(ability)
+                chaineImp += f"\n\t{ability},"
+                self.cible.write(chaineImp)
+        self.cible.seek(self.cible.tell() - 1)
+        self.cible.write(";")
+
+    @staticmethod
+    def checkattacksareclean(data: list[str]):
+        attack1bool = True
+        if (data[12], data[15]) == ("null", "null") and (data[13],data[14]) != ("null", "null"):
+            attack1bool = False
+        attack2bool = True
+        if (data[16], data[19]) == ("null", "null") and (data[17], data[18]) != ("null", "null"):
+            attack2bool = False
+        return [attack1bool, attack2bool]
+
+    def implementsAttacksNoOracle(self):
+        Gestionnaire.newSource.seek(0)
+        self.cible.write("\n\nINSERT INTO P10_Attack(attackName,attackCost,attackDamage,attackEffect) VALUES")
+        attacksExisting = []
+        for lignes in Gestionnaire.newSource.readlines():
+            data = traitementLigne(lignes)
+
+            chaineImp = ""
+            attacksareclean = self.checkattacksareclean(data)
+            attack1 = (data[12],data[13],data[14],data[15])
+            if attack1 not in attacksExisting and attack1 != ("null","null","null","null") and attacksareclean[0]:
+                attacksExisting.append(attack1)
+                chaineImp += f"\n\t{attack1},"
+                self.cible.write(chaineImp)
+
+            chaineImp = ""
+            attack2 = (data[16], data[17], data[18], data[19])
+            if attack2 not in attacksExisting and attack2 != ("null","null","null","null") and attacksareclean[1]:
+                attacksExisting.append(attack2)
+                chaineImp += f"\n\t{attack2},"
+                self.cible.write(chaineImp)
+
+        self.cible.seek(self.cible.tell() - 1)
+        self.cible.write(";")
+
+    def implementsResistancesNoOracle(self):
+        Gestionnaire.newSource.seek(0)
+        self.cible.write("\n\nINSERT INTO P10_Resistance(resistanceType,resistanceValue) VALUES")
+        resistancesExisting = []
+        for lignes in Gestionnaire.newSource.readlines():
+            data = traitementLigne(lignes)
+            chaineImp = ""
+            data[20] = data[20].replace("Métal","Metal")
+            resistance = (data[20],data[21])
+            if resistance not in resistancesExisting and resistance != ("null","null"):
+                resistancesExisting.append(resistance)
+                chaineImp += f"\n\t{resistance},"
+                self.cible.write(chaineImp)
+        self.cible.seek(self.cible.tell() - 1)
+        self.cible.write(";")
+
+    def implementsWeaknessNoOracle(self):
+        Gestionnaire.newSource.seek(0)
+        self.cible.write("\n\nINSERT INTO P10_Weakness(weaknessType,weaknessValue) VALUES")
+        weaknessExisting = []
+        for lignes in Gestionnaire.newSource.readlines():
+            data = traitementLigne(lignes)
+            chaineImp = ""
+            data[22] = data[22].replace("Métal","Metal")
+            weakness = (data[22],data[23])
+            if weakness not in weaknessExisting and weakness != ("null","null"):
+                weaknessExisting.append(weakness)
+                chaineImp += f"\n\t{weakness},"
+                self.cible.write(chaineImp)
+        self.cible.seek(self.cible.tell() - 1)
+        self.cible.write(";")
+
+    def implementsCardsNoOracle(self):
+        Gestionnaire.newSource.seek(0)
+        self.cible.write("\n\nINSERT INTO P10_Card(cardCategory,cardName,"
+                         "cardHP,cardRarity,cardImg,cardType,cardExtension,"
+                         "cardRetreat,cardLang,abilityId,weaknessId,resistanceId) VALUES")
+        cardsExisting = []
+        for lignes in Gestionnaire.newSource.readlines():
+            donnees = traitementLigne(lignes)
+
+            chaine = f"\n\t('{donnees[1]}','{donnees[2]}',{donnees[3]},'{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
+                     f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
+
+            if donnees[10] == "null" and donnees[11] != "null":
+                chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityEffect = '{donnees[11]}')"
+
+            elif donnees[10] != "null" and donnees[11] != "null":
+                chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityName = '{donnees[10]}' " \
+                          f"AND abilityEffect = '{donnees[11]}')"
+            else:
+                chaine += ",null"
+
+            if donnees[22] != "null":
+                chaine += f",(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = '{donnees[22]}' " \
+                          f"AND weaknessValue = '{donnees[23]}')"
+            else:
+                chaine += ",null"
+
+            if donnees[20] != "null":
+                chaine += f",(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = '{donnees[20]}' " \
+                          f"AND resistanceValue = '{donnees[21]}')"
+            else:
+                chaine += ",null"
+
+            chaine = chaine.replace("'null'", "null")
+            if chaine not in cardsExisting:
+                cardsExisting.append(chaine)
+                self.cible.write(chaine + "),")
+        self.cible.seek(self.cible.tell() - 1)
+        self.cible.write(";")
+        Gestionnaire.newSource.seek(0)
+
+    @staticmethod
+    def checkifNull(data: list[str]):
+        for i in range(12, 19):
+            if data[i] == "null":
+                data[i] = "IS NULL"
+            else:
+                data[i] = f"= '{data[i]}'"
+        return data
+
+
+
+    def implementsContientNoOracle(self):
+        Gestionnaire.newSource.seek(0)
+        self.cible.write("\n\nINSERT INTO P10_Contient(cardId,attackId) VALUES")
+        for lignes in Gestionnaire.newSource.readlines(0):
+            data = traitementLigne(lignes)
+            attack1 = (data[12], data[13], data[14], data[15])
+            attack2 = (data[16], data[17], data[18], data[19])
+            data = self.checkifNull(data)
+            attacksclean = self.checkattacksareclean(data)
+
+            if attack1 != ("null", "null", "null", "null") and attacksclean[0]:
+                self.cible.write(f"\n\t((SELECT cardId INTO P10_Card WHERE cardImg = '{data[5]}'),"
+                                 f"(SELECT attackId FROM P10_Attack WHERE attackName {data[12]} AND "
+                                 f"attackCost {data[13]} AND attackDamage {data[14]} AND attackEffect {data[15]})),")
+
+            if attack2 != ("null", "null", "null", "null") and attacksclean[1]:
+                self.cible.write(f"\n\t((SELECT cardId INTO P10_Card WHERE cardImg = '{data[5]}'),"
+                                 f"(SELECT attackId FROM P10_Attack WHERE attackName {data[16]} AND "
+                                 f"attackCost {data[17]} AND attackDamage {data[18]} AND attackEffect {data[19]})),")
+
+        self.cible.seek(self.cible.tell() - 1)
+        self.cible.write(";")
 
     def oracleTable(self):
         types = ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon',
@@ -398,159 +365,58 @@ class Gestionnaire:
         self.cible.write(
             f"{drops}\n{sequences}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}\n")
 
-    def assocCollectionSQL(self):
-        self.perso.seek(0)
+    def implementsCardOracle(self):
         Gestionnaire.newSource.seek(0)
-        alea = randint(3, 7)
-        self.cible.write("\n\nINSERT INTO P10_Collection(cardId,userId) VALUES")
-        for lignes in self.perso.readlines():
-            toWrite = []
-            while len(toWrite) < alea:
-                Gestionnaire.newSource.seek(0)
-                lignealea = randint(0, Gestionnaire.numberLignes)
-                courrante = ""
-                for i in range(lignealea):
-                    courrante = Gestionnaire.newSource.readline()
-                if courrante not in toWrite:
-                    toWrite.append(courrante)
-            lignes = traitementLigne(lignes)
-            pseudo = lignes[0]
-
-            print(toWrite)
-            for element in toWrite:
-                if '' == element:
-                    toWrite.remove(element)
-                else:
-                    element = traitementLigne(element)
-                    print(element)
-                    lien = element[5]
-                    self.cible.write(
-                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{lien}'),(SELECT userId FROM P10_User WHERE userName = '{pseudo}')),")
-        self.cible.seek(self.cible.tell() - 1)
-        self.cible.write(";")
-
-    def assocCollectionOracle(self):
-        self.perso.seek(0)
-        Gestionnaire.newSource.seek(0)
-        for lignes in self.perso.readlines():
-            alea = randint(3, 7)
-            toWrite = []
-            while len(toWrite) < alea:
-                Gestionnaire.newSource.seek(0)
-                lignealea = randint(0, Gestionnaire.numberLignes)
-                courrante = ""
-                for i in range(lignealea):
-                    courrante = Gestionnaire.newSource.readline()
-                if courrante not in toWrite:
-                    toWrite.append(courrante)
-            lignes = traitementLigne(lignes)
-            pseudo = lignes[0]
-
-            print(toWrite)
-            for element in toWrite:
-                if '' == element:
-                    toWrite.remove(element)
-                else:
-                    element = traitementLigne(element)
-                    print(element)
-                    lien = element[5]
-                    self.cible.write(f"\nINSERT INTO P10_Collection(cardId,userId) VALUES ((SELECT cardId FROM P10_Card WHERE cardImg = '{lien}'),(SELECT userId FROM P10_User WHERE userName = '{pseudo}'));")
-
-    def assocTable(self):
-        Gestionnaire.newSource.seek(0)
-        if not self.oracle:
-            self.cible.write("\n\nINSERT INTO P10_Contient(cardId, attackId) VALUES")
-
         for lignes in Gestionnaire.newSource.readlines():
-            donnes = traitementLigne(lignes)
+            donnees = traitementLigne(lignes)
 
-            data12 = f"= '{donnes[12]}'"
-            if donnes[12] == "null":
-                data12 = data12.replace("= 'null'", "IS NULL")
+            chaine = "\nINSERT INTO P10_Card(cardId,cardCategory,cardName," \
+                     "cardHP,cardRarity,cardImg,cardType,cardExtension," \
+                     "cardRetreat,cardLang,abilityId,weaknessId,resistanceId) VALUES "
 
-            data13 = f"= '{donnes[13]}'"
-            if donnes[13] == "null":
-                data13 = data13.replace("= 'null'", "IS NULL")
+            chaine += f"(seq_card.nextval,'{donnees[1]}','{donnees[2]}',{donnees[3]},'{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
+                      f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
 
-            data14 = f"= '{donnes[14]}'"
-            if donnes[14] == "null":
-                data14 = data14.replace("= 'null'", "IS NULL")
+            if donnees[10] == "null" and donnees[11] != "null":
+                chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityEffect = '{donnees[11]}')"
 
-            data15 = f"= '{donnes[15]}'"
-            if donnes[15] == "null":
-                data15 = data15.replace("= 'null'", "IS NULL")
+            elif donnees[10] != "null" and donnees[11] != "null":
+                chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityName = '{donnees[10]}' " \
+                          f"AND abilityEffect = '{donnees[11]}')"
+            else:
+                chaine += ",'null'"
 
-            data16 = f"= '{donnes[16]}'"
-            if donnes[16] == "null":
-                data16 = data16.replace("= 'null'", "IS NULL")
+            if donnees[22] != "null":
+                chaine += f",(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = '{donnees[22]}' " \
+                          f"AND weaknessValue = '{donnees[23]}')"
+            else:
+                chaine += ",'null'"
 
-            data17 = f"= '{donnes[17]}'"
-            if donnes[17] == "null":
-                data17 = data17.replace("= 'null'", "IS NULL")
+            if donnees[20] != "null":
+                chaine += f",(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = '{donnees[20]}' " \
+                          f"AND resistanceValue = '{donnees[21]}')"
 
-            data18 = f"= '{donnes[18]}'"
-            if donnes[18] == "null":
-                data18 = data18.replace("= 'null'", "IS NULL")
+            else:
+                chaine += ",'null'"
 
-            data19 = f"= '{donnes[19]}'"
-            if donnes[19] == "null":
-                data19 = data19.replace("= 'null'", "IS NULL")
+            chaine = chaine.replace("'null'", "null")
+            self.cible.write(chaine + ");")
 
-            if donnes[12] != "null" and donnes[16] == "null":
-                if not self.oracle:
-                    self.cible.write(
-                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), "
-                        f"(SELECT attackId FROM P10_Attack WHERE attackName {data12} "
-                        f"AND attackCost {data13} AND attackDamage {data14} AND attackEffect {data15})),")
-                else:
-                    self.cible.write(
-                        f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES "
-                        f"((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), "
-                        f"(SELECT attackId FROM P10_Attack WHERE attackName {data12} "
-                        f"AND attackCost {data13} AND attackDamage {data14} AND attackEffect {data15}));")
 
-            elif donnes[12] != "null" and donnes[16] != "null":
-                if not self.oracle:
-                    self.cible.write(
-                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName {data12} AND attackCost {data13} AND attackDamage {data14} AND attackEffect {data15})),")
-                    self.cible.write(
-                        f"\n\t((SELECT cardId FROM P10_Card WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack WHERE attackName {data16} AND attackCost {data17} AND attackDamage {data18} AND attackEffect {data19})),")
-                else:
-                    self.cible.write(
-                        f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
-                        f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
-                        f"WHERE attackName {data12} AND attackCost {data13} AND "
-                        f"attackDamage {data14} AND attackEffect {data15}));")
-
-                    self.cible.write(
-                        f"\nINSERT INTO P10_Contient(cardId,attackId) VALUES ((SELECT cardId FROM P10_Card "
-                        f"WHERE cardImg = '{donnes[5]}'), (SELECT attackId FROM P10_Attack "
-                        f"WHERE attackName {data16} AND attackCost {data17} AND "
-                        f"attackDamage {data18} AND attackEffect {data19}));")
-        if not self.oracle:
-            self.cible.seek(self.cible.tell() - 1)
-            self.cible.write(";")
 
     def nettoyage(self):
         self.cible.seek(0)
         lignes = self.cible.readlines()
         self.cible.close()
+
         fichier = open(self.nameCible, "w")
         for ligne in lignes:
-            newLine = ligne.replace("'null'", "null").replace(" ", " ").replace("Métal", "Metal")
+            newLine = ligne.replace("'null'", "null").replace(" ", " ").replace("Métal", "Metal").replace("\xa0", " ")
             fichier.write(newLine)
         fichier.close()
         self.cible.close()
 
-    def implementsUsersSQL(self):
-        Gestionnaire.perso.seek(0)
-        self.cible.write("\n\nINSERT INTO P10_User(userName,userDob,userStatus,userLogin,userPass) VALUES ")
-        for lignes in self.perso.readlines():
-            data = traitementLigne(lignes)
-            date = data[1].split("-")
-            self.cible.write(f"\n\t('{data[0]}','{date[2]}-{date[0]}-{date[1]}','{data[2]}','{data[3]}','{data[4]}'),")
-        self.cible.seek(self.cible.tell() - 1)
-        self.cible.write(";")
+
 
     def implementsUsersOracle(self):
         Gestionnaire.perso.seek(0)
@@ -567,38 +433,34 @@ if __name__ == "__main__":
     gesteSQL = Gestionnaire("P10_PokemonMySQL.sql", "mysql")
     gesteSQL.sqlTable()
     gesteSQL.implementsUsersSQL()
-    gesteSQL.writeDataInFile([10, 11])
-    gesteSQL.writeDataInFile([12, 13, 14, 15])
-    gesteSQL.writeDataInFile([16, 17, 18, 19])
-    gesteSQL.writeDataInFile([20, 21])
-    gesteSQL.writeDataInFile([22, 23])
+    gesteSQL.implementsAbilityNoOracle()
+    gesteSQL.implementsAttacksNoOracle()
+    gesteSQL.implementsResistancesNoOracle()
+    gesteSQL.implementsWeaknessNoOracle()
     gesteSQL.implementsCardsNoOracle()
-    gesteSQL.assocTable()
-    gesteSQL.assocCollectionSQL()
+    gesteSQL.implementsContientNoOracle()
     gesteSQL.nettoyage()
 
     gestePostgreSQL = Gestionnaire("P10_PokemonPostgresql.sql", "postgresql")
     gestePostgreSQL.sqlTable()
     gestePostgreSQL.implementsUsersSQL()
-    gestePostgreSQL.writeDataInFile([10, 11])
-    gestePostgreSQL.writeDataInFile([12, 13, 14, 15])
-    gestePostgreSQL.writeDataInFile([16, 17, 18, 19])
-    gestePostgreSQL.writeDataInFile([20, 21])
-    gestePostgreSQL.writeDataInFile([22, 23])
+    gestePostgreSQL.implementsAbilityNoOracle()
+    gestePostgreSQL.implementsAttacksNoOracle()
+    gestePostgreSQL.implementsResistancesNoOracle()
+    gestePostgreSQL.implementsWeaknessNoOracle()
     gestePostgreSQL.implementsCardsNoOracle()
-    gestePostgreSQL.assocTable()
-    gestePostgreSQL.assocCollectionSQL()
+    gestePostgreSQL.implementsContientNoOracle()
     gestePostgreSQL.nettoyage()
 
-    gesteOracle = Gestionnaire("P10_PokemonOracle.sql", "oracle")
-    gesteOracle.oracleTable()
-    gesteOracle.implementsUsersOracle()
-    gesteOracle.writeDataInFile([10, 11])
-    gesteOracle.writeDataInFile([12, 13, 14, 15])
-    gesteOracle.writeDataInFile([16, 17, 18, 19])
-    gesteOracle.writeDataInFile([20, 21])
-    gesteOracle.writeDataInFile([22, 23])
-    gesteOracle.implementsCardOracle()
-    gesteOracle.assocTable()
-    gesteOracle.assocCollectionOracle()
-    gesteOracle.nettoyage()
+    #gesteOracle = Gestionnaire("P10_PokemonOracle.sql", "oracle")
+    #gesteOracle.oracleTable()
+    #gesteOracle.implementsUsersOracle()
+    #gesteOracle.writeDataInFile([10, 11])
+    #gesteOracle.writeDataInFile([12, 13, 14, 15])
+    #gesteOracle.writeDataInFile([16, 17, 18, 19])
+    #gesteOracle.writeDataInFile([20, 21])
+    #gesteOracle.writeDataInFile([22, 23])
+    #gesteOracle.implementsCardOracle()
+    #gesteOracle.assocTable()
+    #gesteOracle.assocCollectionOracle()
+    #gesteOracle.nettoyage()
