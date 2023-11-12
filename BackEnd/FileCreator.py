@@ -275,7 +275,7 @@ class Gestionnaire:
 
     def implementsContientNoOracle(self):
         Gestionnaire.newSource.seek(0)
-        self.cible.write("\n\nINSERT FROM P10_Contient(cardId,attackId) VALUES")
+        self.cible.write("\n\nINSERT INTO P10_Contient(cardId,attackId) VALUES")
         for lignes in Gestionnaire.newSource.readlines(0):
             data = traitementLigne(lignes)
             attack1 = (data[12], data[13], data[14], data[15])
