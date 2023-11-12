@@ -103,7 +103,7 @@ class Gestionnaire:
                           f"resistanceType varchar(10) CHECK (resistanceType IN {types}),\n\tresistanceValue varchar(5) CHECK (resistanceValue IN ('/2','-20','-10','-30')));\n"
 
         weaknessTable = f"CREATE TABLE IF NOT EXISTS P10_Weakness(\n\tweaknessId {auto} PRIMARY KEY,\n\t" \
-                        f"weaknessType varchar(10) CHECK (weaknessType IN {types}),\n\tweaknessValue varchar(5) CHECK (weaknessValue IN ('×2','+20','+10','+30')));\n"
+                        f"weaknessType varchar(10) CHECK (weaknessType IN {types}),\n\tweaknessValue varchar(5) CHECK (weaknessValue IN ('×2','x2','+20','+10','+30')));\n"
 
         attackTable = f"CREATE TABLE IF NOT EXISTS P10_Attack(\n\tattackId {auto} PRIMARY KEY,\n\t" \
                       f"attackName varchar(50) NOT NULL,\n\tattackCost varchar(50),\n\tattackDamage varchar(4)," \
@@ -354,7 +354,7 @@ class Gestionnaire:
         weaknessTable = f"CREATE TABLE P10_Weakness(\n\tweaknessId NUMBER PRIMARY KEY,\n\t" \
                         "weaknessType VARCHAR2(20) NOT NULL,\n\tweaknessValue VARCHAR2(5) DEFAULT '×2',\n\t" \
                         f"CONSTRAINT CheckTypeWeakness CHECK (weaknessType IN {types}),\n\t" \
-                        f"CONSTRAINT CheckValueWeakness CHECK (weaknessValue IN ('×2','+10','+20','+30')));\n"
+                        f"CONSTRAINT CheckValueWeakness CHECK (weaknessValue IN ('×2','x2','+10','+20','+30')));\n"
 
         attackTable = f"CREATE TABLE P10_Attack(\n\tattackId NUMBER PRIMARY KEY,\n\t" \
                       "attackName VARCHAR2(50) NOT NULL,\n\tattackCost VARCHAR2(50),\n\tattackDamage VARCHAR2(4)," \
