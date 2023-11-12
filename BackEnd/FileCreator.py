@@ -315,7 +315,7 @@ class Gestionnaire:
         self.cible.seek(self.cible.tell() - 1)
         self.cible.write(";")
 
-
+# ------------------------ Oracle ---------------------------------------
     def oracleTable(self):
         types = ('Incolore', 'Feu', 'Eau', 'Plante', 'Combat', 'Métal', 'Électrique', 'Psy', 'Obscurité', 'Dragon',
                  'Colorless', 'Fire', 'Water', 'Grass', 'Fighting', 'Metal', 'Lightning', 'Psychic', 'Darkness')
@@ -384,17 +384,83 @@ class Gestionnaire:
         self.cible.write(
             f"{drops}\n{sequences}\n{userTable}\n{abilityTable}\n{resistanceTable}\n{weaknessTable}\n{attackTable}\n{cardTable}\n{contientTable}\n{collectionTable}\n")
 
-    def implementsCardOracle(self):
+    def implementsUsersOracle(self):
+        Gestionnaire.perso.seek(0)
+        for lignes in self.perso.readlines():
+            data = traitementLigne(lignes)
+            date = data[1].split("-")
+            self.cible.write(
+                f"INSERT INTO P10_User(userName,userDob,userStatus,userLogin,userPass) VALUES ('{data[0]}',TO_DATE('{date[2]}/{date[0]}/{date[1]}','yyyy/mm/dd'),'{data[2]}','{data[3]}','{data[4]}');\n")
+
+    def implementsAbilityOracle(self):
         Gestionnaire.newSource.seek(0)
+        abilitiesExisting = []
+        for lignes in Gestionnaire.newSource.readlines():
+            data = traitementLigne(lignes)
+            chaineImp = "\nINSERT INTO P10_Ability(abiltyName,abiltiyEffect) VALUES ("
+            ability = (data[10],data[11])
+            if ability not in abilitiesExisting and ability != ("null","null"):
+                abilitiesExisting.append(ability)
+                chaineImp += f"{ability});"
+                self.cible.write(chaineImp)
+
+    def implementsAttacksOracle(self):
+        Gestionnaire.newSource.seek(0)
+        attacksExisting = []
+        for lignes in Gestionnaire.newSource.readlines():
+            data = traitementLigne(lignes)
+
+            chaineImp = "\nINSERT INTO P10_Attack(attackName,attackCost,attackDamage,attackEffect) VALUES "
+            attacksareclean = self.checkattacksareclean(data)
+            attack1 = (data[12],data[13],data[14],data[15])
+            if attack1 not in attacksExisting and attack1 != ("null","null","null","null") and attacksareclean[0]:
+                attacksExisting.append(attack1)
+                chaineImp += f"{attack1};"
+                self.cible.write(chaineImp)
+
+            chaineImp = "\nINSERT INTO P10_Attack(attackName,attackCost,attackDamage,attackEffect) VALUES "
+            attack2 = (data[16], data[17], data[18], data[19])
+            if attack2 not in attacksExisting and attack2 != ("null","null","null","null") and attacksareclean[1]:
+                attacksExisting.append(attack2)
+                chaineImp += f"{attack2};"
+                self.cible.write(chaineImp)
+
+    def implementsResistancesOracle(self):
+        Gestionnaire.newSource.seek(0)
+        resistancesExisting = []
+        for lignes in Gestionnaire.newSource.readlines():
+            data = traitementLigne(lignes)
+            chaineImp = "\nINSERT INTO P10_Resistance(resistanceType,resistanceValue) VALUES "
+            data[20] = data[20].replace("Métal","Metal")
+            resistance = (data[20],data[21])
+            if resistance not in resistancesExisting and resistance != ("null","null"):
+                resistancesExisting.append(resistance)
+                chaineImp += f"{resistance};"
+                self.cible.write(chaineImp)
+
+    def implementsWeaknessOracle(self):
+        Gestionnaire.newSource.seek(0)
+        weaknessExisting = []
+        for lignes in Gestionnaire.newSource.readlines():
+            data = traitementLigne(lignes)
+            chaineImp = "\nINSERT INTO P10_Weakness(weaknessType,weaknessValue) VALUES "
+            data[22] = data[22].replace("Métal","Metal")
+            weakness = (data[22],data[23])
+            if weakness not in weaknessExisting and weakness != ("null","null"):
+                weaknessExisting.append(weakness)
+                chaineImp += f"{weakness};"
+                self.cible.write(chaineImp)
+
+    def implementsCardsOracle(self):
+        Gestionnaire.newSource.seek(0)
+        cardsExisting = []
         for lignes in Gestionnaire.newSource.readlines():
             donnees = traitementLigne(lignes)
 
-            chaine = "\nINSERT INTO P10_Card(cardId,cardCategory,cardName," \
-                     "cardHP,cardRarity,cardImg,cardType,cardExtension," \
-                     "cardRetreat,cardLang,abilityId,weaknessId,resistanceId) VALUES "
-
-            chaine += f"(seq_card.nextval,'{donnees[1]}','{donnees[2]}',{donnees[3]},'{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
-                      f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
+            chaine = f"\nINSERT INTO P10_Card(cardCategory,cardName," \
+                     f"cardHP,cardRarity,cardImg,cardType,cardExtension," \
+                     f"cardRetreat,cardLang,abilityId,weaknessId,resistanceId') VALUES ('{donnees[1]}','{donnees[2]}',{donnees[3]},'{donnees[4]}','{donnees[5]}','{donnees[6]}'," \
+                     f"'{donnees[7]}',{donnees[8]},'{donnees[9]}'"
 
             if donnees[10] == "null" and donnees[11] != "null":
                 chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityEffect = '{donnees[11]}')"
@@ -403,23 +469,24 @@ class Gestionnaire:
                 chaine += f",(SELECT abilityId FROM P10_Ability WHERE abilityName = '{donnees[10]}' " \
                           f"AND abilityEffect = '{donnees[11]}')"
             else:
-                chaine += ",'null'"
+                chaine += ",null"
 
             if donnees[22] != "null":
                 chaine += f",(SELECT weaknessId FROM P10_Weakness WHERE weaknessType = '{donnees[22]}' " \
                           f"AND weaknessValue = '{donnees[23]}')"
             else:
-                chaine += ",'null'"
+                chaine += ",null"
 
             if donnees[20] != "null":
                 chaine += f",(SELECT resistanceId FROM P10_Resistance WHERE resistanceType = '{donnees[20]}' " \
                           f"AND resistanceValue = '{donnees[21]}')"
-
             else:
-                chaine += ",'null'"
+                chaine += ",null"
 
             chaine = chaine.replace("'null'", "null")
-            self.cible.write(chaine + ");")
+            if chaine not in cardsExisting:
+                cardsExisting.append(chaine)
+                self.cible.write(chaine + ");")
 
 
 
@@ -430,22 +497,14 @@ class Gestionnaire:
 
         fichier = open(self.nameCible, "w")
         for ligne in lignes:
-            newLine = ligne.replace("'null'", "null").replace(" ", " ").replace("Métal", "Metal").replace("\xa0", " ")
+            newLine = ligne.replace("'null'", "null").replace(" ", " ").replace("Métal", "Metal").replace("\\xa0", " ").replace('"', "'")
             fichier.write(newLine)
         fichier.close()
         self.cible.close()
 
 
 
-    def implementsUsersOracle(self):
-        Gestionnaire.perso.seek(0)
-        for lignes in self.perso.readlines():
-            data = traitementLigne(lignes)
-            date = data[1].split("-")
-            self.cible.write(
-                f"INSERT INTO P10_User(userName,userDob,userStatus,userLogin,userPass) VALUES('{data[0]}',TO_DATE('{date[2]}/{date[0]}/{date[1]}','yyyy/mm/dd'),'{data[2]}','{data[3]}','{data[4]}');\n")
-        self.cible.seek(self.cible.tell() - 1)
-        self.cible.write(";")
+
 
 
 if __name__ == "__main__":
@@ -473,15 +532,14 @@ if __name__ == "__main__":
     gestePostgreSQL.implementsCollectionNoOracle()
     gestePostgreSQL.nettoyage()
 
-    #gesteOracle = Gestionnaire("P10_PokemonOracle.sql", "oracle")
-    #gesteOracle.oracleTable()
-    #gesteOracle.implementsUsersOracle()
-    #gesteOracle.writeDataInFile([10, 11])
-    #gesteOracle.writeDataInFile([12, 13, 14, 15])
-    #gesteOracle.writeDataInFile([16, 17, 18, 19])
-    #gesteOracle.writeDataInFile([20, 21])
-    #gesteOracle.writeDataInFile([22, 23])
-    #gesteOracle.implementsCardOracle()
+    gesteOracle = Gestionnaire("P10_PokemonOracle.sql", "oracle")
+    gesteOracle.oracleTable()
+    gesteOracle.implementsUsersOracle()
+    gesteOracle.implementsAbilityOracle()
+    gesteOracle.implementsAttacksOracle()
+    gesteOracle.implementsWeaknessOracle()
+    gesteOracle.implementsResistancesOracle()
+    gesteOracle.implementsCardsOracle()
     #gesteOracle.assocTable()
     #gesteOracle.assocCollectionOracle()
-    #gesteOracle.nettoyage()
+    gesteOracle.nettoyage()
