@@ -261,7 +261,6 @@ class Gestionnaire:
                 self.cible.write(chaine + "),")
         self.cible.seek(self.cible.tell() - 1)
         self.cible.write(";")
-        Gestionnaire.newSource.seek(0)
 
     @staticmethod
     def checkifNull(data: list[str]):
