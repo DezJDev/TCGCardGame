@@ -119,4 +119,11 @@ __Nous avons maintenant 6 nouveaux Fichiers :__
 5. P10_PokemonPostgreSQL.sql
 6. P10_PokemonOracle.sql
 
+# Etape 2 du Projet
+### Utilisation avancée des SGBD.
+Pour chaque répertoires, vous retrouverez comment on réaliser nos Vues, nos Fonctions et Procédures et nos Triggers.  
+En Mysql nous ne pouvons pas réaliser les Fonctions, les Procédures et les Triggers.
+
+
+
 
