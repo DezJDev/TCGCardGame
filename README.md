@@ -103,3 +103,20 @@ __Relation Collection :__
 
 Nos relations respectent toutes la Boyce-Codd Forme Normale.
 
+# Etape 1 du Projet
+### Création des Tables & Implémentations des données.  
+Utilisation de l'API TGCDEX https://www.tcgdex.dev/  
+__Data.php__ -> Script qui se connecte à l'API. Récupère les cartes de l'extension indiquée dans la variable $version et la langue voulue dans $langue.
+Le script renvoie un fichier txt dans lequel pour chaque carte de l'extension, on récupère dans son fichier JSON référent, les attributs qu'on va avoir besoin.  
+__Doublon.py__ -> Supprime les cartes en double (on va supprimer dans le fichier les lignes en double).  
+__FileCreator.py__ -> Script qui parse le fichier txt afin de créer les fichiers d'implémentations des données des trois SGBD.  
+
+__Nous avons maintenant 6 nouveaux Fichiers :__  
+1. MySQLTable.sql
+2. PostgreSQLTable.sql
+3. OracleTable.sql
+4. P10_PokemonMySQL.sql
+5. P10_PokemonPostgreSQL.sql
+6. P10_PokemonOracle.sql
+
+
