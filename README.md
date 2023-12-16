@@ -124,6 +124,8 @@ __Nous avons maintenant 6 nouveaux Fichiers :__
 Pour chaque répertoires, vous retrouverez comment on réaliser nos Vues, nos Fonctions et Procédures et nos Triggers.  
 En Mysql nous ne pouvons pas réaliser les Fonctions, les Procédures et les Triggers.
 
-
-
+# Etape 3 du Projet
+### Création du site avec PHP Symfony
+Prochain semestre on va construire notre Site.  
+J'aimerai bien utiliser Bootstrap pour le responsive, React pour du Front dynamique et PHP Symfony pour le Backend.
 
